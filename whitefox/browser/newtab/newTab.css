@@ -80,9 +80,27 @@
 #newtab-horizontal-margin {
   display: flex;
 }
+
+@supports (not (-moz-text-decoration-style:inherit))  { {} /* Firefox >= 40 */
+  #newtab-margin-top {
+    -moz-box-flex: 5;
+    max-height: 408px;
+    min-height: 45px;
+  }
+
+  #newtab-horizontal-margin {
+    -moz-box-flex: 0;
+  }
+
+  #newtab-margin-bottom {
+    -moz-box-flex: 3;
+  }
+}
+
 .newtab-side-margin {
   flex-grow: 1;
 }
+
 #newtab-grid {
   width: auto !important;
 }
@@ -152,10 +170,29 @@
       #newtab-grid {
         max-height: calc(((100vh - 141px - (255px/2)) / (255*60)) * (255*60) + 7px) !important;        = ((100vh - s - q - p - (t/2))/(t*60))*(t*60) + q
       }
-  */
+      
+  OLD COMPUTATION:
+
   #newtab-grid {
     max-height: calc(((100vh - 268.5px) / 15300) * 15300 + 7px) !important;
   }
+  */
+
+  /*
+    The following computation is correct using integer arithmetic, with the length unit being 1/60 px, and division results rounded to the nearest unit:
+      #newtab-grid {
+        max-height: calc(((100vh - 45px - 71px - 35px - 7px - (255px/2)) / (255*60)) * (255*60)) !important;        = ((100vh - s - q - p - (t/2))/(t*60))*(t*60)
+      }
+  */
+  #newtab-grid {
+    max-height: calc(((100vh - 285.5px) / 15300) * 15300 + 7px) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+body:-moz-any(.compact,:not(.compact)) #topsites-heading {
+  display: none;
 }
 
 /* CELLS */
@@ -316,6 +353,10 @@
   transform: translateY(-15px);
   transition: transform 300ms;
 }
+.newtab-site:not(:hover) .newtab-control {
+  pointer-events: none;
+}
+
 
 .newtab-control-pin:dir(ltr),
 .newtab-control-block:dir(rtl) {
@@ -384,6 +425,13 @@
 #newtab-search-container{
   margin-top:45px;
   margin-bottom:15px;
+}
+
+@supports (not (-moz-text-decoration-style:inherit))  { {} /* Firefox >= 40 */
+  #newtab-search-container {
+    margin-top: 0;
+    margin-bottom: 35px;
+  }
 }
 
 #newtab-search-form {
@@ -664,4 +712,74 @@
 }
 #newtab-customize-learn:hover label::before{
   background-position: -16px 0;
+}
+
+@supports (TRY:this) {  {}
+
+body/*.compact*/ .newtab-cell {
+  margin: 13px 13px 13px;
+  height: 110px;
+  width: 110px;
+}
+
+body/*.compact*/ .newtab-control {
+  top: 0;
+}
+
+body/*.compact*/ .newtab-control-pin:dir(ltr),
+body/*.compact*/ .newtab-control-block:dir(rtl) {
+  left: -1px;
+}
+body/*.compact*/ .newtab-control-pin:dir(rtl),
+body/*.compact*/ .newtab-control-block:dir(ltr) {
+  right: -1px;
+}
+
+body/*.compact*/ .newtab-thumbnail:first-child {
+  box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.17), 0px 0px 6px rgba(0, 0, 0, 0.02);
+  box-shadow: 0px 9px 10px rgba(0, 0, 0, 0.10), 0px 0px 5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 9px 10px rgba(0, 0, 0, 0.07), 0px 0px 4px rgba(0, 0, 0, 0.04);
+}
+
+body/*.compact*/ .newtab-site:hover .newtab-thumbnail:first-child {
+  box-shadow: 0px 20px 12px rgba(0, 0, 0, 0.12), 0px 0px 6px rgba(0, 0, 0, 0.01);
+  box-shadow: 0px 20px 12px rgba(0, 0, 0, 0.08), 0px 0px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 20px 12px rgba(0, 0, 0, 0.07), 0px 0px 3px rgba(0, 0, 0, 0.05);
+}
+
+body/*.compact*/ .newtab-title {
+  font-size: 12px;
+  line-height: 18px;
+  height: 18px;
+}
+
+body/*.compact*/ .newtab-site:hover .newtab-thumbnail,
+body/*.compact*/ .newtab-site:hover .newtab-control {
+  transform: translateY(-13px);
+}
+
+/*
+s = <newtab-search-container height> + <newtab-search-container margin-top> + <newtab-search-container margin-bottom>
+  = 71px + 45px + 15px        (or 79px + 45px + 15px for Firefox < 40**)
+t = <newtab-cell height> + <newtab-cell margin-top> + <newtab-cell margin-bottom>
+  = 210px + 20px + 25px       (or 180px + 20px + 25px for Firefox < 40)
+  = 210px + 22px + 23px       (or 180px + 22px + 23px for Firefox < 40)
+q = <newtab-grid "pre-programmed" padding> = 7px
+p = <newtab-grid padding-top> = 3px
+  The following computation is correct using integer arithmetic, with the length unit being 1/60 px, and division results rounded to the nearest unit:
+    #newtab-grid {
+      max-height: calc(((100vh - 141px - (255px/2)) / (255*60)) * (255*60) + 7px) !important;        = ((100vh - s - q - p - (t/2))/(t*60))*(t*60) + q
+      max-height: calc(((100vh - 141px - (255px/2)) / (255*60)) * (255*60) + 7px) !important;        = ((100vh - s - q - p - (t/2))/(t*60))*(t*60) + q
+    }
+
+  max-height: calc(((100vh - (71px + 35px + (110px + 13px + 13px)/2 + 13px + 2px)) / ((110+14+12) * 60)) * ((110+14+12) * 60)) !important;
+  max-height: calc(((100vh - 45px - 71px - 35px - 7px - 3px - 1px - (136px/2)) / (136*60)) * (136*60) + 7px) !important;        = ((100vh - s - q - p - (t/2))/(t*60))*(t*60)
+}
+*/
+body/*.compact*/ #newtab-grid {
+  max-height: calc(((100vh - 230px) / 8160) * 8160 + 7px) !important;
+  padding-top: 3px !important;
+  padding-bottom: 1px !important;
+}
+
 }

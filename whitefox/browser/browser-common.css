@@ -502,6 +502,7 @@
 @media not all and (-moz-windows-classic) {
   #titlebar-min {
     -moz-margin-end: 2px;
+    margin-inline-end: 2px;
   }
 }
 
@@ -520,6 +521,8 @@
   max-width: 140px;
   -moz-margin-start: 1px;
   -moz-margin-end: 2px;
+  margin-inline-start: 1px;
+  margin-inline-end: 2px;
   margin-bottom: 2px;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -729,12 +732,12 @@ menuitem.bookmark-item {
 
 /* Note that this file isn't used for HiDPI on OS X. */
 
-:-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button), toolbarbutton#pocket-button,
+:-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button), toolbarbutton#pocket-button,
 #bookmarks-menu-button > .toolbarbutton-menubutton-dropmarker > .dropmarker-icon {
   list-style-image: url("chrome://browser/skin/Toolbar.png");
 }
 
-toolbar[brighttext] :-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button), toolbar[brighttext] toolbarbutton#pocket-button,
+toolbar[brighttext] :-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button), toolbar[brighttext] toolbarbutton#pocket-button,
 toolbar[brighttext] #bookmarks-menu-button > .toolbarbutton-menubutton-dropmarker > .dropmarker-icon {
   list-style-image: url(chrome://browser/skin/Toolbar-inverted.png);
 }
@@ -747,6 +750,15 @@ toolbar[brighttext] #bookmarks-menu-button > .toolbarbutton-menubutton-dropmarke
   -moz-image-region: rect(0, 72px, 18px, 54px);
 }
 
+#reload-button {
+  -moz-image-region: rect(0, 90px, 18px, 72px);
+}
+
+#stop-button {
+  -moz-image-region: rect(0, 108px, 18px, 90px);
+}
+
+#reload-button:-moz-locale-dir(rtl),
 #forward-button:-moz-locale-dir(rtl),
 #back-button:-moz-locale-dir(rtl) {
   transform: scaleX(-1);
@@ -754,6 +766,10 @@ toolbar[brighttext] #bookmarks-menu-button > .toolbarbutton-menubutton-dropmarke
 
 #home-button[cui-areatype="toolbar"] {
   -moz-image-region: rect(0, 126px, 18px, 108px);
+}
+
+#library-button[cui-areatype="toolbar"] {
+  list-style-image: url(chrome://browser/skin/places/libraryToolbar.svg#organizeButton);
 }
 
 #bookmarks-menu-button[cui-areatype="toolbar"] {
@@ -765,6 +781,10 @@ toolbar[brighttext] #bookmarks-menu-button > .toolbarbutton-menubutton-dropmarke
 }
 
 #bookmarks-menu-button[cui-areatype="toolbar"] > .toolbarbutton-menubutton-dropmarker > .dropmarker-icon {
+  -moz-image-region: rect(0, 630px, 18px, 612px);
+}
+
+#bookmarks-menu-button[cui-areatype="toolbar"][type=menu] {
   -moz-image-region: rect(0, 630px, 18px, 612px);
 }
 
@@ -1210,14 +1230,19 @@ toolbarbutton#pocket-button[cui-areatype="toolbar"][open] {
 /*@media not all and (min-resolution: 1.1dppx) { *** this is for all resolutions ****/
 
   toolbaritem[sdkstylewidget="true"] > toolbarbutton,
-  :-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button)[cui-areatype="menu-panel"], toolbarbutton#pocket-button[cui-areatype="menu-panel"],
-  toolbarpaletteitem[place="palette"] > :-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button), toolbarpaletteitem[place="palette"] > toolbarbutton#pocket-button {
+  :-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button)[cui-areatype="menu-panel"], toolbarbutton#pocket-button[cui-areatype="menu-panel"],
+  toolbarpaletteitem[place="palette"] > :-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button), toolbarpaletteitem[place="palette"] > toolbarbutton#pocket-button {
     list-style-image: var(--menupanel-list-style-image);
   }
 
   #home-button[cui-areatype="menu-panel"],
   toolbarpaletteitem[place="palette"] > #home-button {
     -moz-image-region: rect(0px, 128px, 32px, 96px);
+  }
+
+  #library-button[cui-areatype="menu-panel"],
+  toolbarpaletteitem[place="palette"] > #library-button {
+    list-style-image: url(chrome://browser/skin/library.svg);
   }
 
   #bookmarks-menu-button[cui-areatype="menu-panel"],
@@ -1272,6 +1297,10 @@ toolbarbutton#pocket-button[cui-areatype="toolbar"][open] {
   #sync-button[cui-areatype="menu-panel"][status="active"] {
     list-style-image: url(chrome://browser/skin/syncProgress-menuPanel.png);
     -moz-image-region: rect(0px, 32px, 32px, 0px);
+  }
+
+  #sync-button[cui-areatype="menu-panel"][panel-multiview-anchor=true] {
+    list-style-image: url(chrome://browser/skin/menuPanel.svg#SyncTabsInv);
   }
 
   #feed-button[cui-areatype="menu-panel"],
@@ -1482,6 +1511,149 @@ toolbarbutton#pocket-button[cui-areatype="toolbar"][open] {
     -moz-image-region: rect(0px, 96px, 16px, 80px);
   }
 /*}  for all resolutions! */
+
+/* Start For Firefox 56 **********************************************************/
+#appMenu-new-window-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 341px, 17px, 325px);
+}
+
+#appMenu-private-window-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 377px, 17px, 361px);
+}
+
+#appMenu-open-file-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 233px, 17px, 217px);
+}
+
+#appMenu-save-file-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 251px, 17px, 235px);
+}
+
+#appMenu-page-setup-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 251px, 17px, 235px);
+}
+
+#appMenu-page-setup-button > .toolbarbutton-icon {
+  transform: rotate(-90deg);
+}
+
+#appMenu-print-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 413px, 17px, 397px);
+}
+
+#appMenu-library-button {
+  list-style-image: url(chrome://browser/skin/places/libraryToolbar.svg#organizeButton);
+}
+
+#appMenu-addons-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 215px, 17px, 199px);
+}
+
+#appMenu-preferences-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 467px, 17px, 451px);
+}
+
+#appMenu-customize-button {
+  list-style-image: url(chrome://mozapps/skin/extensions/themeGeneric-16.png);
+}
+
+#appMenu-find-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 395px, 17px, 379px);
+}
+
+#appMenu-more-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 610px, 17px, 595px);
+}
+
+#appMenu-developer-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 449px, 17px, 433px);
+}
+
+#appMenu-help-button {
+  list-style-image: url(chrome://global/skin/icons/question-16.svg);
+}
+#appMenu-help-button > .toolbarbutton-icon {
+  filter: brightness(0);
+}
+
+#appMenu-cut-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 503px, 17px, 487px);
+}
+
+#appMenu-copy-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 521px, 17px, 505px);
+}
+
+#appMenu-paste-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 539px, 17px, 523px);
+}
+
+#appMenu-quit-button {
+  list-style-image: url(chrome://browser/skin/devtools/images/power.svg);
+}
+
+#appMenu-zoomEnlarge-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 575px, 17px, 559px);
+}
+
+#appMenu-zoomReduce-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 557px, 17px, 541px);
+}
+
+#appMenu-fullscreen-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 431px, 17px, 415px);
+}
+
+#appMenu-fullscreen-button[checked] {
+  background-image: none;
+}
+
+#appMenu-fullscreen-button[checked] > .toolbarbutton-icon {
+  filter: url("chrome://devtools/skin/images/filters.svg#checked-icon-state");
+}
+
+toolbarbutton#appMenu-library-pocket-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 773px, 17px, 757px);
+}
+
+#appMenu-library-bookmarks-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 143px, 17px, 127px);
+}
+
+#appMenu-library-history-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 179px, 17px, 163px);
+}
+
+#appMenu-library-remotetabs-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.svg#SyncTabs);
+  -moz-image-region: rect(1px, 17px, 17px, 1px);
+}
+
+#appMenu-characterencoding-button {
+  list-style-image: url(chrome://browser/skin/Toolbar.png);
+  -moz-image-region: rect(1px, 323px, 17px, 307px);
+}
+/* End   For Firefox 56 **********************************************************/
 
 /* Menu panel and palette styles */
 /***** No menuPanel@2X.png nor menuPanel-small@2X.png, so removed from here until says gone *****%
@@ -1767,6 +1939,18 @@ toolbarbutton#pocket-button[cui-areatype="toolbar"][open] {
 }
 %************  it's gone!  *******************************************************************************/
 
+
+#pocket-button#pocket-button   > .toolbarbutton-animatable-box,
+#library-button#library-button > .toolbarbutton-animatable-box,
+:-moz-any(#nav-bar-overflow-button,#stop-button,#reload-button) > .toolbarbutton-animatable-box {
+  display: none;
+}
+
+.tabs-newtab-button > .toolbarbutton-menu-dropmarker,
+.toolbarbutton-1 > .toolbarbutton-menu-dropmarker {
+  display: none;
+}
+
 #main-window:not([customizing]) .toolbarbutton-1[disabled=true] > .toolbarbutton-icon,
 #main-window:not([customizing]) .toolbarbutton-1[disabled=true] > .toolbarbutton-menu-dropmarker,
 #main-window:not([customizing]) .toolbarbutton-1[disabled=true] > .toolbarbutton-menubutton-dropmarker,
@@ -1788,6 +1972,7 @@ toolbar[brighttext] .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
 .toolbarbutton-1 > .toolbarbutton-icon,
 .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
   -moz-margin-end: 0;
+  margin-inline-end: 0;
 }
 
 .findbar-button,
@@ -1811,10 +1996,12 @@ toolbar[brighttext] .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
   -moz-padding-end: 5px;
 }*/
 
-#nav-bar .toolbarbutton-1[type=menu]:not(#back-button):not(#forward-button):not(#feed-button)/*:not(#PanelUI-menu-button)*/ {
+/**********  REMOVED --johnGraciliano ******************************************************************************************
+#nav-bar .toolbarbutton-1[type=menu]:not(#back-button):not(#forward-button):not(#feed-button)/*:not(#PanelUI-menu-button)*./ {
   padding-left: 5px;
   padding-right: 5px;
 }
+ **********  REMOVED --johnGraciliano ******************************************************************************************/
 
 #nav-bar .toolbarbutton-1 > menupopup {
   margin-top: -3px;
@@ -1848,12 +2035,24 @@ window:not([chromehidden~="toolbar"]) #urlbar-wrapper > .toolbarbutton-1:-moz-an
   transition-property: background-color, border-color;
   transition-duration: 150ms;
 }
+#nav-bar #pocket-button > image.toolbarbutton-icon {
+  padding: var(--toolbarbutton-vertical-inner-padding) 6px;
+}
 
-#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-icon,
-#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-badge-stack,  /* Firefox 42+ --johnGraciliano */
-#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-badge-container,
-#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
+#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-icon,
+#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-badge-stack,  /* Firefox 42+ --johnGraciliano */
+#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-badge-container,
+#nav-bar .toolbarbutton-1:not(:-moz-any(#back-button, #forward-button, #reload-button, #stop-button, #home-button, #print-button, #downloads-button, #bookmarks-menu-button, #new-tab-button, #new-window-button, #fullscreen-button, #sync-button, #feed-button, #tabview-button, #social-share-button, #open-file-button, #find-button, #developer-button, #preferences-button, #privatebrowsing-button, #save-page-button, #switch-to-metro-button, #add-ons-button, #history-panelmenu, #nav-bar-overflow-button, #PanelUI-menu-button, #characterencoding-button, #email-link-button, #sidebar-button, #zoom-out-button, #zoom-reset-button, #zoom-in-button, #cut-button, #copy-button, #paste-button, #e10s-button, #panic-button, #web-apps-button, #webide-button, #loop-button, #pocket-button, #containers-panelmenu)) > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
   padding: calc(var(--toolbarbutton-vertical-inner-padding) + 1px) 7px;  /* This is for 16px × 16px icon buttons!  It may be best also add: 'max-height: 16px; max-width 16px;'  --johnGraciliano */
+}
+
+/* Some buttons need the following to limit their size at some resolutions */
+#nav-bar .toolbarbutton-1 > .toolbarbutton-icon,
+#nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack, /* Firefox 42+ --johnGraciliano */
+#nav-bar .toolbarbutton-1 > .toolbarbutton-badge-container,
+#nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
+#nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker > .dropmarker-icon {
+  max-width: 32px; /* = 18px (content) + 2*6px (padding) + 2*1px border  = 16px (icon) + 2*7px (padding) + 2*1px border */
 }
 
 /*****  All this taken from default theme shall be gone --johnGraciliano *******%
@@ -1939,19 +2138,27 @@ toolbarbutton[constrain-size="true"][cui-areatype="toolbar"] > .toolbarbutton-ba
   width: 32px;
 }
 
-/* Special rule to undo one in some versions that constrains the #pocket-button icon max-width to 18px making it tiny --johnGraciliano */
-#nav-bar #pocket-button[cui-areatype="toolbar"] > .toolbarbutton-icon { /* This override is only for the button in the #nav-bar */
+/* Special rule to undo one in some versions that constrains the #pocket-button icon max-width to 18px making it tiny --johnGraciliano *./
+#nav-bar #pocket-button[cui-areatype="toolbar"] > .toolbarbutton-icon REMOVE-THIS { /* This override is only for the button in the #nav-bar *./
   max-width: none;
 }
+ ********************************************** REMOVE RULE ABOVE IN COMMENT *****************************************************************/
 
+/**********  REMOVED --johnGraciliano ******************************************************************************************
 #nav-bar .toolbarbutton-1[type=menu]:not(#back-button):not(#forward-button):not(#feed-button):not(#PanelUI-menu-button) > .toolbarbutton-icon,
+ **********  REMOVED --johnGraciliano ******************************************************************************************/
 #nav-bar .toolbarbutton-1[type=menu] > .toolbarbutton-text /* hack for add-ons that forcefully display the label */ {
+  max-width: unset;
   -moz-padding-end: 17px;
+  padding-inline-end: 17px;
 }
 
+/**********  REMOVED --johnGraciliano ******************************************************************************************
 #nav-bar .toolbarbutton-1 > .toolbarbutton-menu-dropmarker {
   -moz-margin-start: -15px;
+  margin-inline-start: -15px;
 }
+ **********  REMOVED --johnGraciliano ******************************************************************************************/
 
 /*#nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
   -moz-border-end: none transparent;
@@ -1982,7 +2189,6 @@ toolbarbutton[constrain-size="true"][cui-areatype="toolbar"] > .toolbarbutton-ba
   display: -moz-box;
   width: 1px;
   height: 18px;
-  -moz-margin-end: -1px;
   background-image: var(--toolbarbutton-combined-backgroundimage);
   box-shadow: var(--toolbarbutton-combined-boxshadow);
   background-clip: padding-box;
@@ -1990,6 +2196,7 @@ toolbarbutton[constrain-size="true"][cui-areatype="toolbar"] > .toolbarbutton-ba
   background-repeat: no-repeat;
   background-size: 1px 16px;
   margin-left: -1px;
+  margin-right: -1px;
 }
 
 #nav-bar .toolbaritem-combined-buttons > separator { /* This was in panelUIOverlay.css, it should only apply in the nav-bar */
@@ -2547,6 +2754,9 @@ html|*.urlbar-input:-moz-lwtheme::-moz-placeholder,
 
 .urlbar-icon {
   padding: 0 3px;
+  /* 16x16 icon with border-box sizing */
+  width: 22px;
+  height: 16px;
 }
 
 
@@ -2590,6 +2800,88 @@ html|*.urlbar-input:-moz-lwtheme::-moz-placeholder,
 #urlbar-zoom-button > .toolbarbutton-icon {
   display: none;
 }
+
+#star-button {
+  list-style-image: url("chrome://browser/skin/Toolbar.png");
+  -moz-image-region: rect(1px, 143px, 17px, 127px);
+}
+
+#star-button[starred] {
+  -moz-image-region: rect(1px, 161px, 17px, 145px);
+}
+
+#star-button:not(:hover):not(:active) {
+  opacity: .4;
+}
+  
+#star-button:not([starred]) {
+  display: none;
+}
+
+/* Page action button */
+#urlbar-page-action-button {
+  -moz-appearance: none;
+  border-style: none;
+  list-style-image: url("chrome://browser/skin/page-action.svg");
+  margin: 0;
+  padding: 0 6px;
+  color: inherit;
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+#urlbar-page-action-button > .toolbarbutton-icon {
+  width: 16px;
+}
+
+#urlbar-page-action-button:not(:hover) > .toolbarbutton-icon {
+  opacity: .5;
+}
+
+#urlbar-page-action-button:active > .toolbarbutton-icon {
+  filter: brightness(0);
+}
+
+#page-action-bookmark-button {
+  list-style-image: url("chrome://browser/skin/Toolbar.png");
+  -moz-image-region: rect(1px, 143px, 17px, 127px);
+}
+
+#page-action-bookmark-button[starred] {
+  list-style-image: url("chrome://browser/skin/Toolbar.png");
+  -moz-image-region: rect(1px, 161px, 17px, 145px);
+}
+
+#page-action-copy-url-button {
+  list-style-image: url("chrome://browser/skin/Toolbar.png");
+  -moz-image-region: rect(1px, 521px, 17px, 505px);
+}
+
+#page-action-email-link-button {
+  list-style-image: url("chrome://browser/skin/Toolbar.png");
+  -moz-image-region: rect(1px, 665px, 17px, 649px);
+}
+
+#page-action-send-to-device-button {
+  list-style-image: url("chrome://browser/skin/Toolbar.png");
+  -moz-image-region: rect(1px, 305px, 17px, 289px);
+}
+
+/**********  This is not Ready *****************************************
+.page-action-sendToDevice-device[clientType=mobile] {
+  list-style-image: url("chrome://browser/skin/device-mobile.svg");
+}
+
+.page-action-sendToDevice-device[clientType=desktop] {
+  list-style-image: url("chrome://browser/skin/device-desktop.svg");
+}
+
+#page-action-sendToDevice-fxa-button {
+  list-style-image: url("chrome://browser/skin/sync.svg");
+}
+ **********  End of This is not Ready **********************************/
+
+
 /****************************************************************************************************************************************/
 
 
@@ -3596,24 +3888,35 @@ richlistitem[type~="action"][actiontype="switchtab"][selected="true"] > .ac-url-
   border: none;
 }
 
+#urlbar > #reload-button,
+#urlbar > #stop-button {
+  -moz-image-region: auto;
+}
+
+#urlbar > #reload-button,
 #urlbar-reload-button {
   list-style-image: url("chrome://browser/skin/reload-stop-go.svg#reload");
 }
 #urlbar-go-button {
   list-style-image: url("chrome://browser/skin/reload-stop-go.svg#go");
 }
+#urlbar > #stop-button,
 #urlbar-stop-button {
   list-style-image: url("chrome://browser/skin/reload-stop-go.svg#stop");
 }
+#urlbar > #reload-button:active,
 #urlbar-reload-button:active {
   list-style-image: url("chrome://browser/skin/reload-stop-go.svg#reload-active");
 }
 #urlbar-go-button:active {
   list-style-image: url("chrome://browser/skin/reload-stop-go.svg#go-active");
 }
+#urlbar > #stop-button:active,
 #urlbar-stop-button:active {
   list-style-image: url("chrome://browser/skin/reload-stop-go.svg#stop-active");
 }
+#urlbar > #reload-button:not(:hover):not(:active),
+#urlbar > #stop-button:not(:hover):not(:active),
 #urlbar-reload-button:not(:hover):not(:active),
 #urlbar-stop-button:not(:hover):not(:active),
 #urlbar-go-button:not(:hover):not(:active) {
@@ -3930,14 +4233,63 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
 
 /* ::::: content area ::::: */
 
-#sidebar {
-  background-color: Window;
+toolbarbutton#sidebar-switcher-target {
+  -moz-appearance: none;
+  margin-inline-start: 1px;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+
+toolbarbutton#sidebar-switcher-target:hover {
+  background: var(--toolbarbutton-hover-background);
+  border-color: var(--toolbarbutton-hover-bordercolor);
+  box-shadow: var(--toolbarbutton-hover-boxshadow);
+}
+toolbarbutton#sidebar-switcher-target.active {
+  background: var(--toolbarbutton-active-background);
+  border-color: var(--toolbarbutton-active-bordercolor);
+  box-shadow: var(--toolbarbutton-active-boxshadow);
+  transition: none;
+}
+
+#sidebar-icon { /* This is to position the pop-up panel */
+  height: 16px;
+  width:28px;
+  margin-inline-end:-28px;
 }
 
 #sidebar-title {
   -moz-padding-start: 0px;
 }
 
+toolbarbutton > #sidebar-title {
+  margin-inline-start: 0;
+}
+
+#sidebar-switcher-arrow {
+  list-style-image:url("chrome://browser/skin/toolbarbutton-dropdown-arrow.png");
+}
+
+#sidebar-extensions:empty + toolbarseparator {
+  display: none;
+}
+
+#onboarding-overlay-close-btn, /* Firefox 56 */
+#onboarding-notification-close-btn, /* Firefox 56 */
+#sidebar-close /* Firefox 55+ */ 
+{
+  list-style-image: url("chrome://global/skin/icons/close.svg#normal");
+}
+#onboarding-notification-close-btn:hover,
+#sidebar-close:hover {
+  list-style-image: url("chrome://global/skin/icons/close.svg#hover");
+}
+#onboarding-notification-close-btn:hover:active,
+#sidebar-close:hover:active {
+  list-style-image: url("chrome://global/skin/icons/close.svg#active");
+}
+
+#sidebar-close, /* Firefox 55+ */
 #sidebar-header > .close-icon {
   -moz-appearance: none;
   padding: 4px 2px;
@@ -3945,8 +4297,13 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
   border: none;
 }
 
+#sidebar-close:-moz-lwtheme-brighttext, /* Firefox 55+ */
 #sidebar-header > :-moz-lwtheme-brighttext.close-icon {
   filter: invert(1.0);
+}
+
+#sidebar {
+  background-color: Window;
 }
 
 .browserContainer > findbar {
@@ -4277,12 +4634,21 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
 
 /* Tab scrollbox arrow, tabstrip new tab and all-tabs buttons */
 
-.tabbrowser-arrowscrollbox > .scrollbutton-up,
+.tabbrowser-arrowscrollbox > .scrollbutton-up {
+  margin: 0;
+  background-origin: border-box;
+  -moz-padding-end: 0px;
+  -moz-padding-start: 1px;
+  padding-inline-end: 0px;
+  padding-inline-start: 1px;
+}
 .tabbrowser-arrowscrollbox > .scrollbutton-down {
   margin: 0;
-  padding-right: 2px;
-  border-right: 2px solid transparent;
   background-origin: border-box;
+  -moz-padding-start: 0px;
+  -moz-padding-end: 1px;
+  padding-inline-start: 0px;
+  padding-inline-end: 1px;
 }
 
 .tabbrowser-arrowscrollbox > .scrollbutton-up:-moz-locale-dir(ltr),
@@ -4341,6 +4707,8 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
 .tabs-newtab-button > .toolbarbutton-icon {
   margin-top: -1px;
   margin-bottom: -1px;
+  -moz-margin-end: 0;
+  margin-inline-end: 0;
 }
 
 .tabs-newtab-button,
@@ -4349,8 +4717,15 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
   list-style-image: url(chrome://browser/skin/tabbrowser/newtab.png);
   -moz-image-region: auto;
 }
+.tabs-newtab-button > .toolbarbutton-icon,
+#TabsToolbar > #new-tab-button > .toolbarbutton-icon,
+#TabsToolbar > toolbarpaletteitem > #new-tab-button > .toolbarbutton-icon {
+  padding: 1px 1px 0;
+  -moz-padding-start: 2px;
+  padding-inline-start: 2px;
+}
 
-/*#TabsToolbar[brighttext] .tabs-newtab-button,*/
+#TabsToolbar[brighttext] .tabs-newtab-button,
 #TabsToolbar[brighttext] > #new-tab-button,
 #TabsToolbar[brighttext] > toolbarpaletteitem > #new-tab-button {
   list-style-image: url(chrome://browser/skin/tabbrowser/newtab-inverted.png);
@@ -4376,8 +4751,30 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
 }
 %*** it's gone! ******************************************************************/
 
-#TabsToolbar > #new-tab-button {
-  width: 26px;
+#tabbrowser-tabs[overflow=true] {
+  -moz-margin-end: 0;
+  margin-inline-end: 0;
+}
+#tabbrowser-tabs[overflow=true] + #new-tab-button {
+  padding-left: 0;
+  padding-right: 0;
+}
+#tabbrowser-tabs[overflow=true] + #new-tab-button > .toolbarbutton-icon {
+  padding-left: 0;
+  padding-right: 0;
+  -moz-padding-start: 1px;
+  padding-inline-start: 1px;
+}
+
+#alltabs-button#alltabs-button {
+  -moz-padding-start: 4px;
+  -moz-padding-end: 3px;
+  -moz-margin-end: 6px;
+  -moz-margin-end: 6px;
+  padding-inline-start: 4px;
+  padding-inline-end: 3px;
+  margin-inline-end: 6px;
+  margin-inline-end: 6px;
 }
 
 #alltabs-button {
@@ -4387,10 +4784,6 @@ toolbarbutton[type="socialmark"] > .toolbarbutton-icon {
 #TabsToolbar[brighttext] > #alltabs-button,
 #TabsToolbar[brighttext] > toolbarpaletteitem > #alltabs-button {
   list-style-image: url("chrome://browser/skin/toolbarbutton-dropdown-arrow-inverted.png");
-}
-
-#alltabs-button > .toolbarbutton-icon {
-  margin: 0 2px;
 }
 
 #alltabs-button > .toolbarbutton-menu-dropmarker {
@@ -4430,6 +4823,70 @@ menuitem:hover > hbox > .alltabs-endimage[muted] {
 menuitem:hover > hbox > .alltabs-endimage[soundplaying] {
   list-style-image: url(chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-menu-hover);
 }
+
+
+/****************************************************************************************************/
+/********  Start Restore tab rules from Firefox 56 (Need Review) ************************************/
+/****************************************************************************************************/
+.restore-tabs-button-wrapper {
+  visibility: hidden;
+  position: fixed; /* so the button does not take up actual space and cause overflow buttons in the tabbar when hidden */
+}
+
+.restore-tabs-button-wrapper[shown] {
+  visibility: visible;
+  position: initial;
+}
+
+.restore-tabs-button {
+  box-sizing: border-box;
+  -moz-appearance: none;
+  background-color: hsl(0,0%,0%,.04); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+  border: 1px solid hsla(0,0%,16%,.2); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+  border-radius: 3px;
+  margin: 3px;
+  margin-inline-start: 9px;
+  transition: max-width 300ms;
+}
+
+.restore-tabs-button:hover {
+  background-color: hsl(0,0%,0%,.08); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+}
+
+.restore-tabs-button:active {
+  background-color: hsl(0,0%,0%,.11); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+}
+
+#TabsToolbar[brighttext] .restore-tabs-button {
+  background-color: hsl(0,0%,100%,.07); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+  border-color:currentColor;
+  color: currentColor;
+  opacity: .7;
+}
+
+#TabsToolbar[brighttext] .restore-tabs-button:hover {
+  background-color: hsl(0,0%,100%,.17); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+}
+
+#TabsToolbar[brighttext] .restore-tabs-button:active {
+  background-color: hsl(0,0%,100%,.27); /* CONFIRM THIS COLOR (FIREFOX 56) --johnGraciliano */
+}
+
+.restore-tabs-button > .toolbarbutton-icon {
+  display: none;
+}
+
+.restore-tabs-button > .toolbarbutton-text {
+  display: -moz-box;
+  padding: 0 5px;
+}
+
+/* Prevent movement in the restore-tabs-button when it's clicked. */
+.restore-tabs-button:hover:active:not([disabled="true"]) {
+  padding: 3px;
+}
+/********  End Restore tab rules from Firefox 56 (Need Review) **************************************/
+
 
 toolbarbutton.chevron {
   list-style-image: url("chrome://global/skin/toolbar/chevron.gif") !important;
@@ -5024,6 +5481,14 @@ window:not([chromehidden~="toolbar"]) #urlbar-wrapper > #forward-button[disabled
 }
 %**** it's gone!  **************************************************************/
 
+/* UPDATE */
+.popup-notification-icon[popupid="update-available"],
+.popup-notification-icon[popupid="update-manual"],
+.popup-notification-icon[popupid="update-restart"] {
+  background: #74BF43 url(chrome://browser/skin/notification-icons.svg#update) no-repeat center;
+  border-radius: 50%;
+}
+
 .popup-notification-body[popupid="addon-progress"],
 .popup-notification-body[popupid="addon-install-confirmation"] {
   width: 28em;
@@ -5265,11 +5730,9 @@ notification[value="loop-sharing-notification"] .messageImage {
   -moz-image-region: auto;
 }
 
-#panelMenu_pocket,
-#menu_pocket {
-  list-style-image: url("chrome://browser/content/pocket/panels/img/pocketmenuitem16.png");
-}
-menuitem#BMB_pocket {
+[id]#panelMenu_pocket,
+[id]#menu_pocket,
+[id]#BMB_pocket {
 /*  list-style-image: url("chrome://browser/content/pocket/panels/img/pocketmenuitem16.png"); *** This image is the default **/
 /*  -moz-image-region: auto;  *** this line was never here because it was not needed */
   list-style-image: url("chrome://browser/skin/Toolbar.png");
@@ -6419,16 +6882,21 @@ notification.pluginVulnerable .messageImage {
 }
 %***  it's gone!   ****************************************************/
 
+#downloads-indicator-anchor {
+  min-width: 18px;
+  min-height: 18px;
+}
+
 #downloads-indicator-icon {
-  background: -moz-image-rect(url("chrome://browser/skin/Toolbar.png"),
-                              0, 198, 18, 180) center no-repeat;
+  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar.png"), 0, 198, 18, 180);
+  background-position: center;
+  background-repeat: no-repeat;
   min-width: 18px;
   min-height: 18px;
 }
 
 toolbar[brighttext] #downloads-button:not([attention]) > #downloads-indicator-anchor > #downloads-indicator-icon {
-  background: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"),
-                              0, 198, 18, 180) center no-repeat;
+  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"), 0, 198, 18, 180);
 }
 
 #downloads-button[attention] > #downloads-indicator-anchor > #downloads-indicator-icon {
@@ -6439,40 +6907,209 @@ toolbar[brighttext] #downloads-button[attention] > #downloads-indicator-anchor >
   background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"), 18, 198, 36, 180);
 }
 
-#downloads-button[cui-areatype="menu-panel"][attention] {
+#main-window:not([customizing]) #downloads-button[cui-areatype="menu-panel"][attention] {
   list-style-image: url("chrome://browser/skin/downloads/download-glow-menuPanel.png");
   -moz-image-region: auto;
 }
 
-/*@media (-moz-os-version: windows-vista),
-       (-moz-os-version: windows-win7) {
-  #downloads-button[cui-areatype="menu-panel"][attention] {
-    list-style-image: url("chrome://browser/skin/downloads/download-glow-menuPanel-XPVista7.png");
-  }
-}*/
+#downloads-indicator-progress-outer /* Firefox 56 */ {
+  background-image: none;
+  min-width: 18px;
+  min-height: 18px;
+}
 
 /* In the next few rules, we use :not([counter]) as a shortcut that is
    equivalent to -moz-any([progress], [paused]). */
 
-#downloads-button:not([counter]) > #downloads-indicator-anchor > #downloads-indicator-progress-area > #downloads-indicator-counter {
-  background: -moz-image-rect(url("chrome://browser/skin/Toolbar.png"),
-                              0, 198, 18, 180) center no-repeat;
-  background-size: 12px;
+#downloads-button:not([counter]) > #downloads-indicator-anchor > #downloads-indicator-progress-area > #downloads-indicator-counter,
+#downloads-button[progress] > #downloads-indicator-anchor > box#downloads-indicator-icon:first-child:not(:last-child):empty, /* Firefox 56 */
+#downloads-button[progress] > #downloads-indicator-anchor > #downloads-indicator-icon:only-child:not(:empty) { /* Firefox 55 */
+  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar.png"), 0, 198, 11, 180);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 18px 11px;
 }
 
-toolbar[brighttext] #downloads-button:not([counter]):not([attention]) > #downloads-indicator-anchor > #downloads-button-progress-area > #downloads-indicator-counter {
-  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"), 0, 198, 18, 180);
+toolbar[brighttext] #downloads-button:not([counter]):not([attention]) > #downloads-indicator-anchor > #downloads-button-progress-area > #downloads-indicator-counter,
+toolbar[brighttext] #downloads-button[progress]:not([attention]) > #downloads-indicator-anchor > box#downloads-indicator-icon:first-child:not(:last-child):empty, /* Firefox 56 */
+toolbar[brighttext] #downloads-button[progress]:not([attention]) > #downloads-indicator-anchor > #downloads-indicator-icon:only-child:not(:empty) { /* Firefox 55 */
+  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"), 0, 198, 11, 180);
 }
 
-#downloads-button:not([counter])[attention] > #downloads-indicator-anchor > #downloads-indicator-progress-area > #downloads-indicator-counter {
-  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar.png"), 18, 198, 36, 180);
+#downloads-button:not([counter])[attention] > #downloads-indicator-anchor > #downloads-indicator-progress-area > #downloads-indicator-counter,
+#downloads-button[progress][attention] > #downloads-indicator-anchor > box#downloads-indicator-icon:first-child:not(:last-child):empty, /* Firefox 56 */
+#downloads-button[progress][attention] > #downloads-indicator-anchor > #downloads-indicator-icon:only-child:not(:empty) { /* Firefox 55 */
+  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar.png"), 18, 198, 29, 180);
 }
 
-toolbar[brighttext] #downloads-button:not([counter])[attention] > #downloads-indicator-anchor > #downloads-indicator-progress-area > #downloads-indicator-counter {
-  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"), 18, 198, 36, 180);
+toolbar[brighttext] #downloads-button:not([counter])[attention] > #downloads-indicator-anchor > #downloads-indicator-progress-area > #downloads-indicator-counter,
+toolbar[brighttext] #downloads-button[progress][attention] > #downloads-indicator-anchor > box#downloads-indicator-icon:first-child:not(:last-child):empty, /* Firefox 56 */
+toolbar[brighttext] #downloads-button[progress][attention] > #downloads-indicator-anchor > #downloads-indicator-icon:only-child:not(:empty) { /* Firefox 55 */
+  background-image: -moz-image-rect(url("chrome://browser/skin/Toolbar-inverted.png"), 18, 198, 29, 180);
+}
+
+/****  Start Firefox 55+ ********************************************************************************/
+#downloads-button[indicator]:not([progress]) > #downloads-indicator-anchor > #downloads-indicator-icon > #downloads-indicator-progress-icon,
+#downloads-button[indicator]:not([progress]) > #downloads-indicator-anchor > #downloads-indicator-icon + #downloads-indicator-progress-outer > #downloads-indicator-progress-inner {
+  display: none;
+}
+
+#downloads-indicator-progress-icon,
+#downloads-indicator-progress-inner {
+  height: 5px;
+  max-height: 5px;
+  margin: 11px 2px 2px 1px; /*  "11px 3px 2px 2px"  for the download box with regular width */
+  border-radius: 1.8px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #0082f0;
+  background-color: #F1F5B9;
+  background-image: linear-gradient(#0DACE8,#0DACE8);
+  background-origin: padding-box;
+  background-clip: padding-box;
+  background-repeat: no-repeat;
+  /* In the next setting uses "-15px" to hide the bar even if the border width was 0px */
+  background-position: -15px center; /* "-13px center" for the download box with regular width */
+  background-size: auto; /* The nominal "13px 3px" does not work in resolutions where the border width is not 1px */
+
+  /* From javascript side we use animation delay from 0s to -100s to show
+   * corresponding frames needed for progress.
+   * animation-delay is set to a positive value to make nothing shown.
+   */
+  animation-play-state: paused;
+  animation-delay: 1s;
+  animation-duration: 100.1s; /* the extra ".1s" is so that the bar will show with "animation-delay: -100s" */
+  animation-timing-function: linear;
+  animation-name: indicatorArrowProgress;
+}
+
+/****  This is not used! ([paused] is not set!)
+#downloads-button[paused] > * > * > #downloads-indicator-progress-icon,
+#downloads-button[paused] > * > * > #downloads-indicator-progress-inner {
+  border-color: black;
+  background-color: #DCE651;
+  background-image: linear-gradient(to left, #4b5000, #515700);
+}
+ ****/
+
+@keyframes indicatorArrowProgress {
+  0% {
+    /* Here I use "-13.1px" instead of "-13px" so the bar does not show much at 0% with 
+     * resolutions that make the border width is less than 1px.  However when the border
+     * is 1px, the first 0.8% of the animation will be out of sight.
+     */
+    background-position-x: -13.1px;  /*  "-11.1px"  for the download box with regular width */
+  }
+  100% {
+    background-position-x: 0;
+  }
+}
+/********** End Firefox 55+ *****************************************************************************/
+
+/*** Status badges ***/
+
+#downloads-button[attention="severe"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  display: -moz-box;
+  height: 9px;
+  width: 9px;
+  min-width: 0;
+  border-radius: 50%;
+  /* "!important" is necessary to override the rule in toolbarbutton.css */
+  margin-top: -3px !important;
+  margin-inline-end: -3px !important;
+  padding: 0px;
+
+  background-color: #D90000;
+  background-image: url("chrome://browser/skin/update-badge-failed.svg");
+  background-size: 7px 7px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#downloads-button[attention="warning"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  display: -moz-box;
+  height: 10px;
+  width: 10px;
+  min-width: 0;
+  border-radius: 50%;
+  /* "!important" is necessary to override the rule in toolbarbutton.css */
+  margin-top: -4px !important;
+  margin-inline-end: -4px !important;
+  padding: 0;
+
+  /* background: #FFBF00; *** This color is within the background image image */
+  background-color: transparent;
+
+  background-image: url("chrome://browser/skin/warning.svg"); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Any shadow will be done by the following filter */
+#downloads-button[attention] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  filter: drop-shadow(0 1px 0 hsla(206, 50%, 10%, .2));
+  box-shadow: none;
+}
+#downloads-button[attention] > .toolbarbutton-badge-stack > .toolbarbutton-badge:after {
+  display: none;
+}
+
+#downloads-button[attention="severe"] > .toolbarbutton-badge-stack > .toolbarbutton-badge:-moz-window-inactive,
+#downloads-button[attention="warning"] > .toolbarbutton-badge-stack > .toolbarbutton-badge:-moz-window-inactive {
+  filter: none;
+}
+
+#downloads-button[attention="severe"][cui-areatype="menu-panel"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  height: 12px;
+  width: 12px;
+  background-size: 10px 10px;
+}
+#downloads-button[attention="warning"][cui-areatype="menu-panel"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  height: 14px;
+  width: 14px;
+  margin-top: -3px;
+  margin-inline-end: -3px;
 }
 
 /*** Download notifications ***/
+
+#downloads-button[notification="start"] > #downloads-indicator-anchor > #downloads-indicator-icon
+{
+  animation-name: downloadsIndicatorStartJump;
+  /* Upon changing the overall duration below, please keep the delay time of
+     setTimeout() identical in indicator.js for this animation. */
+  animation-duration: 0.5s;
+  animation-delay: 1s;
+  animation-iteration-count: 2;
+}
+
+@keyframes downloadsIndicatorStartJump {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-3px);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+#downloads-animation-container {
+  min-height: 1px;
+  min-width: 1px;
+  height: 1px;
+  margin-bottom: -1px;
+  /* Makes the outermost animation container element positioned, so that its
+     contents are rendered over the main browser window in the Z order.
+     This is required by the animated event notification. */
+  position: relative;
+  /* The selected tab may overlap #downloads-indicator-notification */
+  z-index: 5;
+}
 
 #downloads-indicator-notification {
   opacity: 0;
@@ -6495,6 +7132,12 @@ toolbar[brighttext] #downloads-button:not([counter])[attention] > #downloads-ind
   to   { opacity: 0; transform: translate(0) scale(1); }
 }
 
+@keyframes downloadsIndicatorNotificationFinish {
+  from { opacity: 0; transform: scale(1); }
+  20%  { opacity: .65; animation-timing-function: ease-in; }
+  to   { opacity: 0; transform: scale(8); }
+}
+
 #downloads-notification-anchor[notification="start"] > #downloads-indicator-notification {
   background-image: url("chrome://browser/skin/downloads/download-notification-start.png");
   animation-name: downloadsIndicatorNotificationStartRight;
@@ -6503,12 +7146,6 @@ toolbar[brighttext] #downloads-button:not([counter])[attention] > #downloads-ind
 
 #downloads-notification-anchor[notification="start"]:-moz-locale-dir(rtl) > #downloads-indicator-notification {
   animation-name: downloadsIndicatorNotificationStartLeft;
-}
-
-@keyframes downloadsIndicatorNotificationFinish {
-  from { opacity: 0; transform: scale(1); }
-  20%  { opacity: .65; animation-timing-function: ease-in; }
-  to   { opacity: 0; transform: scale(8); }
 }
 
 #downloads-notification-anchor[notification="finish"] > #downloads-indicator-notification {
@@ -6520,20 +7157,13 @@ toolbar[brighttext] #downloads-button:not([counter])[attention] > #downloads-ind
 /*** Progress bar and text ***/
 
 #downloads-indicator-counter {
-  height: 9px;
-  margin: -2px 0px 0px 0px; /*Louis*/
+  height: 13px; /* This was incorrectly set to 9px --johnGraciliano */
+  margin: 0; /* This had the value "-2px 0px 0px 0px" set by "Louis" --johnGraciliano */
   color: hsl(0,0%,30%);
   text-shadow: hsla(0,0%,100%,.5) 0 1px;
   font-size: 9px;
   line-height: 9px;
   text-align: center;
-}
-
-@media not all and (-moz-os-version: windows-xp) {
-  #downloads-indicator-counter {
-    /* Bug 812345 added this... */
-    margin-bottom: -1px;
-  }
 }
 
 toolbar[brighttext] #downloads-indicator-counter {
@@ -6547,8 +7177,7 @@ toolbar[brighttext] #downloads-indicator-counter {
   height: 5px;
   min-width: 0;
   min-height: 0;
-  margin-top: 1px;
-  margin-bottom: 2px;
+  margin: -1px 1px 1px !important; /* needs !important due to rule for .plain in global.css */
   border-radius: 2px;
   /*box-shadow: 0 1px 0 hsla(0,0%,100%,.4);*/
 }
@@ -6587,19 +7216,26 @@ toolbar[brighttext] #downloads-indicator-counter {
 
 /***  Start of aditional control for changes in Firefox 54     **********************************************************************************************/
 /* Ignore rules content/browser/browser.css and behave like .withProgressBar is present */
-#downloads-button[id] #downloads-indicator-progress-icon { /* '[id]' is to needed to raise the precedence */
-  visibility: hidden;
-}
-#downloads-button[id] #downloads-indicator-progress-area {
+#downloads-button:-moz-any([progress], [counter], [paused]) #downloads-indicator-progress-area {
   visibility: visible; /* This is the oposite of what is in the content css --johnGraciliano!!! */
 }
 
 /* These have to appear after the previous two rules so they get the proper precedence */
-#downloads-button:-moz-any([progress], [counter], [paused]) #downloads-indicator-icon,  /* The class ".withProgressBar" cannot be here. --johnGraciliano */
+#downloads-button:-moz-any([progress], [counter], [paused]) #downloads-indicator-icon:first-child:not(:last-child):not(:empty),  /* The class ".withProgressBar" cannot be here. --johnGraciliano */
 #downloads-button:not(:-moz-any([progress], [counter], [paused])) #downloads-indicator-progress-area {
   visibility: hidden;
 }
 /***  End of aditional control for changes in Firefox 54       **********************************************************************************************/
+
+/* When customizing, show only the regular toolbar button icon, with no badge nor progress bar */
+#main-window[customizing] #downloads-button[indicator] > .toolbarbutton-badge-stack > image.toolbarbutton-icon {
+  display: -moz-box;
+}
+#downloads-button[open] > .toolbarbutton-badge-stack > .toolbarbutton-badge, /* Hide the badge when the panel is open */
+#main-window[customizing] #downloads-button[indicator] > .toolbarbutton-badge-stack > .toolbarbutton-badge,
+#main-window[customizing] #downloads-button[indicator] > #downloads-indicator-anchor {
+  display: none;
+}
 
 /* Error counter */
 
@@ -7998,11 +8634,6 @@ menugroup > .menuitem-iconic[disabled="true"] > .menu-iconic-left {
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#downloads-indicator-counter {
-  /* Bug 812345 added this... */
-  margin-bottom: -1px;
-}
-
 @media not all and (-moz-windows-classic) {
   #main-window[sizemode="normal"] > #tab-view-deck > #browser-panel > #navigator-toolbox > #toolbar-menubar {
     margin-top: 1px;
@@ -8802,6 +9433,10 @@ toolbar[brighttext] #containers-panelmenu[cui-areatype="toolbar"][widget-type="v
 toolbarpaletteitem[place="palette"] > #containers-panelmenu[widget-type="view"] {
   -moz-image-region: initial;
   list-style-image: url(chrome://browser/skin/menuPanel.svg#ContainerTabs);
+}
+
+#containers-panelmenu[cui-areatype="menu-panel"][panel-multiview-anchor=true] {
+  list-style-image: url(chrome://browser/skin/menuPanel.svg#ContainerTabsInv);
 }
 /***  END BUTTON STYLES FOR CONTAINER TABS ********************************************************************************************/
 

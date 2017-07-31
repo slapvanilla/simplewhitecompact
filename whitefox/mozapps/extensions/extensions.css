@@ -504,9 +504,13 @@
 }
 
 .addon[active="false"] .icon {
-  filter: saturate(0);
+  filter: saturate(.15)opacity(.8);
 }
 
+.addon-view[active="false"] #detail-screenshot,
+#detail-view.addon-view[active="false"] .icon {
+  filter: saturate(.25)opacity(.8);
+}
 
 .addon-view[type="theme"] .icon {
   list-style-image: url("chrome://mozapps/skin/extensions/addons.svg#themeGeneric");
@@ -530,15 +534,48 @@
 
 .name-container {
   font-size: 150%;
-  font-weight: bold;
+  font-weight: 600;
   color: #3F3F3F;
   margin-bottom: 0;
   -moz-box-align: end;
   -moz-box-flex: 1;
 }
 
+.legacy-warning {
+  /*
+  background-color: #FFE900;
+  color: #3E2800;
+  padding: 4px 5px 3px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  */
+  font-size: .66667em;
+  font-weight: 600;
+  margin-bottom: calc(2px + .5em);
+  opacity: .8;
+}
+
+#detail-view .legacy-warning {
+  /* margin-top: 0.78rem; */
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-top: .4rem;
+  margin-bottom: 2px;
+  
+  font-size: 1.25rem;
+}
+
+.disabled-postfix, .update-postfix {
+  font-weight: 500;
+}
+
 .creator {
-  font-weight: bold;
+  font-weight: 600;
+  margin-top: -2px;
+}
+
+.creator > label[anonid=label]{
+  text-transform: lowercase;
 }
 
 .creator .text-link {
@@ -666,6 +703,11 @@
   color: #AAA;
 }
 
+#detail-view.addon-view[active="false"],
+#detail-view.addon-view[active="false"] .name-container {
+  color: #666;
+}
+
 .addon-view[notification="warning"] {
   background-image: url("chrome://mozapps/skin/extensions/stripes-warning.png"),
                     linear-gradient(rgba(255, 255, 0, 0.04),
@@ -779,7 +821,7 @@
 }
 
 .detail-view-container {
-  padding: 0 2em 2em 2em;
+  padding: 0 3em 2em;
   font-size: 110%;
 }
 
@@ -797,12 +839,15 @@
 #detail-icon-container {
   width: 64px;
   -moz-margin-end: 10px;
-  margin-top: 6px;
+  margin-top: 0;
+  height: 64px;
+  -moz-box-pack: center;
 }
 
 #detail-icon {
   max-width: 64px;
-  max-height: 64px;
+  width: 64px;
+  max-height: unset;
 }
 
 #detail-summary {
@@ -810,7 +855,8 @@
 }
 
 #detail-name-container {
-  font-size: 200%;
+  font-size: 2.2rem;
+  font-weight: 600;
 }
 
 #detail-screenshot {

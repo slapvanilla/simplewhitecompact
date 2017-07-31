@@ -54,6 +54,15 @@ panel[type="arrow"][side="right"] {
   padding: 16px;
   margin: 1px;
 }
+/*
+ * The following rule cuts any content that may go beyond the border radius.
+ * However, the rule seems create problems in the animations of some panels
+ * that do not expanded to their full size.  The rule restrited to panels 
+ * not showing the problem.  
+ */
+:not(:-moz-any(#notification-popup, #identity-popup, #downloadsPanel, #newtab-customize-panel, #customizationui-widget-panel[viewId="PanelUI-panicView"] /* = Forget */ ) ) > * > .panel-arrowcontent {
+  overflow: hidden;
+}
 
 .panel-arrow[side="top"] {
   list-style-image: url("chrome://ostarget/skin/global/arrow/panelarrow-light-vertical.png");

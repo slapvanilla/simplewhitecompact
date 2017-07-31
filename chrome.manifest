@@ -57,3 +57,12 @@ override  chrome://devtools/skin/floating-scrollbars-responsive-design.css      
 
 ## Temporary Fix for Firefox 48.0
 override  chrome://browser/skin/aboutNetError.css        chrome://browser/skin/aboutNetError48.css   appversion>=48.0a1
+
+
+override  chrome://browser/skin/preferences/in-content-new/preferences.css   chrome://browser/skin/preferences/in-content/preferences.css   appversion>=56.0a1
+override  chrome://browser/skin/preferences/in-content-new/dialog.css        chrome://browser/skin/preferences/in-content/dialog.css        appversion>=56.0a1
+override  chrome://browser/skin/preferences/in-content-new/containers.css    chrome://browser/skin/preferences/in-content/containers.css    appversion>=56.0a1
+override  chrome://browser/skin/preferences/in-content-new/search.css        chrome://browser/skin/preferences/in-content/search.css        appversion>=56.0a1
+override  chrome://browser/skin/preferences/in-content-new/favicon.ico       chrome://browser/skin/preferences/in-content/favicon.ico       appversion>=56.0a1
+
+override  chrome://browser/skin/sidebar/close.svg       chrome://browser/skin/devtools/images/close.svg       appversion>=56.0a1

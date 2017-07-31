@@ -15,6 +15,9 @@
       stroke: #000;
       stroke-width: 1;
     }
+    use[id$=Inv] {
+      stroke: #fff;
+    }
   </style>
   <defs style="display: none;">
     <g id="SyncTabs-shape">
@@ -27,6 +30,8 @@
                M 4,15.5   h 23   M 13,9.5   h 5   M 13,22.5   h 5"/>
     </g>
   </defs>
-  <use id="SyncTabs"      xlink:href="#SyncTabs-shape"/>
-  <use id="ContainerTabs" xlink:href="#ContainerTabs-shape"/>
+  <use id="SyncTabs"         xlink:href="#SyncTabs-shape"/>
+  <use id="SyncTabsInv"      xlink:href="#SyncTabs-shape"/>
+  <use id="ContainerTabs"    xlink:href="#ContainerTabs-shape"/>
+  <use id="ContainerTabsInv" xlink:href="#ContainerTabs-shape"/>
 </svg>

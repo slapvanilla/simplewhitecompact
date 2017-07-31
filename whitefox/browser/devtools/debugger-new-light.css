@@ -41,6 +41,38 @@
   width: 3px;
 }
 
+.split-box.vert > .splitter:first-child,
+.split-box.vert > .splitter:last-child {
+  display: none;
+}
+
+
+.debugger .split-box.horz > .splitter {
+  margin: -1px 0;
+  padding: 1px 0;
+  min-width: unset;
+  min-height: 3px;
+}
+
+.debugger .split-box.horz > .splitter > .splitter-handle {
+  margin: -1px 0;
+  width: unset;
+}
+
+
+
+.debugger .split-box.horz > .controlled:nth-last-child(+2) {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+.debugger .split-box.horz > .splitter:last-child {
+  display: none;
+}
+
+
+
+
+
 div.sources-header, div.source-header, div.command-bar, div._header {
   background-color: var(--theme-toolbar-background);
 }
@@ -78,6 +110,10 @@ div.source-tab {
   background-color:  #f1f1f1;
 }
 
+.accordion div._content{
+  font-size: inherit;
+}
+
 .command-bar > span:not(.disabled):not(:hover):not(:active) {
   opacity: .8;
 }
@@ -106,3 +142,77 @@ div.source-tab {
 :root:not(.theme-firebug) .breakpoints-list .breakpoint {
   --theme-toolbar-background: #f3f3f3; /* This is the color used when :hover */
 }
+
+
+input.input-expression {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+
+.tree .node.object-node {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.tree .node.object-node .arrow {
+  position: relative;
+  top: 1px;
+}
+
+.CodeMirror {
+  line-height: 1.25;
+}
+
+div.CodeMirror-linenumber {
+  font-size: inherit;
+  line-height: inherit;
+  /* line-height: 1.25; */
+}
+
+.editor-wrapper pre.CodeMirror-line {
+  /* font-family:  var(--monospace-font-family); */
+  font-size: 12px;
+  line-height: 15px;
+
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Prevent the splitter from covering the command bar (by scrolling the content up). */
+.secondary-panes > .command-bar {
+  z-index: 102;
+}
+
+/* Prevent covering the toolbars with the vertical scrolling bar */
+.secondary-panes > .split-box.vert[style="width: 100vw;"] {
+  width: 100% !important;
+}
+
+
+
+/******
+.CodeMirror-linenumber.CodeMirror-gutter-elt {
+  background-color: pink !important;
+}
+.CodeMirror-linenumber.CodeMirror-gutter-elt::last-child {
+  background-color: red !important;
+}
+ ***************/
+
+.breakpoints-list input.breakpoint-checkbox {
+  vertical-align: bottom;
+}
+
+.breakpoints-list div.breakpoint {
+  font-size: inherit;
+  line-height: inherit;
+  padding-top: .75ex;
+  padding-bottom: .75ex;
+}
+
+
+.editor.new-breakpoint > i.breakpoint > svg {
+  height: 1.3em;
+}
+

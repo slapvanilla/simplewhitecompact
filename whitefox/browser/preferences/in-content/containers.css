@@ -2,11 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+#browserContainersGroupPane[data-category="paneContainers"], /* Firefox 56 */
 #browserContainersGroup[data-category="paneContainers"] {
   border: 1px solid #CCC;
   border-radius: 0;
   margin: 0 4px;
-  margin-top: 19px;
+  margin-top: 27px; /* This was 19px */
 }
 #browserContainersGroup[data-category="paneContainers"] > * > #browserContainersbox {
   -moz-box-align: stretch;
@@ -52,24 +53,48 @@
   --identity-icon-color: #7a2f7a;
 }
 
-[data-identity-icon="fingerprint"] {
-  --identity-icon: url("chrome://browser/content/usercontext.svg#fingerprint");
+@supports (not (text-justify: auto)) { /* Before Firefox 55 */
+  [data-identity-icon="fingerprint"] {
+    --identity-icon: url("chrome://browser/content/usercontext.svg#fingerprint");
+  }
+
+  [data-identity-icon="briefcase"] {
+    --identity-icon: url("chrome://browser/content/usercontext.svg#briefcase");
+  }
+
+  [data-identity-icon="dollar"] {
+    --identity-icon: url("chrome://browser/content/usercontext.svg#dollar");
+  }
+
+  [data-identity-icon="cart"] {
+    --identity-icon: url("chrome://browser/content/usercontext.svg#cart");
+  }
+
+  [data-identity-icon="circle"] {
+    --identity-icon: url("chrome://browser/content/usercontext.svg#circle");
+  }
 }
 
-[data-identity-icon="briefcase"] {
-  --identity-icon: url("chrome://browser/content/usercontext.svg#briefcase");
-}
+@supports (text-justify: auto) { /* Firefox 55 and later */
+  [data-identity-icon="fingerprint"] {
+    --identity-icon: url("chrome://browser/content/usercontext-fingerprint.svg");
+  }
 
-[data-identity-icon="dollar"] {
-  --identity-icon: url("chrome://browser/content/usercontext.svg#dollar");
-}
+  [data-identity-icon="briefcase"] {
+    --identity-icon: url("chrome://browser/content/usercontext-briefcase.svg");
+  }
 
-[data-identity-icon="cart"] {
-  --identity-icon: url("chrome://browser/content/usercontext.svg#cart");
-}
+  [data-identity-icon="dollar"] {
+    --identity-icon: url("chrome://browser/content/usercontext-dollar.svg");
+  }
 
-[data-identity-icon="circle"] {
-  --identity-icon: url("chrome://browser/content/usercontext.svg#circle");
+  [data-identity-icon="cart"] {
+    --identity-icon: url("chrome://browser/content/usercontext-cart.svg");
+  }
+
+  [data-identity-icon="circle"] {
+    --identity-icon: url("chrome://browser/content/usercontext-circle.svg");
+  }
 }
 
 #userContext-indicator {
@@ -109,6 +134,11 @@
   margin-block-start: -8px;
 }
 
+.help-button + .main-content > #mainPrefPane > .content-box > .container-header-links { /* Firefox 56 */
+  margin-block-end: 0;
+  margin-block-start: 0;
+}
+
 [data-identity-icon] {
   margin: 0;
   margin-inline-end: 16px;
@@ -129,7 +159,7 @@
   padding: 5px 5px 8px;
 }
 
-button[onclick^="gContainersPane.onAddButtonClick"] {
+button[onclick^="gContainersPane.onAddButtonClick"][onclick] {
   margin: 5px;
   margin-inline-start: 28px;
 }

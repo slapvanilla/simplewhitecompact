@@ -790,18 +790,139 @@ button#toolbox-dock-bottom-minimize:hover::before, /* button#toolbox-dock-bottom
 
 .tabs-menu-item,
 .devtools-sidebar-tabs tabs > tab {
-  --border-img: linear-gradient(transparent 15%, var(--theme-splitter-color) 15%, var(--theme-splitter-color) 85%, transparent 85%) 1 1;
-  border-image: var(--border-img);
+  border-image-source: linear-gradient(transparent 15%, var(--theme-splitter-color) 15%, var(--theme-splitter-color) 85%, transparent 85%);
+  border-image-slice: 1;
 }
 
+.tabs-menu-item:hover,
+.tabs-menu-item:hover + .tabs-menu-item,
 .tabs-menu-item.is-active,
 .tabs-menu-item.is-active + .tabs-menu-item,
 .devtools-sidebar-tabs tabs > tab[selected] + [hidden="true"] + tab,
 .devtools-sidebar-tabs tabs > tab[selected],
 .devtools-sidebar-tabs tabs > tab[selected] + tab {
-  --border-img: linear-gradient(var(--theme-splitter-color), var(--theme-splitter-color)) 1 1;
-  border-image: var(--border-img);
+  border-image-source: linear-gradient(var(--theme-splitter-color), var(--theme-splitter-color));
+/*  border-image-slice: 1;  ************************************************************************* REMOVE THIS?????? ***********************/
 }
+
+.theme-firebug .tabs li.tabs-menu-item {
+  height: 25px; /* = .tabs-navigation[height] - .tabs-navigation[padding-top] = 28px - 3px */
+  box-sizing: border-box;
+  border-image-source: none;
+  border-radius: 4px 4px 0 0;
+  border-color: transparent;
+  border-width: 1px 1px 0;
+}
+.theme-firebug .tabs .tabs-menu-item:not(.is-active):hover {
+  border-color: #c8c8c8;
+  border-bottom-color: transparent;
+}
+.theme-firebug .tabs .tabs-menu-item:not(.is-active)[class]:hover:active {
+  background-color: var(--toolbar-tab-hover-active);
+}
+.theme-firebug .tabs li.tabs-menu-item.is-active[class] {
+  border-color: var(--theme-splitter-color);
+  background-color: #f7fbfe; /* rgb(247, 251, 254) */
+  border-bottom-color: #f7fbfe;
+}
+
+/*.theme-firebug .tabs .tabs-menu-item.is-active:hover:active a */
+.theme-firebug .tabs li.tabs-menu-item[class][class] > a {
+  border-width: 0;
+  border-radius: unset;
+  background: transparent;
+}
+.theme-firebug .tabs li.tabs-menu-item > a {
+  color: #565656;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+
+/*********
+.theme-firebug .tabs > .tabs-navigation {
+  position: relative;
+  border-bottom-width: 0;
+}
+.theme-firebug .tabs > .tabs-navigation::before {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--theme-splitter-color);
+  content: "";
+}
+.theme-firebug .tabs > .tabs-navigation > .tabs-menu {
+  margin-bottom: 0;
+  height: 25px;
+}
+**********/
+
+
+
+
+
+/***
+
+.theme-firebug .tabs .tabs-navigation {
+  padding-top: 3px;
+  padding-left: 3px;
+}
+
+.theme-firebug .tabs .tabs-menu {
+  margin-bottom: -1px;
+}
+
+.theme-firebug .tabs .tabs-menu-item.is-active,
+.theme-firebug .tabs .tabs-menu-item.is-active:hover {
+  background-color: transparent;
+}
+
+.theme-firebug .tabs .tabs-menu-item {
+  position: relative;
+  border-inline-start-width: 0;
+}
+
+.theme-firebug .tabs .tabs-menu-item a {
+  font-family: var(--proportional-font-family);
+  font-weight: bold;
+  color: var(--theme-body-color);
+  border-radius: 4px 4px 0 0;
+}
+
+.theme-firebug .tabs .tabs-menu-item:hover:not(.is-active) a {
+  border: 1px solid var(--theme-splitter-color);
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+}
+
+.theme-firebug .tabs .tabs-menu-item.is-active a {
+  background-color: var(--theme-toolbar-tab-selected-background);
+  border: 1px solid var(--theme-splitter-color);
+  border-bottom-color: transparent;
+  color: var(--theme-body-color);
+}
+
+.theme-firebug .tabs .tabs-menu-item:hover:active a {
+  background-color: var(--theme-toolbar-hover-active);
+}
+
+.theme-firebug .tabs .tabs-menu-item.is-active:hover:active a {
+  background-color: var(--theme-selection-background);
+  color: var(--theme-selection-color);
+}
+
+.theme-firebug .tabs .tabs-menu-item a {
+  border: 1px solid transparent;
+  padding: 4px 8px;
+}
+****/
+
+
 
 .devtools-sidebar-tabs tabs > tab:first-child {
   -moz-border-start-width: 0;
@@ -1363,6 +1484,10 @@ button.devtools-tab-icon-only { /* Firefox 53+ */ /* tag 'button' is needed for 
   top: 1px;
 }
 
+.devtools-tab-label { /* Firefox 55 ****************************************************************/
+  display: contents; /* Simply display the text and ignore format rules --johnGraciliano */
+}
+
 /* Save space on the tab-strip in Firebug theme */
 .theme-firebug .devtools-tab {
   -moz-box-flex: initial;
@@ -1380,6 +1505,7 @@ button.devtools-tab-icon-only { /* Firefox 53+ */ /* tag 'button' is needed for 
   color: #ced3d9;
 }
 
+.tabs-menu-item:not(.is-active)[class][class][class]:hover,
 .devtools-tab:hover {
   background-color: var(--toolbar-tab-hover);
 }
@@ -1388,6 +1514,7 @@ button.devtools-tab-icon-only { /* Firefox 53+ */ /* tag 'button' is needed for 
   color: var(--theme-selection-color);
 }
 
+.tabs-menu-item:not(.is-active)[class][class][class]:hover:active,
 .devtools-tab:hover:active {
   background-color: var(--toolbar-tab-hover-active);
 }

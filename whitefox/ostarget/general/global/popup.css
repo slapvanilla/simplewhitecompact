@@ -61,6 +61,15 @@ panel[type="arrow"][side="right"] {
   /* box-shadow: 0 0 4px hsla(0,0%,0%,.2);  ** Added to the default theme but I am leaving it out.  --johnGraciliano */
   margin: 4px;
 }
+/*
+ * The following rule cuts any content that may go beyond the border radius.
+ * However, the rule seems create problems in the animations of some panels
+ * that do not expanded to their full size.  The rule restrited to panels 
+ * not showing the problem.  
+ */
+:not(:-moz-any(#notification-popup, #identity-popup, #downloadsPanel, #newtab-customize-panel, #customizationui-widget-panel[viewId="PanelUI-panicView"] /* = Forget */ ) ) > * > .panel-arrowcontent {
+  overflow: hidden;
+}
 
 .panel-arrow[side="top"],
 .panel-arrow[side="bottom"] {

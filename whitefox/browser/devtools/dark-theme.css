@@ -847,7 +847,8 @@ div.CodeMirror span.eval-text {
 @supports (display: flow-root) { {} /* Firefox 53+ */
   /* .theme-dark input[type=checkbox] */
   .theme-dark input#browser-style-checkbox,
-  .theme-dark #pseudo-class-panel > label > input {
+  .theme-dark #pseudo-class-panel > label > input,
+  .theme-dark #ruleview-class-panel > .classes > label > input /* Firefox 55 */ {
     -moz-appearance: none;
     height: 13px;
     width: 13px;
@@ -858,13 +859,15 @@ div.CodeMirror span.eval-text {
   }
   /* .theme-dark input[type=checkbox]:checked */
   .theme-dark input#browser-style-checkbox:checked,
-  .theme-dark #pseudo-class-panel > label > input:checked {
+  .theme-dark #pseudo-class-panel > label > input:checked,
+  .theme-dark #ruleview-class-panel > .classes > label > input:checked /* Firefox 55 */ {
     background-image: url(images/checkmark-dark-small.svg);
     background-position: center center;
   }
   /*.theme-dark label:hover > input[type=checkbox] */
   .theme-dark input#browser-style-checkbox:hover,
-  .theme-dark #pseudo-class-panel > label > input:hover {
+  .theme-dark #pseudo-class-panel > label > input:hover,
+  .theme-dark #ruleview-class-panel > .classes > label > input:hover /* Firefox 55 */ {
     border-color: #3896D6;
     background-color: #1a2329;
   }
