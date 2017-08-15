@@ -349,7 +349,7 @@ label.positionLabel {
    * has the same background-color specified, the semitransparent
    * compositing gives it a different visual appearance.
    */
-  background-color: rgba(255,255,255,.65); /* This was rgba(255,255,255,.5) */
+  background-color: rgba(160,160,160,.6); /* This was rgba(255,255,255,.65) but earlier it was rgba(255,255,255,.5) */
   border-radius: 2.5px;
   -moz-appearance: none;
   -moz-padding-end: 13px; /* This padding accounts for the width of .scale-thumb */
@@ -357,11 +357,9 @@ label.positionLabel {
 }
 
 .progressBar .progress-bar {
-  background-color: white;
+  background-color: #00b6f0; /* This was white */
   border-radius: 2.5px;
   -moz-appearance: none;
-
-  background-color: #00b6f0;
   -moz-padding-end: 13px; /* This padding accounts for the width of .scale-thumb */
   padding-inline-end: 13px;
 }

@@ -265,6 +265,9 @@ body {
   border-right-width: 0;
   border-radius: 0;
 }
+.theme-firebug #timeline-rate > select.devtools-button {
+  border-radius: 2px;
+}
 #timeline-rate:after {
   display: block;
   width: 8px;
@@ -362,13 +365,19 @@ body {
 }
 
 .theme-firebug #timeline-rate > .devtools-button:focus:not(:active),
-.theme-firebug #element-picker:not(:active)[checked=true] {
+.theme-firebug #element-picker:not(:active)[checked=true],
+.theme-firebug #element-picker:not(:active).checked {
   background: rgba(255,255,255,.05) linear-gradient(rgba(0, 0, 0, 0.1), transparent) no-repeat;
   color: inherit;
   border-color: rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.1) inset;
 }
 
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-root > [class].uncontrolled {
+    overflow: hidden;
+  }
+}
 
 /* Animation timeline component (Firefox 43 and later) */
 
@@ -377,6 +386,17 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline {
+    position: relative;
+    display: block; /* No flexible items inside! */
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
 
 /** The 'time graduations' will be done drawn by the style using the 'time ticks'       **\
  ** The following was used in Firefox 43-48 but will be ignored and eventually deleted. **
@@ -395,6 +415,7 @@ body {
 
 
 /* Useful for positioning animations or keyframes in the timeline */
+.animation-detail .track-container,
 .animation-timeline .track-container {
   position: absolute;
   top: 0;
@@ -414,6 +435,16 @@ body {
   height: 100%;
 }
 
+
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline .scrubber-wrapper {
+    height: unset;
+    z-index: 5;
+    pointer-events: none;
+  }
+}
+
+
 .animation-timeline > .scrubber { /* Firefox 43-44 */
   padding-left: 200px /* var(--timeline-sidebar-width) */ ;
   top: 0;
@@ -432,6 +463,18 @@ body {
   box-sizing: border-box;
 }
 
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline .scrubber {
+    z-index: auto;
+    height: unset;
+    min-height: unset;
+    border-right: none;
+    margin-left: -5px;
+  }
+}
+
+
+
 /* The scrubber handle is a transparent element displayed on top of the scrubber
    line that allows users to drag it */
 .animation-timeline .scrubber .scrubber-handle {
@@ -443,6 +486,14 @@ body {
   cursor: col-resize;
   pointer-events: all;
 }
+
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline .scrubber .scrubber-handle {
+    position: fixed;
+    right: unset;
+  }
+}
+
 
 .animation-timeline .scrubber:empty::before, /* Firefox 43 */
 .animation-timeline .scrubber .scrubber-handle::before { /* Firefox >= 44 */
@@ -459,6 +510,21 @@ body {
   position: absolute;
   right: -6px;
 }
+
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline .scrubber .scrubber-handle::before {
+    position: absolute;
+  }
+
+  .animation-timeline .scrubber .scrubber-handle .scrubber-line {
+    position: relative;
+    height: 100%;
+    left: 5px;
+    width: 0;
+    border-right: 1px solid red;
+  }
+}
+
 
 .animation-timeline .scrubber ~ .time-header { /* Firefox 43-44 */
   position: absolute;
@@ -479,6 +545,7 @@ body {
   height: 100%;
 }
 
+.animated-properties-header > * > .header-item,
 .animation-timeline > * > .time-header > .header-item {
   position: absolute;
   height: 100%;
@@ -500,6 +567,11 @@ body {
   height: 100%;
 }
 
+.uncontrolled > .animation-timeline > .time-body {  /* Firefox >= 55 */
+  height: unset;
+}
+
+.progress-tick-container .progress-tick,
 .animation-timeline > .time-header > .time-tick,  /* Firefox 43-49 */
 .animation-timeline > .time-body > .time-tick {  /* Firefox >= 50 */
   -moz-user-select: none;
@@ -513,12 +585,42 @@ body {
   border-left: 0.5px solid rgba(128,136,144,.5) /*var(--time-graduation-border-color)*/;
   box-sizing: border-box;
 }
+.progress-tick-container .progress-tick {  /* Firefox >= 55 */
+  min-height: unset;
+  border-left-width: 0;
+}
+
+.uncontrolled > .animation-timeline > .time-body > .time-tick {  /* Firefox >= 55 */
+  min-height: unset;
+  border-left-width: 0;
+}
 
 .animation-timeline > .time-header > .time-tick {  /* Firefox 39-49 */
   top: 0;
   padding-top: 3px;
   width: auto;
 }
+
+
+
+
+/****/
+
+.progress-tick-container .progress-tick::before,
+.uncontrolled > .animation-timeline > .time-body > .time-tick::before {  /* Firefox >= 55 */
+  content: "";
+  display: block;
+  position: fixed;
+  height: 100vh;
+  width: 0;
+  border-left: 0.5px solid rgba(128,136,144,.5); /*var(--time-graduation-border-color)*/
+}
+
+
+/******/
+
+
+
 
 .animation-timeline .animations {
   width: 100%;
@@ -535,6 +637,17 @@ body {
   border-top: 1px solid rgba(128,136,144,.5) /*var(--time-graduation-border-color)*/ ;
 }
 
+
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline .animations {
+    height: auto;
+  }
+}
+
+
+
+
+
 /* Animation block widgets */
 
 .animation-timeline .animation {
@@ -547,12 +660,27 @@ body {
   background-color: var(--even-animation-timeline-background-color);
 }
 
-/* We want animations' background colors to alternate, but each animation has
-   a sibling (hidden by default) that contains the animated properties and
-   keyframes, so we need to alternate every 4 elements. */
-.animation-timeline .scrubber-wrapper ~ .animations .animation:nth-child(4n+1) { /* Firefox 45 & later */
-  background-color: var(--even-animation-timeline-background-color);
+@supports not (text-justify: auto) { /* Constrain to prior to Firefox 55 */ {}
+  /* We want animations' background colors to alternate, but each animation has
+     a sibling (hidden by default) that contains the animated properties and
+     keyframes, so we need to alternate every 4 elements. */
+  .animation-timeline .scrubber-wrapper ~ .animations .animation:nth-child(4n+1) { /* Firefox 45 & later */
+    background-color: var(--even-animation-timeline-background-color);
+  }
 }
+
+@supports (text-justify: auto) { /* Constrain to Firefox 55 and later */ {}
+  .animation-timeline .animation.selected {
+    background-color: var(--theme-selection-background-semitransparent);
+  }
+
+  .animation-timeline .animation:last-child {
+    margin-bottom: 4px;
+  }
+}
+
+
+
 
 .animation-timeline .animation .target {
   width: 200px /*var(--timeline-sidebar-width)*/ ;
@@ -765,6 +893,26 @@ body {
     background-color: rgba(24,19,32,.4); /* var(--theme-sidebar-background) 40% */
   }
 
+
+  @supports (text-justify: auto)  { /*  Constrain to Firefox 55 or later */ {}
+    .animation-timeline .animation .name svg {
+      height: 100%;
+      width: calc(100% - 20px);
+    }
+
+    .animation-timeline .animation .name text {
+      fill: var(--theme-focus-outline-color);
+      stroke: var(--theme-body-background);
+      stroke-width: 4;
+      stroke-opacity: .5;
+      stroke-linejoin: round;
+      paint-order: stroke;
+      text-anchor: end;
+      dominant-baseline: middle;
+    }
+  }
+
+
   .animation-timeline .fast-track > * > .name::after {
     /* Animations running on the compositor have the fast-track background image*/
     content: "";
@@ -945,15 +1093,19 @@ body {
   list-style-type: none;
 }
 
-.animation-timeline .animated-properties .property {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties .property {
   height: 20px /*var(--timeline-animation-height)*/ ;
   position: relative;
 }
 
-.animation-timeline .animated-properties .property:nth-child(2n) {
+.animation-detail .animated-properties .property.unchanged {
+  opacity: 0.6;
+}
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties .property:nth-child(2n) {
   background-color: var(--even-animation-timeline-background-color);
 }
 
+.animation-detail .animated-properties > * > * > .name,
 .animation-timeline .animated-properties > * > .name {
   width: 200px /*var(--timeline-sidebar-width)*/ ;
   padding-right: 10px /*var(--keyframes-marker-size)*/ ;
@@ -966,24 +1118,25 @@ body {
   align-items: center;
 }
 
+.animation-detail .animated-properties > * > * > .name > div,
 .animation-timeline .animated-properties > * > .name > div {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.animation-timeline .animated-properties.cssanimation .oncompositor::before {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties.cssanimation .oncompositor::before {
   background-color: var(--theme-contrast-background);
 }
 
-.animation-timeline .animated-properties.csstransition .oncompositor::before {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties.csstransition .oncompositor::before {
   background-color: var(--theme-highlight-blue);
 }
 
-.animation-timeline .animated-properties.scriptanimation .oncompositor::before {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties.scriptanimation .oncompositor::before {
   background-color: var(--theme-graphs-green);
 }
 
-.animation-timeline .animated-properties .oncompositor::before {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties .oncompositor::before {
   content: "";
   display: inline-block;
   width: 17px;
@@ -992,11 +1145,11 @@ body {
   vertical-align: middle;
 }
 
-.animation-timeline .animated-properties .warning {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties .warning {
   text-decoration: underline dotted;
 }
 
-.animation-timeline .animated-properties .frames {
+:-moz-any(.animation-timeline,.animation-detail) .animated-properties .frames {
   /* The frames list is absolutely positioned and the left and width properties
      are dynamically set from javascript to match the animation's startTime and
      duration */
@@ -1007,29 +1160,48 @@ body {
   display: flex;
   align-items: center;
 }
+.animation-detail .animated-properties .frames{
+  left: 0;
+  width: 100%;
+}
 
 /* Keyframes diagram, displayed below the timeline, inside the animation-details
    element. */
 
-.keyframes {
-  /* Actual keyframe markers are positioned absolutely within this container and
-     their position is relative to its size (we know the offset of each frame
-     in percentage) */
-  position: relative;
-  width: 100%;
-  height: 0;
+@supports not (text-justify: auto)  { /*  Constrain to before Firefox 55 (i.e., Firefox 54 and earlier) */ {}
+  .keyframes {
+    /* Actual keyframe markers are positioned absolutely within this container and
+       their position is relative to its size (we know the offset of each frame
+       in percentage) */
+    position: relative;
+    width: 100%;
+    height: 0;
+  }
+
+  .keyframes.cssanimation {
+    background-color: var(--theme-contrast-background);
+  }
+
+  .keyframes.csstransition {
+    background-color: var(--theme-highlight-blue);
+  }
+
+  .keyframes.scriptanimation {
+    background-color: var(--theme-graphs-green);
+  }
 }
 
-.keyframes.cssanimation {
-  background-color: var(--theme-contrast-background);
-}
-
-.keyframes.csstransition {
-  background-color: var(--theme-highlight-blue);
-}
-
-.keyframes.scriptanimation {
-  background-color: var(--theme-graphs-green);
+@supports (text-justify: auto)  { /*  Constrain to Firefox 55 or later */ {}
+  .keyframes {
+    /* Actual keyframe markers are positioned absolutely within this container and
+       their position is relative to its size (we know the offset of each frame
+       in percentage) */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .keyframes > .frame {
@@ -1039,6 +1211,11 @@ body {
   height: 0;
   background-color: inherit;
   cursor: pointer;
+}
+
+.animation-detail .keyframes > .frame {
+  top: 50%;
+  cursor: unset;
 }
 
 .keyframes > .frame::before {
@@ -1052,6 +1229,224 @@ body {
   border-radius: 100%;
   background-color: inherit;
 }
+
+@supports (text-justify: auto)  { /*  Constrain to Firefox 55 and later */ {}
+  .keyframes > .frame::before {
+    border: 1px solid var(--theme-highlight-gray);
+  }
+
+  .keyframes.cssanimation .frame {
+    background-color: var(--theme-contrast-background);
+  }
+
+  .keyframes.csstransition .frame {
+    background-color: var(--theme-highlight-blue);
+  }
+
+  .keyframes.scriptanimation .frame {
+    background-color: var(--theme-graphs-green);
+  }
+
+  .keyframes svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .keyframes svg path {
+    fill: #0072ab80;
+    stroke: var(--theme-graphs-bluegrey);
+  }
+  .theme-dark .keyframes svg path {
+    fill: #5e88b080;
+  }
+
+  /* color of path is decided by the animation type */
+
+  .keyframes svg path.opacity {
+    fill: #b82ee580;
+    stroke: var(--theme-highlight-pink);
+  }
+  .theme-dark .keyframes svg path.opacity {
+    fill: #df80ff80;
+  }
+
+  .keyframes svg path.transform {
+    fill: #efc05280;
+    stroke: var(--theme-graphs-orange);
+  }
+  .theme-dark .keyframes svg path.transform {
+    fill: #d99b2880;
+    stroke: var(--theme-graphs-yellow);
+  }
+
+  .keyframes svg path.color {
+    stroke: none;
+    height: 100%;
+  }
+
+  .animation-detail {
+    position: relative;
+    width: 100%;
+    background-color: var(--theme-body-background);
+    z-index: 5;
+  }
+
+  .animation-detail .animation-detail-header {
+    position: relative;
+    height: calc(var(--toolbar-height) + 1px);
+    width: 100%;
+  }
+
+  .animation-detail .animation-detail-header > div {
+    position: fixed;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: calc(var(--toolbar-height) + 1px) !important; /* !important to override the default value in the firebug theme. --johnGraciliano */
+    line-height: var(--toolbar-height);
+    /* background-color: var(--theme-body-background);   *****/
+    padding: 0;
+    z-index: 5;
+  }
+
+  .animation-detail .animation-detail-header > div > div {
+    white-space: nowrap;
+  }
+
+  .animation-detail .animation-detail-header > div > div:first-child {
+    margin-left: 15px;
+  }
+
+  .animation-detail .animation-detail-header > div > div:nth-child(2) {
+    flex: 1;
+    margin-left: .5em;
+    min-width: 0;
+  }
+
+  .animation-detail .animation-detail-header .devtools-button {
+    /* We need to tweak the padding
+       since the devtools-button is optimized for toolbox-tab height */
+    padding-top: 0;
+  }
+  .animation-detail .animation-detail-header .devtools-button:not(:active) {
+    opacity: .8;
+  }
+  .animation-detail .animation-detail-header .devtools-button:not(:hover) {
+    opacity: .6;
+  }
+
+  .animation-detail .animation-detail-header .devtools-button::before {
+    background-image: url("chrome://global/skin/icons/close.svg#normal");
+  }
+  
+  .theme-firebug .animation-detail .animation-detail-header .devtools-button::before {
+    background-image: url(chrome://devtools/skin/images/close.png);
+    filter: invert(1);
+  }
+
+  .animation-detail .animation-detail-body {
+    position: relative;
+    background-color: var(--theme-body-background);
+    height: calc(100% - var(--toolbar-height) - 1px);
+  }
+
+  .animation-detail .animation-detail-body .animated-properties {
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .animated-properties-header {
+    -moz-user-select: none;
+    position: sticky;
+    top: 0; /* var(--toolbar-height); */
+    min-height: 20px; /* var(--toolbar-height); */
+    /* padding-top: 2px;  ***************************/
+    z-index: 3;
+    background-color: var(--theme-body-background);
+    /* box-sizing: border-box; */
+    border-bottom: 1px solid rgba(128,136,144,.5); /*var(--time-graduation-border-color)*/
+    overflow: hidden;
+  }
+
+  .animated-properties-header .header-item:nth-child(2) {
+    left: 50%;
+  }
+
+  .animated-properties-header .header-item:nth-child(3) {
+    right: -0.5px;
+    border-left: none;
+    border-right: 0.5px solid rgba(128,136,144,.5); /*var(--time-graduation-border-color)*/
+  }
+
+  .progress-tick-container .progress-tick:nth-child(2) {
+    left: 50%;
+  }
+
+  .progress-tick-container .progress-tick:nth-child(3) {
+    left: 100%;
+  }
+
+  .animated-properties-body .property {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  .animated-properties-body .property .track-container {
+    top: 2px;
+  }
+
+  .animated-properties-body .property:last-child {
+    /* To display animation progress graph clealy when the scroll is bottom. */
+    /* padding-bottom: 10px; /*   = calc(var(--detail-animation-height) / 2)  --johnGraciliano */
+    margin-bottom: 4px;
+  }
+
+  .animated-properties .progress-indicator-wrapper {
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .progress-indicator-wrapper .progress-indicator {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .progress-indicator-wrapper .progress-indicator .progress-indicator-shape {
+    position: fixed;
+    width: 0;
+    height: 100vh;
+    border-right: 1px solid gray;
+  }
+  .theme-dark .progress-indicator-wrapper .progress-indicator .progress-indicator-shape {
+    border-right-color: var(--theme-highlight-gray);
+  }
+
+  .progress-indicator-wrapper .progress-indicator .progress-indicator-shape::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -6px;
+    width: 1px;
+    border-top: 5px solid gray;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+  .theme-dark .progress-indicator-wrapper .progress-indicator .progress-indicator-shape::before {
+    border-top-color: var(--theme-highlight-gray);
+  }
+
+  .animation-root:not(.animation-detail-visible) > .splitter,
+  .animation-root:not(.animation-detail-visible) > .controlled {
+    display: none;
+  }
+
+}
+
+
+
 
 /* All that follows is for Firefox 42 and earlier */
 @supports not (hyphens:none) {

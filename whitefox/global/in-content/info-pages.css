@@ -29,6 +29,12 @@ body {
 }
 
 /* Typography */
+body > .container > h1:not(:empty) /* This is for  about:about  */
+{
+  border-bottom: 1px solid #C1C1C1;
+  padding-bottom: 0.4em;
+}
+
 .title {
   background-image: url("chrome://browser/skin/aboutNetError_info.svg");
   background-position: left 0;
@@ -86,6 +92,21 @@ ul > li, ol > li {
 
 ul {
   list-style: disc;
+}
+
+dt {
+  font-weight: bold;
+}
+
+ul.columns {
+  column-count: 2;
+  column-gap: 5em;
+}
+
+@media (max-width: 35em) {
+  ul.columns {
+    column-count: 1;
+  }
 }
 
 /* Buttons */

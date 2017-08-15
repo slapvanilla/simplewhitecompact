@@ -3,11 +3,19 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>SimpleWhiteCompact@Theme.Theme</em:id>
     <em:type>4</em:type>
+<<<<<<< HEAD
     <em:name>Simple White Compact</em:name>
     <em:description>Paint your Firefox white. Make it look simpler, nicer, compact.</em:description>
     <em:version>2.2b18.C2.03</em:version>
     <em:creator>Louis Chan (updated by Graciliano, 3marcusw)</em:creator>
     <em:contributor>3marcusw</em:contributor>
+=======
+    <em:name>Simple White X</em:name>
+    <em:description>Paint your Firefox white. Make it look simpler, nicer.</em:description>
+    <em:version>2.2b18.x2.03</em:version>
+    <em:creator>Louis Chan (updated by Graciliano)</em:creator>
+    <em:contributor>Louis Chan</em:contributor>
+>>>>>>> 0eeac3e61f8337b76669d04ee1a3c14355397e27
     <em:contributor>Graciliano</em:contributor>
     <em:contributor>Ryan C</em:contributor>
     <em:contributor>Chi Lei</em:contributor>

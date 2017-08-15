@@ -22,6 +22,20 @@ treecol {
   -moz-user-select: none;
 }
 
+label.learnMore {
+  -moz-margin-start: 24px !important;
+  margin-inline-start: 24px !important;
+}
+checkbox + label.learnMore {
+  -moz-margin-start: 20px !important;
+  margin-inline-start: 20px !important;
+}
+
+#engineList {
+  -moz-margin-end: 4px;
+  margin-inline-end: 4px;
+}
+
 #engineList treechildren::-moz-tree-image(engineShown, checked),
 #blocklistsTree treechildren::-moz-tree-image(selectionCol, checked) {
   list-style-image: url("chrome://global/skin/in-content/check.svg#check");
@@ -55,6 +69,10 @@ treecol {
   list-style-image: url(chrome://browser/skin/preferences/in-content/icons32.svg);
 }
 
+richlistbox#categories {  /* To undo inline css in Firefox 56 (55?) */
+  padding: 0;
+}
+
 #categories {
   max-height: 100vh;
 }
@@ -77,6 +95,7 @@ treecol {
   list-style-image: url(chrome://browser/skin/preferences/in-content/icons32.svg#general);
 }
 
+#category-search-results > .category-icon, /* Firefox 56 */
 #category-search > .category-icon {
   list-style-image: url(chrome://browser/skin/preferences/in-content/icons32.svg#search);
 }
@@ -105,53 +124,212 @@ treecol {
   list-style-image: url(chrome://browser/skin/preferences/in-content/icons32.svg#advanced);
 }
 
-/* No need for HiDPI icons because of using SVG **********%
-@media (min-resolution: 2dppx) {
-  .category-icon {
-    list-style-image: url("chrome://browser/skin/preferences/in-content/icons@2x.png");
-  }
+/* help button */
 
-  #category-general > .category-icon {
-    -moz-image-region: rect(0, 48px, 48px, 0);
-  }
-
-  #category-search > .category-icon {
-    -moz-image-region: rect(0, 384px, 48px, 336px);
-  }
-
-  #category-content > .category-icon {
-    -moz-image-region: rect(0, 96px, 48px, 48px);
-  }
-
-  #category-application > .category-icon {
-    -moz-image-region: rect(0, 144px, 48px, 96px);
-  }
-
-  #category-privacy > .category-icon {
-    -moz-image-region: rect(0, 192px, 48px, 144px);
-  }
-
-  #category-security > .category-icon {
-    -moz-image-region: rect(0, 240px, 48px, 192px);
-  }
-
-  #category-sync > .category-icon {
-    -moz-image-region: rect(0, 288px, 48px, 240px);
-  }
-
-  #category-advanced > .category-icon {
-    -moz-image-region: rect(0, 336px, 48px, 288px);
-  }
+#categories + keyset + .help-button { /* Firefox 56 */
+  position: absolute;
+  font-size: 0px;
+  z-index: 1;
+  margin: 0;
+  top: 6px;
+  right: 4px;
 }
-%*********************************************************/
 
-/*  This is now elswhere in /ostarget/general/global/in-content/common.css
-@media (max-width: 800px) {
-  .category-name {
-    display: none;
-  }
+/* Re-arrange elements panel for Firefox 56 */
+
+.help-button + .main-content {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0;
 }
-****/
+
+.help-button + .main-content > #mainPrefPane {
+  border: 1px solid var(--in-content-main-border-color);
+  border-radius: 5px;
+  background-color: var(--in-content-main-background-color);
+  background-image: var(--in-content-main-background-image);
+
+  -moz-padding-end: 44px;
+  -moz-padding-start: 48px;
+
+  overflow: auto;
+  max-width: unset;
+  position: absolute;
+  top: 43px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.help-button + .main-content > #mainPrefPane > .content-box {
+  width: 800px;
+  max-width: 100%;
+  padding-top: 10px; /* + 15px (spacing at top of first contained element = 25px */
+  padding-bottom: 40px;
+}
+
+.help-button + .main-content > #mainPrefPane > .content-box > .header { /* These headers have no use here with Firefox 56 */
+  display: none;
+}
+
+
+/* @-moz-document url-prefix("about:preferences"){ */
+/* xul|page[title="Options"] > script[src$="preferences.js"] ~ stack */
+:root > stack {
+  min-height: 214px;  /* If the viewport is too small some content will be hidden! */
+  padding: 18px;
+  background-color: var(--in-content-frame-background);
+}
+
+/* Hide anything beyond the round corners */
+:root >  stack > hbox:first-child {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+
+/* Round corner decorations to hide the scrollbar top end corner */
+/* Draw round corners borders that may be missing at the bottom end corner of the .main-content when there is a scroll-bar */
+:root >  stack > hbox:first-child::after {
+  pointer-events: none; /* These decoration should have no effect beyond its visual significance */
+  position: absolute;
+  bottom: 0;
+  z-index: 2000000;
+  width: 5px;
+  height: 5px;
+  content: "";
+  border-top-width: 0;
+  -moz-border-end-width: 1px;
+  border-inline-end-width: 1px;
+  border-bottom-width: 1px;
+  -moz-border-start-width: 0;
+  border-inline-start-width: 0;
+  border-color: var(--in-content-box-border-color);
+  border-style: solid;
+}
+:root > stack > hbox:-moz-locale-dir(ltr):first-child::after {
+  right: 0;
+  border-bottom-right-radius: 5px;
+}
+:root > stack > hbox:-moz-locale-dir(rtl):first-child::after {
+  left: 0;
+  border-bottom-left-radius: 5px;
+}
+
+/* Round corner decorations for the scrollbar top end corner */
+
+/* Prior to Firefox 56 the following can be used: */
+:not(.help-button) + .main-content::after {
+  pointer-events: none; /* This decoration should have no effect beyond its visual significance */
+  position: fixed;
+  top: 18px;
+  width:5px;
+  height:5px;
+  content: "";
+  border-top-width: 1px;
+  -moz-border-end-width: 1px;
+  border-inline-end-width: 1px;
+  border-bottom-width: 0;
+  -moz-border-start-width: 0;
+  border-inline-start-width: 0;
+  border-color: var(--in-content-box-border-color);
+  border-style: solid;
+}
+:not(.help-button) + .main-content:-moz-locale-dir(ltr)::after {
+  right: 18px;
+  border-top-right-radius: 5px;
+}
+:not(.help-button) + .main-content:-moz-locale-dir(rtl)::after {
+  left: 18px;
+  border-top-left-radius: 5px;
+}
+
+/* For Firefox 56 the tips must be covered to be round */
+.help-button + .main-content::before {
+  pointer-events: none; /* This decoration should have no effect beyond its visual significance */
+  position: absolute;
+  top: 43px;
+  z-index: 2000000;
+  width:5px;
+  height:5px;
+  font-size: 0; /* To fit the contetent in a tiny box! (Needed regardless no text being displayed.) */
+}
+.help-button + .main-content:-moz-locale-dir(ltr)::before {
+  right: 0;
+  content: url('data:image/svg+xml,<?xml version="1.0" encoding="UTF-8" standalone="no"?>  <svg x="0" y="0" height="5" width="5" viewBox="0 0 5 5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">  <path d="M0,0 h5 v5 a5,5 0 0,0 -5,-5 z" stroke-width="0" fill="%23fdfdfd"/>  </svg>');
+}
+.help-button + .main-content:-moz-locale-dir(rtl)::before {
+  left: 0;
+  content: url('data:image/svg+xml,<?xml version="1.0" encoding="UTF-8" standalone="no"?>  <svg x="0" y="0" height="5" width="5" viewBox="0 0 5 5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">  <path d="M0,0 h5 a5,5 0 0,0 -5,5 v-5 z" stroke-width="0" fill="%23fdfdfd"/>  </svg>');
+}
+
+/* For Firefox 56 the round corners can be drawn with the following */
+.help-button + .main-content::after {
+  pointer-events: none; /* This decoration should have no effect beyond its visual significance */
+  position: absolute;
+  top: 43px;
+  width:5px;
+  height:5px;
+  content: "";
+  border-top-width: 1px;
+  -moz-border-end-width: 1px;
+  border-inline-end-width: 1px;
+  border-bottom-width: 0;
+  -moz-border-start-width: 0;
+  border-inline-start-width: 0;
+  border-color: var(--in-content-box-border-color);
+  border-style: solid;
+}
+.help-button + .main-content:-moz-locale-dir(ltr)::after {
+  right: 0;
+  border-top-right-radius: 5px;
+}
+.help-button + .main-content:-moz-locale-dir(rtl)::after {
+  left: 0;
+  border-top-left-radius: 5px;
+}
+
+/* Search bar in Firefox 56 */
+
+.help-button + .main-content > hbox:first-child { /* This is the containter box for #searchInput */
+  max-width: unset;
+  margin-inline-start: 49px;
+  margin-inline-end: 30px;
+}
+
+.help-button + .main-content > hbox > #searchInput {
+  margin: 0;
+}
+
+/* Search Results Pane */
+
+.search-tooltip {
+  font-size: 1.25rem;
+  position: absolute;
+  padding: 0 10px;
+  bottom: 100%;
+  background-color: #ffe900;
+}
+
+.search-tooltip:hover,
+.search-tooltip:hover::before {
+  filter: opacity(10%);
+}
+
+.search-tooltip::before {
+  position: absolute;
+  content: "";
+  border: 6px solid transparent;
+  border-top-color: #ffe900;
+  top: 100%;
+  offset-inline-start: calc(50% - 6px);
+}
+
+.search-tooltip-parent {
+  position: relative;
+}
 
 /* header */
 
@@ -223,10 +401,21 @@ treecol {
 }
 
 /* Content pane */
+
+#drmGroup{
+  -moz-box-align: start;
+}
+
+#playDRMContentRow > vbox { /* This rule may have been made for an early alpha and currently unnecessary --johnGraciliano */
+  -moz-box-pack: center;
+}
+
 #playDRMContentLink {
   /* Line up with the buttons in the other grid bits: */
-  margin-left: 4px !important;
-  margin-right: 4px !important;
+  -moz-margin-start: 20px !important;
+  -moz-margin-end: 4px !important;
+  margin-inline-start: 20px !important;
+  margin-inline-end: 4px !important;
 }
 
 #notificationsPolicyLearnMore {
@@ -244,6 +433,10 @@ treecol {
 
 #applicationsContent {
   padding: 15px 0;
+}
+
+#applicationsContent > groupbox:first-child { /* For Firefox 55 (where this would be #downloadsGroup) */
+  margin-top: 0;
 }
 
 #filter {
@@ -343,6 +536,21 @@ description > html|a {
   margin-inline-end: 4px; /* add the 4px end-margin of other elements */
 }
 
+/* this undoes a setting from a rule in global/in-content/common.css for a special case for Firefox 55 */
+#crashReporterGroup {
+  margin-top: 0;
+}
+
+/* the following repeats settings from a rule in global/in-content/common.css using selectors needed for Firefox 55 */
+#submitHealthReportBox,
+#submitTelemetryBox,
+#automaticallySubmitCrashesBox {
+  font-size: 1.3rem;
+  font-weight: bold;
+  line-height: 22px;
+  margin: 0 !important;
+}
+
 #telemetryLearnMore,
 #FHRLearnMore,
 #crashReporterLearnMore {
@@ -368,9 +576,10 @@ label + #crashReporterLearnMore[flex="1"] {
  -moz-box-align: start; /* Avoid extending labels into trailing space --johnGraciliano */
 }
 
-#certSelection {
+radiogroup#certSelection { /* Element type radiogroup is to exclude groupbox#certSelection in Firefox 56 (55?) --johnGraciliano */
   -moz-box-align: start; /* --johnGraciliano */
 }
+
 #certSelection radio:not(:last-of-type) {
   -moz-margin-end: 1.5em; /* Fix for Firefox 37 Only --johnGraciliano */
   margin-inline-end: 1.5em; /* Fix for Firefox 37 Only --johnGraciliano */
@@ -397,21 +606,25 @@ label + #crashReporterLearnMore[flex="1"] {
   margin-bottom: 0;
 }
 
+/*** This is no longer needed:
 #showUpdateHistory {
   -moz-margin-start: 0;
   margin-inline-start: 0;
 }
+ ***/
 
 /**
  * Dialog
  */
 
+.dialogOverlay, /* Firefox 56 */
 #dialogOverlay {
   background-color: rgba(0,0,0,0.5);
   visibility: hidden;
   margin: -18px; /* To revert the value for 'padding' of 'script[src$="preferences.js"] ~ stack' in 'global/in-content/common.css' */
 }
 
+.dialogBox, /* Firefox 56 */
 #dialogBox {
   background-color: #fbfbfb;
   background-clip: content-box;
@@ -427,6 +640,7 @@ label + #crashReporterLearnMore[flex="1"] {
   padding: 0;
 }
 
+.dialogBox[resizable="true"], /* Firefox 56 */
 #dialogBox[resizable="true"] {
   resize: both;
   overflow: hidden;
@@ -434,12 +648,14 @@ label + #crashReporterLearnMore[flex="1"] {
   min-width: 66ch;
 }
 
+.dialogBox > .groupbox-title, /* Firefox 56 */
 #dialogBox > .groupbox-title {
   padding: 3.5px 0;
   background-color: #F1F1F1;
   border-bottom: 1px solid #C1C1C1;
 }
 
+.dialogTitle, /* Firefox 56 */
 #dialogTitle {
   text-align: center;
   -moz-user-select: none;
@@ -455,11 +671,13 @@ label + #crashReporterLearnMore[flex="1"] {
   min-height: 18px;
 }
 
+.dialogBox > .groupbox-body, /* Firefox 56 */
 #dialogBox > .groupbox-body {
   -moz-appearance: none;
   padding: 20px;
 }
 
+.dialogFrame, /* Firefox 56 */
 #dialogFrame {
   -moz-box-flex: 1;
   /* Default dialog dimensions */
@@ -685,6 +903,9 @@ label + #crashReporterLearnMore[flex="1"] {
 
 .fxaSyncIllustration {
   margin-top: 35px;
+  width: 231px;
+  min-width: 231px; /* This is needed in Firefox 54+ (53+?). Otherwise the default image width (320px) in the .svg is used. */
+  list-style-image: url(chrome://browser/skin/fxa/sync-illustration.svg)
 }
 
 #syncOptions caption {
@@ -735,11 +956,6 @@ spacer.separator + groupbox #fxaDeviceName{ /* Only for Firefox 42+ */
 .fxaAccountBoxButtons > button:first-child {
   -moz-margin-end: 14px;
   margin-inline-end: 14px;
-}
-
-.fxaSyncIllustration {
-  width: 231px;
-  list-style-image: url(chrome://browser/skin/fxa/sync-illustration.png)
 }
 
 #fxaEmailAddress1,
@@ -807,9 +1023,6 @@ spacer.separator + groupbox #fxaDeviceName{ /* Only for Firefox 42+ */
 }
 
 @media (min-resolution: 1.1dppx) {
-  .fxaSyncIllustration {
-    list-style-image: url(chrome://browser/skin/fxa/sync-illustration@2x.png)
-  }
   .fxaFirefoxLogo {
     list-style-image: url(chrome://browser/skin/fxa/logo@2x.png);
   }

@@ -178,9 +178,17 @@
   border-bottom: 1px solid #ccc;
 }
 
-.searchbar-engine-one-off-item.last-of-row,
+:not([compact=true]) > .searchbar-engine-one-off-item.last-of-row, /* Firefox 55 */
+[compact=true] > .searchbar-engine-one-off-item.last-of-row:not(.dummy), /* Firefox 55 */
+[compact=true] > .searchbar-engine-one-off-item.dummy:not(.last-of-row), /* Firefox 55 */
+[compact=true] > .searchbar-engine-one-off-item.last-engine, /* Firefox 55 */
 .search-setting-button-compact {
   background-image: none;
+}
+
+.searchbar-engine-one-off-item:not([selected]):not(.dummy):hover,
+.addengine-item:hover {
+  background-color: rgba(0,149,221,.25);
 }
 
 .searchbar-engine-one-off-item[selected] {
@@ -289,6 +297,7 @@ searchbar[oneoffui] .searchbar-engine-image {
   min-height: 32px;
 }
 
+.search-setting-button:hover,
 .search-setting-button[selected] {
   background-color: #d3d3d3;
   border-top-color: #bdbebe;
@@ -297,6 +306,6 @@ searchbar[oneoffui] .searchbar-engine-image {
 .search-setting-button-compact > .button-box > .button-icon {
   list-style-image: url("chrome://browser/skin/preferences/in-content/favicon.ico");
 }
-.search-setting-button-compact:hover > .button-box > .button-icon {
+.search-setting-button-compact[selected] > .button-box > .button-icon {
   filter: invert(1) brightness(2);
 }

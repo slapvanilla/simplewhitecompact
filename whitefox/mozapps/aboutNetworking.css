@@ -161,6 +161,7 @@
   }
  ********************************************************/
 
+  [id].category::before,
   .category[value]::before{
     background-size: 100%;
     background-position: center;
@@ -171,29 +172,38 @@
     margin-inline-start: 6px;
   }
 
+  #category-http::before,
   .category[value="http"]::before{
     content: "";
     background-image: url(chrome://mozapps/skin/aboutNetworking.svg#http);
   }
+  #category-sockets::before,
   .category[value="sockets"]::before{
     content: "";
     background-image: url(chrome://mozapps/skin/aboutNetworking.svg#sockets);
   }
+  #category-dns::before,
   .category[value="dns"]::before{
     content: "";
     background-image: url(chrome://mozapps/skin/aboutNetworking.svg#dns);
   }
+  #category-websockets::before,
   .category[value="websockets"]::before{
     content: "";
     background-image: url(chrome://mozapps/skin/aboutNetworking.svg#websockets);
   }
+  #category-dnslookuptool::before,
   .category[value="dnslookuptool"]::before{
     content: "";
     background-image: url(chrome://mozapps/skin/aboutNetworking.svg#dnslookup);
   }
+  #category-logging::before,
   .category[value="logging"]::before{
     content: "";
     background-image: url(chrome://mozapps/skin/aboutNetworking.svg#logging);
+  }
+  #category-rcwn::before {
+    content: "";
   }
 
   .header{

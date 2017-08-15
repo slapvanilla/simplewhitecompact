@@ -150,6 +150,7 @@ statusbarpanel {
 sidebarheader {
   height: 25px;
   background-color: #F7F7F7;
+  text-shadow: none;
   -moz-appearance: toolbox;
   border-bottom: 1px solid ThreeDShadow;
   border-top: 1px solid ThreeDHighlight;

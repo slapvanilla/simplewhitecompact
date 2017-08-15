@@ -117,9 +117,155 @@ div.command-bar {
 }
 
 
+.editor-wrapper > div.editor-mount {
+  height: calc(100% - 28px);
+}
+
+
+
+div.source-footer {
+  height: 28px;
+}
+.source-footer > .commands {
+  padding: 5px .7em 4px;
+  padding: 2px 1px;
+}
+.source-footer > .commands > button.action {
+  padding: 1px;
+}
+
+.secondary-panes > .command-bar {
+  flex-basis: 28px;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  padding-inline-start: .7em;
+}
+
+.secondary-panes > .command-bar > button {
+  padding: 1px;
+}
+
+/* button:not(.disabled):not(:hover):not(:active), */
+.secondary-panes > .command-bar > button:not(.disabled):not(:hover):not(:active),
 .command-bar > span:not(.disabled):not(:hover):not(:active) {
   opacity: .8;
 }
+
+
+.secondary-panes > .command-bar {
+  flex-basis: 28px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-inline-start: 1px;
+}
+
+button,
+.accordion .header-buttons button[class],
+.source-footer > .commands > button.action,
+.secondary-panes > .command-bar > button {
+  padding: 3px 2px 2px 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  border-color: transparent;
+  margin: 0 1px;
+}
+.accordion .header-buttons button[class] {
+  box-sizing: content-box;
+}
+
+
+/* button:not(.disabled):hover, */
+.accordion .header-buttons button[class]:not(.disabled):hover,
+.source-footer > .commands > button:not(.disabled):hover,
+.secondary-panes > .command-bar > button:not(.disabled):hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: transparent linear-gradient(rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.2)) no-repeat;
+  box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6) inset, 0 0 1px rgba(255, 255, 255, 0.6) inset,
+      0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* button:hover:active, */
+.accordion .header-buttons button[class]:not(.disabled):hover:active,
+.source-footer > .commands > button:not(.disabled):hover:active,
+.secondary-panes > .command-bar > button:not(.disabled):hover:active {
+  border-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.1) inset,
+      0 0 2px rgba(0, 0, 0, 0.05);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), transparent);
+}
+
+.secondary-panes > .command-bar > .pause:not(:active).disabled,
+.secondary-panes > .command-bar > button:not(:active).checked {
+  background: rgba(255,255,255,.5) linear-gradient(rgba(0, 0, 0, 0.1), transparent) no-repeat;
+  border-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.1) inset;
+  opacity: 1;
+}
+
+
+.accordion ._header {
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: center;
+}
+
+.refresh[class] {
+  position: static;
+}
+
+i.arrow > svg {
+  display: none;
+}
+i.arrow::after{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  padding: 3px 4px 2px 1px;
+  content: url(images/firebug/twisty-closed-firebug.svg);
+}
+i.arrow.expanded::after{
+  content: url(images/firebug/twisty-open-firebug.svg);
+}
+
+i.plus > svg {
+  display: none;
+}
+i.plus::after{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  content: url(images/firebug/add.svg);
+}
+
+i.togglePanes > svg {
+  display: none;
+}
+i.togglePanes::after {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  content: url(images/firebug/pane-expand.svg);
+}
+/*
+.toggle-button-start.collapsed > i.togglePanes::after,
+.toggle-button-end:not(.collapsed) > i.togglePanes::after {
+  content: url(images/firebug/pane-collapse.svg);
+}
+ */
+.toggle-button-start > i.togglePanes::after {
+  content: url(images/firebug/pane-collapse.svg);
+}
+.vertical > i.togglePanes::after {
+  transform: rotate(90deg);
+}
+
+
+
 
 
 i:-moz-any(.pause,.resume,.stepOver,.stepIn,.stepOut,.disableBreakpoints,.toggleBreakpoints,.pause-exceptions,.prettyPrint) > svg {
@@ -195,3 +341,43 @@ i.prettyPrint::after {
 .debugger div.CodeMirror {
   height: 100%;
 }
+
+i.refresh::after {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background-image: url(images/firebug/rerun.svg);
+  content: "";
+}
+i.refresh > svg {
+  display: none;
+}
+
+
+
+.breakpoints-list input.breakpoint-checkbox {
+  vertical-align: bottom;
+}
+
+.breakpoints-list div.breakpoint {
+  font-size: inherit;
+  line-height: inherit;
+  padding-top: .75ex;
+  padding-bottom: .75ex;
+}
+
+
+.editor.new-breakpoint > i.breakpoint > svg {
+  height: 1.3em;
+}
+
+.breakpoints-list div.breakpoint-label {
+  margin-inline-end: 18px;
+}
+
+
+button.dropdown-button {}
+
+
+
+

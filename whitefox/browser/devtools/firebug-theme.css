@@ -172,24 +172,6 @@ div#toolbox-option-container /* Firefox 53+ */ {
   border-bottom: 1px solid transparent;
 }
 
-.theme-firebug .tabs li.tabs-menu-item > a {
-  color: #565656;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-.theme-firebug .tabs li.tabs-menu-item.is-active > a {
-  background-color: rgb(247, 251, 254);
-  color: #18191a; /* var(--theme-body-color) */
-  border-bottom-width: 0; /* This is to make the bottom corners show */
-  padding-bottom: 5px;    /* a sharp right angle --johnGraciliano */
-}
-
-.theme-firebug .netInfoBody > .tabs li.tabs-menu-item.is-active > a { /* Fix for Web Console tool --johnGraciliano */
-  background-color: var(--theme-body-background);
-  padding-bottom: 3px;
-}
-
 .theme-firebug .devtools-tab[selected],
 .theme-firebug .devtools-tab.selected, /* Firefox 53+ */
 .theme-firebug .devtools-sidebar-tabs tab[selected] {

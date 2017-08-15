@@ -89,9 +89,13 @@ p#header{ /* Firefox <= 45 */
   align-items: center;
   margin: 0;
   padding-top: calc(7px + 6px * var(--expand));
-  padding-right: 13px;
   padding-bottom: calc(5px + 8px * var(--expand));
-  padding-left: 13px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  padding-inline-start: 17px;
+  
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
 #boxmodel-info,
@@ -114,10 +118,14 @@ span#element-size:-moz-dir(rtl) { /* Undo a rule in 'chrome://browser/content/de
 .theme-firebug #boxmodel-header,
 .theme-firebug .boxmodel-header {
   padding-top: calc(3px + 6px * var(--expand));
-  padding-left: 14px;
   padding-bottom: calc(3px + 6px * var(--expand));
-  padding-right: 14px;
+  padding-top: 2px;
+  padding-bottom: 3px;
 }
+#boxmodel-container {
+  margin-top: 5px;
+}
+
 
 #layout-geometry-editor,
 .layout-geometry-editor {
@@ -161,7 +169,8 @@ span#element-size:-moz-dir(rtl) { /* Undo a rule in 'chrome://browser/content/de
 
 div#content,
 #boxmodel-content,
-.boxmodel-content {
+.boxmodel-content,
+.boxmodel-contents {
   height: calc(21px + 4px * var(--expand) - var(--condense));
 }
 
@@ -218,7 +227,8 @@ div.boxmodel-borders {
 
 #content,
 #boxmodel-content,
-.boxmodel-content {
+.boxmodel-content,
+.boxmodel-contents {
   background-color: rgba(135, 206, 235, .8); /* #87ceeb * 80% */
 }
 
@@ -276,7 +286,8 @@ div.boxmodel-borders {
 .theme-firebug #boxmodel-main,
 .theme-firebug #boxmodel-content,
 .theme-firebug .boxmodel-main,
-.theme-firebug .boxmodel-content {
+.theme-firebug .boxmodel-content,
+.theme-firebug .boxmodel-contents {
   border: 1px solid transparent;
 }
 
@@ -295,15 +306,18 @@ div.boxmodel-borders {
   font-size: var(--theme-toolbar-font-size);
 }
 
+/*******************************************************  REMOVE ?????????? ****************************************
 .theme-firebug #boxmodel-header,
 .theme-firebug .boxmodel-header {
   font-size: var(--theme-toolbar-font-size);
 }
+ *******************************************************************************************************************/
 
 /* Editable region sizes are contained in absolutely positioned <p> */
 
 #main > p,
 #boxmodel-main > p,
+.boxmodel-main > div.boxmodel-size, /* .boxmodel-size may be a div instead of a p when editable in Firefox 55 */
 .boxmodel-main > p {
   position: absolute;
   pointer-events: none;
@@ -369,6 +383,8 @@ p.border.right,
 p.padding.left,
 p.padding.right,
 .boxmodel-size,
+.boxmodel-position.boxmodel-left, /* Firefox 55 */
+.boxmodel-position.boxmodel-right, /* Firefox 55 */
 .boxmodel-margin.boxmodel-left,
 .boxmodel-margin.boxmodel-right,
 .boxmodel-border.boxmodel-left,
@@ -384,12 +400,45 @@ p.padding.right,
   width: calc(100% - 2px);
 }
 
+
+.boxmodel-size {
+  display: flex;
+  justify-content: center;
+}
+.boxmodel-width,
+.boxmodel-height {
+  margin: 0px; line-height: initial; /* border-width: 0px; */ background-color: transparent; height: initial;
+}
+.theme-firebug .boxmodel-content.boxmodel-width,
+.theme-firebug .boxmodel-content.boxmodel-height {
+  border-width: 0;
+}
+.boxmodel-size > span {
+  /*
+  margin: auto 0px;
+  */
+  line-height: initial;
+  border-color: transparent;
+  border-width: 1px 0;
+  border-style: solid;
+  margin: 1px 0 -1px;
+}
+:-moz-any(.boxmodel-width,.boxmodel-height) > span {
+  font-size: 92%; vertical-align: middle; pointer-events: auto;
+}
+
+
+
 p.margin.right,
 p.margin.left,
 p.border.left,
 p.border.right,
 p.padding.right,
 p.padding.left,
+.boxmodel-position.boxmodel-top, /* Firefox 55 */
+.boxmodel-position.boxmodel-bottom, /* Firefox 55 */
+.boxmodel-position.boxmodel-left, /* Firefox 55 */
+.boxmodel-position.boxmodel-right, /* Firefox 55 */
 .boxmodel-margin.boxmodel-right,
 .boxmodel-margin.boxmodel-left,
 .boxmodel-border.boxmodel-left,
@@ -467,6 +516,62 @@ p.border.right,
 /* Coordinates should be different when the window is small, because we make
    the regions smaller then */
 
+
+/* Box Model Positioning: contains top, right, bottom, left */
+
+.boxmodel-box:nth-last-child(+18) {
+  margin: 12px 15px;
+}
+
+.boxmodel-position ~ .boxmodel-margin.boxmodel-left {left: 0px; left: 15px;}
+.boxmodel-position ~ .boxmodel-border.boxmodel-left {left: 21px; left: 36px;}
+.boxmodel-position ~ .boxmodel-padding.boxmodel-left {left: 41px; left: 56px;}
+.boxmodel-position ~ .boxmodel-margin.boxmodel-right {right: 0px; right: 15px;}
+.boxmodel-position ~ .boxmodel-border.boxmodel-right {right: 21px; right: 36px;}
+.boxmodel-position ~ .boxmodel-padding.boxmodel-right {right: 41px; right: 56px;}
+
+.boxmodel-position {
+  color: var(--theme-highlight-purple);
+}
+
+.boxmodel-position.boxmodel-top,
+.boxmodel-position.boxmodel-bottom {
+  /* border-left: 1px solid var(--theme-highlight-purple); */
+  /* left: calc(50% - 2px); */
+  /* padding-left: 1px; */
+  width: calc(100% - 2px);
+}
+
+/*
+.boxmodel-position.boxmodel-right,
+.boxmodel-position.boxmodel-left {
+  border-top: 1px solid var(--theme-highlight-purple);
+  line-height: 15px;
+  top: calc(50% - 1px);
+  width: 30px;
+}
+ */
+
+.boxmodel-position.boxmodel-top {
+  top: -18px;
+}
+
+.boxmodel-position.boxmodel-right {
+  right: -15px;
+  width: 30px;
+}
+
+.boxmodel-position.boxmodel-bottom {
+  bottom: -18px;
+}
+
+.boxmodel-position.boxmodel-left {
+  left: -15px;
+  width: 30px;
+}
+.boxmodel-position.boxmodel-left:not(.boxmodel-editing):not(.boxmodel-rotate) {
+  direction: rtl;
+}
 
 /* Legend, displayed inside regions */
 

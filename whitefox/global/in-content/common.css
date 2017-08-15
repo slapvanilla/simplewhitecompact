@@ -97,63 +97,9 @@ xul|description {
   -moz-margin-start: 0;
 }
 
-/* Set the page frame for the options page content with round corners */
-/* @-moz-document url-prefix("about:preferences"){ */
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack{
-    min-height: 214px;  /* If the viewport is too small some content will be hidden! */
-    padding: 18px;
-    background-color: var(--in-content-frame-background);
-  }
 
-  /* Hide anything beyond the round corners */
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:first-child{
-    position: relative;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  /* Draw round corners borders that may be missing on top of the .main-content */
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:first-child::before,
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:first-child::after{
-    position: absolute;
-    z-index: 2000000;
-    width:5px;
-    height:5px;
-    border-radius: 0;
-    border: 1px solid var(--in-content-main-border-color);
-    background: transparent;
-    -moz-border-start-width: 0;
-    content: "";
-  }
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:-moz-locale-dir(rtl):first-child::before{
-    top: 0;
-    left: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px; /* To lessen the effect of covering the corner element, i.e., the scrollbar button --johnGraciliano */
-  }
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:-moz-locale-dir(ltr):first-child::before{
-    top: 0;
-    right: 0;
-    border-bottom-width: 0;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px; /* To lessen the effect of covering the corner element, i.e., the scrollbar button --johnGraciliano */
-  }
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:-moz-locale-dir(rtl):first-child::after{
-    bottom: 0;
-    left: 0;
-    border-top-width: 0;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 5px; /* To lessen the effect of covering the corner element, i.e., the scrollbar button --johnGraciliano */
-  }
-  /* xul|page[title="Options"] > */ script[src$="preferences.js"] ~ stack > hbox:-moz-locale-dir(ltr):first-child::after{
-    bottom: 0;
-    right: 0;
-    border-top-width: 0;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 5px; /* To lessen the effect of covering the corner element, i.e., the scrollbar button --johnGraciliano */
-  }
+/* something goes here! */
 
-/* } */
 
 *|*.main-content {
   border: 1px solid var(--in-content-main-border-color);
@@ -330,6 +276,11 @@ xul|menulist {
   background-color: var(--in-content-page-background);
 }
 
+hbox > button:first-child {
+  -moz-margin-start: 0;
+  margin-inline-start: 0;
+}
+
 html|button:enabled:hover,
 xul|button:not([disabled="true"]):hover,
 xul|colorpicker[type="button"]:not([disabled="true"]):hover,
@@ -403,21 +354,21 @@ xul|*.help-button {
   /* Override default button background */
   background-color: transparent;
   box-shadow: none;
-  list-style-image: url("chrome://global/skin/in-content/help-glyph.svg#help");
+  list-style-image: url("chrome://global/skin/in-content/help-glyph.svg");
 }
 
 xul|*.help-button:not([disabled="true"]):hover {
   background-image: none;
   /* Override default button background */
   background-color: transparent;
-  list-style-image: url("chrome://global/skin/in-content/help-glyph.svg#help-hover");
+  list-style-image: url("chrome://global/skin/in-content/help-glyph.svg#hover");
 }
 
 xul|*.help-button:not([disabled="true"]):hover:active {
   background-image: none;
   /* Override default button background */
   background-color: transparent;
-  list-style-image: url("chrome://global/skin/in-content/help-glyph.svg#help-pressed");
+  list-style-image: url("chrome://global/skin/in-content/help-glyph.svg#active");
 }
 
 xul|*.close-icon > xul|*.button-box,
@@ -443,18 +394,18 @@ html|*.help-button {
   border: 0;
   padding: 0;
   display: inline-block;
-  background-image: url("chrome://global/skin/in-content/help-glyph.svg#help");
+  background-image: url("chrome://global/skin/in-content/help-glyph.svg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
 }
 
 html|*.help-button:hover {
-  background-image: url("chrome://global/skin/in-content/help-glyph.svg#help-hover");
+  background-image: url("chrome://global/skin/in-content/help-glyph.svg#hover");
 }
 
 html|*.help-button:hover:active {
-  background-image: url("chrome://global/skin/in-content/help-glyph.svg#help-pressed");
+  background-image: url("chrome://global/skin/in-content/help-glyph.svg#active");
 }
 
 /* Special dimensions for the help button in the options page  --johnGraciliano */
@@ -809,6 +760,8 @@ html|*.category.selected,
   margin: 1px 5px 2px;
   -moz-margin-start: 6px;
   -moz-user-select: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 /* Allow more space to the .main-content when the window is narrow */
 @media (max-width: 800px) {

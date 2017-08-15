@@ -17,6 +17,8 @@
 
 #engineList {
   margin: .5em 0;
+  -moz-margin-end: 4px;
+  margin-inline-end: 4px;
 }
 
 #engineList treechildren::-moz-tree-image(engineName) {
@@ -42,8 +44,10 @@
   margin-bottom: 1em;
 }
 
+/*** This is no longer needed:
 #removeEngineButton,
 #restoreDefaultSearchEngines {
   margin-right: 0;
   margin-left: 0;
 }
+ ***/

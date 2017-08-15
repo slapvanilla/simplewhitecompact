@@ -102,6 +102,7 @@
   display: none;
 }
 
+/*** Start Dissapears in Firefox 55 ********************************************************************************/
 #PanelUI-menu-button[badge-status="update-succeeded"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
   background: #74BF43 url(chrome://browser/skin/update-badge.svg) no-repeat center;
   height: 13px;
@@ -112,6 +113,42 @@
   background: #D90000 url(chrome://browser/skin/update-badge-failed.svg) no-repeat center;
   height: 13px;
 }
+/*** End Dissapears in Firefox 55 **********************************************************************************/
+
+/*** Start New in Firefox 55 ***************************************************************************************/
+#PanelUI-menu-button[badge-status="update-available"] > .toolbarbutton-badge-stack > .toolbarbutton-badge,
+#PanelUI-menu-button[badge-status="update-manual"] > .toolbarbutton-badge-stack > .toolbarbutton-badge,
+#PanelUI-menu-button[badge-status="update-restart"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  background: #74BF43 url(chrome://browser/skin/update-badge.svg) no-repeat center;
+  border-radius: 50%;
+  box-shadow: none;
+  border: 1px solid -moz-dialog;
+  /* "!important" is necessary to override the rule in toolbarbutton.css */
+  margin: -9px 0 0 !important;
+  margin-inline-end: -6px !important;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+/*** These selectors are not correct *******
+#PanelUI-update-restart-menu-item::after,
+#PanelUI-update-available-menu-item::after,
+#PanelUI-update-manual-menu-item::after
+ *** The new selector follows **************/
+.panel-banner-item[notificationid^=update]::after {
+  background: #74BF43 url(chrome://browser/skin/update-badge.svg) no-repeat center;
+  border-radius: 50%;
+}
+
+/*** These selectors are not correct *******
+#PanelUI-update-restart-menu-item,
+#PanelUI-update-available-menu-item,
+#PanelUI-update-manual-menu-item
+ *** The new selector follows **************/
+.panel-banner-item[notificationid^=update] {
+  list-style-image: url(chrome://branding/content/icon16.png);
+}
+/*** End new in Firefox 55   ***************************************************************************************/
 
 #PanelUI-menu-button[badge-status="download-warning"] > .toolbarbutton-badge-stack > .toolbarbutton-badge,
 #PanelUI-menu-button[badge-status="fxa-needs-authentication"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
@@ -154,6 +191,7 @@ panelmultiview[nosubviews=true] > .panel-viewcontainer > .panel-viewstack > .pan
   display: none;
 }
 
+.panel-viewstack:not([viewtype="main"]) > .panel-mainview > #widget-overflow-mainView, /* Firefox 56 + SimpleWhiteX --johnGraciliano */
 .panel-viewstack:not([viewtype="main"]) > .panel-mainview > #PanelUI-mainView {
   -moz-box-flex: 1;
 }
@@ -164,9 +202,15 @@ panelmultiview[nosubviews=true] > .panel-viewcontainer > .panel-viewstack > .pan
   -moz-box-flex: 1;
 }
 
+.panel-view-body-unscrollable { /* new in Firefox 55 */
+  overflow: hidden;
+  -moz-box-flex: 1;
+}
+
+#widget-overflow .panel-subview-body, /* Simple White + Firefox 56 --johnGraciliano */
 #PanelUI-popup .panel-subview-body {
   margin: -4px;
-  padding: 4px 4px;
+  padding: 4px;
 }
 
 .panel-subview-header,
@@ -181,9 +225,12 @@ panelmultiview[nosubviews=true] > .panel-viewcontainer > .panel-viewstack > .pan
   box-shadow: 0 -1px 0 hsla(210,4%,10%,.05) inset;
   color: GrayText;
   font-variant: small-caps;
+  /* Workaround for min-height not being accounted for in vertical layout. */
+  height: 41px;
 }
 
-.cui-widget-panelview .panel-subview-header {
+.cui-widget-panelview .panel-subview-header,
+photonpanelmultiview .panel-subview-header /* Firefox 55 */ {
   display: none;
 }
 
@@ -197,15 +244,19 @@ panelmultiview[nosubviews=true] > .panel-viewcontainer > .panel-viewstack > .pan
   flex-direction: column;
 }
 
+#appMenu-popup > arrowscrollbox > autorepeatbutton, /* new in Firefox 55 */
 #PanelUI-popup > arrowscrollbox > autorepeatbutton {
   display: none;
 }
+
+#appMenu-popup > arrowscrollbox > scrollbox, /* new in Firefox 55 */
 #PanelUI-popup > arrowscrollbox > scrollbox {
   overflow: visible;
 }
 
+#appMenu-popup > .panel-arrowcontainer > .panel-arrowcontent, /* new in Firefox 55 */
 #PanelUI-popup > .panel-arrowcontainer > .panel-arrowcontent {
-  overflow: hidden;
+  overflow: hidden; /* This is probably not needed for Simple White X --johnGraciliano */
 }
 
 #PanelUI-popup > .panel-arrowcontainer > .panel-arrowcontent,
@@ -213,30 +264,53 @@ panelmultiview[nosubviews=true] > .panel-viewcontainer > .panel-viewstack > .pan
   padding: 0;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text,
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-multiline-text {
   line-height: 1.2;
   max-height: 2.4em;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined):not([auto-hyphens="off"]) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined):not([auto-hyphens="off"]) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined):not([auto-hyphens="off"]) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined):not([auto-hyphens="off"]) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1:not([auto-hyphens="off"]) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text,
 .panelUI-grid .toolbarbutton-1:not([auto-hyphens="off"]) > .toolbarbutton-multiline-text {
   -moz-hyphens: auto;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list:not([customize-transitioning]) > * > .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list:not([customize-transitioning]) >     .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list:not([customize-transitioning]) > * > .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list:not([customize-transitioning]) >     .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid:not([customize-transitioning]) .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text,
 .panelUI-grid:not([customize-transitioning]) .toolbarbutton-1 > .toolbarbutton-multiline-text {
   position: absolute;
   clip: rect(-0.1em, auto, 2.6em, auto);
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-text,
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-multiline-text {
   text-align: center;
   /* Need to override toolkit theming which sets margin: 0 !important; */
   margin: 2px 0 0 !important;
 }
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-text /* Firefox 56 + SimpleWhiteX */ {
+  padding-inline-start: 0; /* To override the setting to .5em done elsewhere */
+}
 
+
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text {
   text-align: center;
   margin: -1px 0 0;
@@ -270,7 +344,7 @@ panelmultiview[nosubviews=true] > .panel-viewcontainer > .panel-viewstack > .pan
 }
 
 panelview:not([mainview]) .toolbarbutton-text,
-.cui-widget-panel toolbarbutton > .toolbarbutton-text {
+.cui-widget-panel toolbarbutton:not([wrap]) > .toolbarbutton-text { /* ":not([wrap])" added new in Firefox 55 */
   text-align: start;
   display: -moz-box;
 }
@@ -279,10 +353,81 @@ panelview:not([mainview]) .toolbarbutton-text,
   padding: 4px 0;
 }
 
+
+
+/* Start Rules from Firefox 55 */
+/* START photonpanelview adjustments */
+
+/* #customizationui-widget-panel > .panel-arrowcontainer > .panel-arrowcontent, /* This Too! (Library)  --johnGraciliano This causes problems */
+/* #page-action-panel > .panel-arrowcontainer > .panel-arrowcontent, /* This Too!  --johnGraciliano This also causes problems */
+#appMenu-popup > .panel-arrowcontainer > .panel-arrowcontent {
+  padding: 0;
+  /* border-radius: 0;   ** I removed this because it does not apply for Simple White X ***/
+  
+  /* The following is not needed!!!!
+  border-radius: 4px; /* This was added here for SimpleWhite ! !  !    (it is probably superfluous) */
+}
+
+photonpanelmultiview panelview {
+  /* background: var(--arrowpanel-background); */
+  background-color: var(--panel-arrowcontent-background, #fff);
+  /* padding: 6px 0; */
+  /*
+  margin-top: -4px;
+  margin-bottom: -4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+   */
+/***
+  padding: 0;
+ ***/
+}
+
+/*** The rule in this comment is replaced by the one that follows it. ***
+#appMenu-popup panelview {
+  min-width: 22.35em;
+}
+ ***/
+#appMenu-popup panelview,
+photonpanelmultiview#customizationui-widget-multiview panelview:not([extension]) {
+  min-width: 22.35em;
+  max-width: 30em;
+}
+
+/*** This is not needed because of a change done above ***/
+photonpanelmultiview panelview[title]:not([mainview=true]) {
+  padding-top: 0;
+}
+/***/
+
+/* Remove the bottom padding from pannels with a special button in the bottom */
+/*** This is not needed because of a change done above ***/
+photonpanelmultiview panelview#PanelUI-bookmarks,
+photonpanelmultiview panelview#PanelUI-history {
+  padding-bottom: 0;
+}
+/***/
+
+REMOVED photonpanelmultiview .panel-subview-body REMOVED {
+  /*XXXmikedeboer this flex is unnecessary, so I unset it for our case. It might
+                  break other panels, though, so I refrain from removing it above. */
+  -moz-box-flex: unset;
+}
+
+/* END photonpanelview adjustments */
+/* End   Rules from Firefox 55 */
+
+
+
+
+
+
+
 .cui-widget-panel.cui-widget-panelWithFooter > .panel-arrowcontainer > .panel-arrowcontent {
   padding-bottom: 0;
 }
 
+#widget-overflow-fixed-list, /* Firefox 56 + SimpleWhiteX */
 #PanelUI-contents {
   display: block;
   flex: 1 0 auto;
@@ -307,6 +452,8 @@ panelview:not([mainview]) .toolbarbutton-text,
   margin: 0;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * > .toolbarbutton-1:not(.toolbarbutton-combined), /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >     .toolbarbutton-1:not(.toolbarbutton-combined), /* Firefox 56 + SimpleWhiteX */
 toolbaritem[cui-areatype="menu-panel"][sdkstylewidget="true"]:not(.panel-wide-item),
 .panelUI-grid .toolbarbutton-1,
 .panel-customization-placeholder-child {
@@ -342,6 +489,8 @@ toolbarpaletteitem:-moz-any([place="palette"], [place="panel"]) > toolbaritem[sd
   -moz-box-orient: vertical;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button {
   -moz-appearance: none;
   -moz-box-orient: vertical;
@@ -350,6 +499,10 @@ toolbarpaletteitem:-moz-any([place="palette"], [place="panel"]) > toolbaritem[sd
   border: 0;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-text,
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-multiline-text {
   margin-top: 2px; /* Hack needed to get the label of type=menu-button aligned with other buttons */
@@ -371,10 +524,14 @@ toolbarpaletteitem:-moz-any([place="palette"], [place="panel"]) > toolbaritem[sd
   background-position: left 3px top 16px;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menu-dropmarker, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menu-dropmarker, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menu-dropmarker {
   display: none;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-dropmarker, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-dropmarker, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
   -moz-box-align: center;
   width: 16px;
@@ -384,12 +541,12 @@ toolbarpaletteitem:-moz-any([place="palette"], [place="panel"]) > toolbaritem[sd
   padding: 0;
 }
 
-.panelUI-grid .toolbarbutton-1:not([buttonover]):not(:-moz-any([disabled],[open],:active)):hover > .toolbarbutton-menubutton-dropmarker {
+.panelUI-grid .toolbarbutton-1:not([buttonover]):not(:-moz-any([disabled],[open],:active)):-moz-any(:hover,:focus) > .toolbarbutton-menubutton-dropmarker {  /* Firefox 55 changed ":hover" for ":-moz-any(:hover,:focus)" */
   background-color: hsla(210,4%,10%,.1) !important;
   border-radius: 0 0 0 2px;
 }
 
-.panelUI-grid .toolbarbutton-1:not([buttonover]):not(:-moz-any([disabled],[open],:active)):hover > .toolbarbutton-menubutton-dropmarker:-moz-locale-dir(rtl) {
+.panelUI-grid .toolbarbutton-1:not([buttonover]):not(:-moz-any([disabled],[open],:active)):-moz-any(:hover,:focus) > .toolbarbutton-menubutton-dropmarker:-moz-locale-dir(rtl) {  /* Firefox 55 changed ":hover" for ":-moz-any(:hover,:focus)" */
   border-radius: 0 0 2px 0;
 }
 
@@ -411,17 +568,36 @@ toolbaritem[cui-areatype="menu-panel"][sdkstylewidget="true"] > iframe {
   margin: 4px auto;
 }
 
+panelmultiview[viewtype="subview"] > .panel-viewcontainer > .panel-viewstack > .panel-mainview >  #widget-overflow-mainView, /* Firefox 56 + SimpleWhiteX --johnGraciliano */
 #PanelUI-multiView[viewtype="subview"] > .panel-viewcontainer > .panel-viewstack > .panel-mainview >  #PanelUI-mainView {
   background-color: hsla(210,4%,10%,.1);
 }
 
+panelmultiview[viewtype="subview"] #widget-overflow-mainView > #widget-overflow-scroller > #widget-overflow-fixed-list > .panel-wide-item, /* Firefox 56 + SimpleWhiteX --johnGraciliano */
+panelmultiview[viewtype="subview"] #widget-overflow-mainView > #widget-overflow-scroller > #widget-overflow-fixed-list > toolbarbutton:not([panel-multiview-anchor="true"]), /* Firefox 56 + SimpleWhiteX --johnGraciliano */
+/* panelmultimiew[viewtype="subview"] #widget-overflow-mainView > #widget-overflow-scroller > #widget-overflow-fixed-list > .toolbarbutton-1:not([panel-multiview-anchor="true"]), /* Firefox 56 + SimpleWhiteX --johnGraciliano */
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-contents-scroller > #PanelUI-contents > .panel-wide-item,
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-contents-scroller > #PanelUI-contents > .toolbarbutton-1:not([panel-multiview-anchor="true"]),
+
+/* Start selectors removed in Firefox 55 */
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-update-status,
+ /* disappears in Firefox 55 */
+/***** #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > .PanelUI-notification-menu-item, /* new in Firefox 55 */
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-fxa > #PanelUI-fxa-status > #PanelUI-fxa-avatar,
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-fxa > #PanelUI-fxa-status > #PanelUI-fxa-label,
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-fxa > #PanelUI-fxa-icon,
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-inner > toolbarseparator,
+ /* disappears in Firefox 55 */
+/***** #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-inner > #PanelUI-footer-inner > toolbarseparator, /* new in Firefox 55 */
+/* End  selectors removed in Firefox 55 */
+
+/* Start of Firefox 55 Selectors */
+#PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > .panel-banner-item,
+#PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-fxa-container > #PanelUI-fxa-status > #PanelUI-fxa-avatar,
+#PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-fxa-container > #PanelUI-fxa-status > #PanelUI-fxa-label,
+#PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-fxa-container > #PanelUI-fxa-icon,
+#PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-inner > #PanelUI-footer-inner > toolbarseparator,
+/* End  of Firefox 55 Selectors */
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-inner > #PanelUI-customize,
 #PanelUI-multiView[viewtype="subview"] #PanelUI-mainView > #PanelUI-footer > #PanelUI-footer-inner > #PanelUI-help:not([panel-multiview-anchor="true"]) {
   opacity: .5;
@@ -443,6 +619,10 @@ toolbaritem[cui-areatype="menu-panel"][sdkstylewidget="true"]:not(.panel-wide-it
   text-align: center;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-icon, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button > .toolbarbutton-icon, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-icon, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-badge-stack, /* Firefox 56 + SimpleWhiteX */
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-icon,
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-badge-stack,
@@ -518,17 +698,21 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   margin: 0;
 }
 
-#main-window[customizing] #PanelUI-footer-fxa {
+#main-window[customizing] #PanelUI-footer-fxa, /* Removed in Firefox 55 */
+#main-window[customizing] #PanelUI-fxa-container /* Added in Firefox 55 */ {
   display: none;
 }
 
 #PanelUI-footer-fxa:not([fxastatus="signedin"]) > toolbarseparator,
 #PanelUI-footer-fxa:not([fxastatus="signedin"]) > #PanelUI-fxa-icon,
-#PanelUI-footer-fxa:not([fxaprofileimage]) > #PanelUI-fxa-status > #PanelUI-fxa-avatar {
+#PanelUI-footer-fxa:not([fxaprofileimage]) > #PanelUI-fxa-status > #PanelUI-fxa-avatar,
+#PanelUI-fxa-container:not([fxastatus="signedin"]) > toolbarseparator, /* Firefox 55 */
+#PanelUI-fxa-container:not([fxastatus="signedin"]) > #PanelUI-fxa-icon /* Firefox 55 */ {
   display: none;
 }
 
-/* The following is from the default theme.  I prefer to hide it for being unnecessary.  --johnGraciliano ****************************\
+/* The following is from the default theme.  I prefer to hide it for being unnecessary.  --johnGraciliano ****************************
+
 #PanelUI-footer-fxa[fxastatus="error"] > #PanelUI-fxa-status::after {
   content: url(chrome://browser/skin/warning.svg);
   filter: drop-shadow(0 1px 0 hsla(206, 50%, 10%, .15));
@@ -560,7 +744,8 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   background-image: url(chrome://browser/skin/update-badge-failed.svg);
   background-color: #D90000;
 }
-\*************************************************************************************************************************************/
+
+ *************************************************************************************************************************************/
 
 #PanelUI-fxa-status {
   display: flex;
@@ -569,18 +754,21 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
 }
 
 #PanelUI-footer-inner,
-#PanelUI-footer-fxa:not([hidden]) {
+#PanelUI-footer-fxa:not([hidden]),
+#PanelUI-fxa-container:not([hidden]) /* Firefox 55 */ {
   display: flex;
   border-top: 1px solid hsla(210,4%,10%,.14);
 }
 
 #PanelUI-multiView[viewtype="subview"] #PanelUI-footer-inner,
-#PanelUI-multiView[viewtype="subview"] #PanelUI-footer-fxa {
+#PanelUI-multiView[viewtype="subview"] #PanelUI-footer-fxa,
+#PanelUI-multiView[viewtype="subview"] #PanelUI-fxa-container /* Firefox 55 */ {
   position: relative;
 }
 
 #PanelUI-footer-inner > toolbarseparator,
-#PanelUI-footer-fxa > toolbarseparator {
+#PanelUI-footer-fxa > toolbarseparator,
+#PanelUI-fxa-container > toolbarseparator /* FF55 */ {
   border: 0;
   border-left: 1px solid hsla(210,4%,10%,.14);
   margin: 7px 0 7px;
@@ -588,11 +776,15 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
 }
 
 #PanelUI-footer-inner:hover > toolbarseparator,
-#PanelUI-footer-fxa:hover > toolbarseparator {
+#PanelUI-footer-fxa:hover > toolbarseparator,
+#PanelUI-fxa-container:hover > toolbarseparator /* FF55 */ {
   margin: 0;
 }
 
-#PanelUI-update-status,
+#PanelUI-update-status, /* disapears in Firefox 55 */
+/* ???? .PanelUI-notification-menu-item, ** new in Firefox 55 ???? */
+.addon-banner-item, /* new in Firefox 55 */
+/* .panel-banner-item, /* new in Firefox 55 */
 #PanelUI-help,
 #PanelUI-fxa-label,
 #PanelUI-fxa-icon,
@@ -610,25 +802,128 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   -moz-box-orient: horizontal;
 }
 
-#PanelUI-update-status {
+#PanelUI-update-status, /* disapears in Firefox 55 */
+/* ????? .PanelUI-notification-menu-item /* new in Firefox 55 ????? */
+.panel-banner-item /* new in Firefox 55 */
+{
   border-top: 1px solid hsla(210,4%,10%,.14);
-}
-
-#PanelUI-update-status {
   border-bottom: 1px solid transparent;
   margin-bottom: -1px;
 }
 
-#PanelUI-update-status > .toolbarbutton-text {
+#PanelUI-update-status > .toolbarbutton-text, /* disapears in Firefox 55 */
+/* ????? .PanelUI-notification-menu-item > .toolbarbutton-text /* new in Firefox 55 ????? */
+.panel-banner-item > .toolbarbutton-text /* new in Firefox 55 */
+{
   width: 0; /* Fancy cropping solution for flexbox. */
 }
+
+
+/* Start Rules for Firefox 55 */
+
+/* FxAccount indicator bits. */
+#appMenu-fxa-container:not([fxastatus="signedin"]) {
+  margin-inline-end: 0;
+}
+
+#appMenu-fxa-label,
+#appMenu-fxa-icon {
+  -moz-image-region: rect(0, 16px, 16px, 0);
+  list-style-image: url(chrome://browser/skin/sync-horizontalbar.png);
+}
+
+#appMenu-fxa-label {
+  -moz-box-flex: 1;
+}
+
+#appMenu-fxa-icon[syncstatus="active"] {
+  list-style-image: url(chrome://browser/skin/syncProgress-horizontalbar.png);
+}
+
+#appMenu-fxa-status {
+  -moz-box-align: center;
+}
+
+#appMenu-fxa-avatar {
+  pointer-events: none;
+  list-style-image: url(chrome://browser/skin/fxa/default-avatar.svg);
+
+  list-style-image: url(chrome://browser/skin/fxa/default-profile-image.svg);
+}
+
+@media (min-resolution: 1.1dppx) {
+  #appMenu-fxa-label,
+  #appMenu-fxa-icon {
+    list-style-image: url(chrome://browser/skin/sync-horizontalbar@2x.png);
+    -moz-image-region: rect(0, 32px, 32px, 0);
+  }
+
+  #appMenu-fxa-icon[syncstatus="active"] {
+    list-style-image: url(chrome://browser/skin/syncProgress-horizontalbar@2x.png);
+  }
+}
+
+/* Handle different UI states. */
+#appMenu-fxa-container[fxastatus="signedin"] > #appMenu-fxa-status > #appMenu-fxa-label > .toolbarbutton-icon,
+#appMenu-fxa-container:not([fxastatus="signedin"]) > toolbarseparator,
+#appMenu-fxa-container:not([fxastatus="signedin"]) > #appMenu-fxa-icon,
+#appMenu-fxa-container:not([fxastatus="signedin"]) > #appMenu-fxa-status > #appMenu-fxa-avatar {
+  display: none;
+}
+
+#appMenu-fxa-container[fxastatus="signedin"] > #appMenu-fxa-status > #appMenu-fxa-label {
+  /* 12px space before the avatar, then 16px for the avatar */
+  padding-inline-start: 28px;
+  margin-inline-start: -28px;
+
+  padding-inline-start: 27px; /* 1px for the border --johnGraciliano */
+}
+
+#appMenu-fxa-container[fxastatus="signedin"] > #appMenu-fxa-status > #appMenu-fxa-avatar {
+  margin-inline-start: 12px;
+  
+  margin-inline-start: 11px;
+  margin-inline-end: 5px;
+  border-radius: 50%;
+}
+
+/* Error states */
+#appMenu-fxa-container[fxastatus="unverified"] > #appMenu-fxa-status > #appMenu-fxa-label,
+#appMenu-fxa-container[fxastatus="login-failed"] > #appMenu-fxa-status > #appMenu-fxa-label {
+  list-style-image: url(chrome://browser/skin/warning.svg);
+  -moz-image-region: rect(0, 16px, 16px, 0);
+}
+
+#appMenu-fxa-container[fxastatus="login-failed"],
+#appMenu-fxa-container[fxastatus="unverified"] {
+  background-color: var(--appmenu-yellow-warning-color);
+  border-top: 1px solid var(--appmenu-yellow-warning-border-color);
+  border-bottom: 1px solid var(--appmenu-yellow-warning-border-color);
+}
+
+#appMenu-fxa-container[fxastatus="login-failed"] > #appMenu-fxa-status:hover,
+#appMenu-fxa-container[fxastatus="unverified"] > #appMenu-fxa-status:hover {
+  background-color: var(--appmenu-yellow-warning-hover-color);
+}
+
+#appMenu-fxa-container[fxastatus="login-failed"] > #appMenu-fxa-status:hover:active,
+#appMenu-fxa-container[fxastatus="unverified"] > #appMenu-fxa-status:hover:active {
+  background-color: var(--appmenu-yellow-warning-active-color);
+}
+
+/* End   Rules for Firefox 55 */
+
+
 
 #PanelUI-help,
 #PanelUI-quit {
   min-width: 46px;
 }
 
-#PanelUI-update-status > .toolbarbutton-text,
+#PanelUI-update-status > .toolbarbutton-text, /* disapears in Firefox 55 */
+/* ????? .PanelUI-notification-menu-item > .toolbarbutton-icon, /* new in Firefox 55 ????? */
+.addon-banner-item > .toolbarbutton-text,  /* new in Firefox 55 */
+.panel-banner-item > .toolbarbutton-text,  /* new in Firefox 55 */
 #PanelUI-fxa-label > .toolbarbutton-text,
 #PanelUI-customize > .toolbarbutton-text {
   margin: 0;
@@ -642,7 +937,9 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   display: none;
 }
 
-#PanelUI-update-status > .toolbarbutton-icon,
+#PanelUI-update-status > .toolbarbutton-icon, /* disapears in Firefox 55 */
+/* ????? .PanelUI-notification-menu-item > .toolbarbutton-icon, /* new in Firefox 55 ????? */
+.panel-banner-item > .toolbarbutton-text,  /* new in Firefox 55 */
 #PanelUI-fxa-label > .toolbarbutton-icon,
 #PanelUI-fxa-icon > .toolbarbutton-icon,
 #PanelUI-customize > .toolbarbutton-icon,
@@ -663,18 +960,23 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   border-inline-start-style: none;
 }
 
-#PanelUI-footer-fxa[fxaprofileimage="set"] > #PanelUI-fxa-status > #PanelUI-fxa-label,
-#PanelUI-footer-fxa[fxaprofileimage="enabled"]:not([fxastatus="error"]) > #PanelUI-fxa-status > #PanelUI-fxa-label {
+#PanelUI-footer-fxa[fxaprofileimage="set"] > #PanelUI-fxa-status > #PanelUI-fxa-label, /* disapears in Firefox 55 */
+#PanelUI-footer-fxa[fxaprofileimage="enabled"]:not([fxastatus="error"]) > #PanelUI-fxa-status > #PanelUI-fxa-label, /* disapears in Firefox 55 */
+#PanelUI-fxa-container[fxastatus="signedin"] > #PanelUI-fxa-status > #PanelUI-fxa-label /* new in Firefox 55 */ {
   padding-inline-start: 0px;
 }
 
-#PanelUI-update-status {
+#PanelUI-update-status, /* disapears in Firefox 55 */
+/* descend from #PanelUI-footer to add specificity, or else the
+   padding-inline-start will be overridden */
+#PanelUI-footer > .PanelUI-notification-menu-item /* new in Firefox 55 */
+{
   width: calc(22.35em + 30px);
   padding-inline-start: 15px;
   border-inline-start-style: none;
 }
 
-#PanelUI-update-status {
+#PanelUI-update-status { /* disapears in Firefox 55 */
   list-style-image: url(chrome://branding/content/icon16.png);
 }
 
@@ -746,9 +1048,16 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   margin-left: 28px;
 }
 
+#PanelUI-remotetabs[mainview] .PanelUI-remotetabs-notabsforclient-label {  /* new in Firefox 55 */
+  margin-left: 32px;
+}
+
 .fxaSyncIllustration {
+  width: 180px; /* new in Firefox 55 */
   height: var(--panel-ui-sync-illustration-height);
-  list-style-image: url(chrome://browser/skin/fxa/sync-illustration.svg);
+  list-style-image: url(chrome://browser/skin/fxa/sync-illustration.svg); /* This disappears in Firefox 55 */
+  
+  min-width: 180px; /* Without this, the width=320px in the .svg image file will affect the containing box --johnGraciliano  */
 }
 
 .PanelUI-remotetabs-prefs-button > .toolbarbutton-text {
@@ -759,13 +1068,15 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
 
 #PanelUI-remotetabs[mainview] { /* panel anchored to toolbar button might be too skinny */
   min-width: 19em;
+  min-width: 232px; /* 200px for the button + 16px * 2 sides (or to make room for a scroll bar) */
 }
 
 /* Work around bug 1224412 - these boxes will cause scrollbars to appear when
    the panel is anchored to a toolbar button.
 */
-#PanelUI-remotetabs[mainview] #PanelUI-remotetabs-setupsync,
-#PanelUI-remotetabs[mainview] #PanelUI-remotetabs-reauthsync,
+#PanelUI-remotetabs.PanelUI-subView #PanelUI-remotetabs-setupsync TRIAL,
+#PanelUI-remotetabs[mainview] #PanelUI-remotetabs-setupsync REMOVE ,
+#PanelUI-remotetabs[mainview] #PanelUI-remotetabs-reauthsync REMOVE ,
 #PanelUI-remotetabs[mainview] #PanelUI-remotetabs-nodevicespane,
 #PanelUI-remotetabs[mainview] #PanelUI-remotetabs-tabsdisabledpane {
   min-height: calc(var(--panel-ui-sync-illustration-height) +
@@ -775,6 +1086,14 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
                    30px + 15px + /* padding of .PanelUI-remotetabs-instruction-box */
                    11em);
 }
+
+
+#PanelUI-remotetabs-tabsdisabledpane > * > .PanelUI-remotetabs-instruction-label, /* For Firefox 56 */
+:-moz-any(#PanelUI-remotetabs-setupsync, #PanelUI-remotetabs-reauthsync) > .PanelUI-remotetabs-instruction-label {
+  height: 51px; /* Allow up to three lines provided "line-height: 17px" */
+  margin-bottom: 5px; /* The bottom margin does not need to be 15px, especially if this label is less than three lines long! */
+}
+
 
 #PanelUI-remotetabs-tabslist > label[itemtype="client"] {
   color: GrayText;
@@ -792,7 +1111,7 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   display: none;
 }
 
-#PanelUI-fxa-icon[syncstatus="active"]:not([disabled]) {
+#PanelUI-fxa-icon[syncstatus="active"]:not([disabled]) { /* ":not([disabled])" removed in Firefox 55 */
   list-style-image: url(chrome://browser/skin/syncProgress-horizontalbar.png);
 }
 
@@ -827,17 +1146,19 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   -moz-image-region: rect(0, 16px, 16px, 0);
 }
 
-#PanelUI-footer-fxa[fxastatus="signedin"] > #PanelUI-fxa-status > #PanelUI-fxa-label > .toolbarbutton-icon,
-#PanelUI-footer-fxa[fxastatus="error"][fxaprofileimage="set"] > #PanelUI-fxa-status > #PanelUI-fxa-label > .toolbarbutton-icon {
+#PanelUI-footer-fxa[fxastatus="signedin"] > #PanelUI-fxa-status > #PanelUI-fxa-label > .toolbarbutton-icon, /* Removed in Firefox 55 */
+#PanelUI-footer-fxa[fxastatus="error"][fxaprofileimage="set"] > #PanelUI-fxa-status > #PanelUI-fxa-label > .toolbarbutton-icon, /* Removed in Firefox 55 */
+#PanelUI-fxa-container[fxastatus="signedin"] > #PanelUI-fxa-status > #PanelUI-fxa-label > .toolbarbutton-icon, /* New in Firefox 55 */
+#PanelUI-fxa-container:not([fxastatus="signedin"]) > #PanelUI-fxa-status > #PanelUI-fxa-avatar /* New in Firefox 55 */ {
   display: none;
 }
 
-#PanelUI-footer-fxa[fxastatus="error"]:not([fxaprofileimage="set"]) > #PanelUI-fxa-status > #PanelUI-fxa-avatar {
+#PanelUI-footer-fxa[fxastatus="error"]:not([fxaprofileimage="set"]) > #PanelUI-fxa-status > #PanelUI-fxa-avatar { /* Removed in Firefox 55 */
   display: none;
 }
 
-#PanelUI-fxa-status[disabled],
-#PanelUI-fxa-icon[disabled] {
+#PanelUI-fxa-status[disabled], /* Removed in Firefox 55 */
+#PanelUI-fxa-icon[disabled] { /* Removed in Firefox 55 */
   pointer-events: none;
 }
 
@@ -855,7 +1176,8 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   margin-inline-end: 0;
 }
 
-#PanelUI-footer-fxa[fxaprofileimage="enabled"] > #PanelUI-fxa-status > #PanelUI-fxa-avatar {
+#PanelUI-footer-fxa[fxaprofileimage="enabled"] > #PanelUI-fxa-status > #PanelUI-fxa-avatar, /* Removed in Firefox 55 */
+#PanelUI-fxa-container > #PanelUI-fxa-status > #PanelUI-fxa-avatar /* New in Firefox 55 */ {
   list-style-image: url(chrome://browser/skin/fxa/default-profile-image.svg);
 }
 
@@ -924,31 +1246,40 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   box-shadow: 0 1px 0 hsla(210,4%,10%,.05) inset;
 }
 
-#PanelUI-update-status {
+#PanelUI-update-status {  /* disapears in Firefox 55 */
   color: black;
 }
 
-#PanelUI-update-status[update-status="succeeded"] {
+#PanelUI-update-status[update-status="succeeded"] {  /* disapears in Firefox 55 */
   background-color: hsla(96, 65%, 75%, 0.5);
 }
 
-#PanelUI-update-status[update-status="succeeded"]:not([disabled]):hover {
+.PanelUI-notification-menu-item { /* new in Firefox 55 */
+  color: black;
+  background-color: hsla(96,65%,75%,.5);
+}
+
+#PanelUI-update-status[update-status="succeeded"]:not([disabled]):hover, /* disapears in Firefox 55 */
+.PanelUI-notification-menu-item:not([disabled]):hover /* new in Firefox 55 */
+{
   background-color: hsla(96, 65%, 75%, 0.8);
 }
 
-#PanelUI-update-status[update-status="succeeded"]:not([disabled]):hover:active {
+#PanelUI-update-status[update-status="succeeded"]:not([disabled]):hover:active, /* disapears in Firefox 55 */
+.PanelUI-notification-menu-item:not([disabled]):hover:active /* new in Firefox 55 */
+{
   background-color: hsl(96, 65%, 75%);
 }
 
-#PanelUI-update-status[update-status="failed"] {
+#PanelUI-update-status[update-status="failed"] { /* disapears in Firefox 55 */
   background-color: hsla(359, 69%, 84%, 0.5);
 }
 
-#PanelUI-update-status[update-status="failed"]:not([disabled]):hover {
+#PanelUI-update-status[update-status="failed"]:not([disabled]):hover { /* disapears in Firefox 55 */
   background-color: hsla(359, 69%, 84%, 0.8);
 }
 
-#PanelUI-update-status[update-status="failed"]:not([disabled]):hover:active {
+#PanelUI-update-status[update-status="failed"]:not([disabled]):hover:active { /* disapears in Firefox 55 */
   background-color: hsl(359, 69%, 84%);
 }
 
@@ -983,14 +1314,20 @@ toolbarpaletteitem[place="palette"] > toolbaritem > toolbarbutton {
   display: none;
 }
 
+#main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button, /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button, /* Firefox 56 + SimpleWhiteX */
 panelview .toolbarbutton-1,
 .subviewbutton,
+/*** Tbe selector in this comment is replaced by the one that follows it. ***
 .widget-overflow-list .toolbarbutton-1,
+ ***/
+.widget-overflow-list .toolbarbutton-1:not([panel-multiview-anchor="true"]),
 .panelUI-grid .toolbarbutton-1 > .toolbarbutton-menubutton-button,
 .share-provider-button,
 .toolbaritem-combined-buttons:-moz-any(:not([cui-areatype="toolbar"]), [overflowedItem=true]) > toolbarbutton {
   -moz-appearance: none;
   padding: 0 6px;
+  padding: 0 4px;
   background-color: hsla(210,4%,10%,0);
   border-radius: 2px;
   border-style: solid;
@@ -1053,6 +1390,40 @@ panelview .toolbarbutton-1,
   margin-inline-start: 10px;
 }
 
+
+
+
+
+/* Start Rules from Firefox 55 */
+.subviewbutton[shortcut]::after {
+  content: attr(shortcut);
+  float: right;
+  color: GrayText;
+}
+
+.PanelUI-subView .subviewbutton-nav::after {
+  -moz-context-properties: fill;
+  content: url(chrome://browser/skin/back-12.svg);
+  fill: GrayText;
+  float: right;
+}
+
+.PanelUI-subView .subviewbutton-nav:-moz-locale-dir(ltr)::after {
+  transform: scaleX(-1);
+}
+
+.subviewbutton[shortcut]::after,
+.subviewbutton[shortcut]::after,
+.PanelUI-subView .subviewbutton-nav::after {
+  margin-inline-start: 10px;
+}
+/* End   Rules from Firefox 55 */
+
+
+
+
+
+
 /* This is a <label> but it should fit in with the menu font- and colorwise. */
 #PanelUI-characterEncodingView-autodetect-label {
   font: menu;
@@ -1063,6 +1434,223 @@ panelview .toolbarbutton-1,
   margin-left: 4px;
   margin-right: 4px;
 }
+
+/******************************************************************************************/
+/* For Firefox 55 SimpleWhite X by johnGraciliano */
+photonpanelmultiview .PanelUI-subView .subviewbutton[label][disabled=true] > .toolbarbutton-icon {
+  opacity: .25;
+}
+
+
+photonpanelmultiview .PanelUI-subView .subviewbutton:not(.panel-subview-footer) {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+photonpanelmultiview .PanelUI-subView .subviewbutton[label] > .toolbarbutton-icon,
+photonpanelmultiview .PanelUI-subView .subviewbutton.subviewbutton-iconic > .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+#appMenu-zoomReset-button > .toolbarbutton-icon {
+  display: none;
+}
+photonpanelmultiview .PanelUI-subView .subviewbutton[label] > .toolbarbutton-icon + .toolbarbutton-text,
+photonpanelmultiview .PanelUI-subView .subviewbutton.subviewbutton-iconic > .toolbarbutton-text {
+  padding-inline-start: 0;
+}
+#appMenu-fxa-icon,
+photonpanelmultiview #appMenu-zoom-controls > toolbarbutton,
+photonpanelmultiview #appMenu-edit-controls > toolbarbutton {
+  min-width: unset;
+  max-width: unset;
+  height: auto;
+}
+photonpanelmultiview #appMenu-zoom-controls > label,
+photonpanelmultiview #appMenu-edit-controls > label {
+  margin-inline-start: 27px;
+  margin-inline-end: 27px;
+  -moz-box-flex: 1;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  margin-inline-start: 28px;
+  margin-inline-end: 4px;
+  -moz-box-flex: 2;
+}
+#appMenu-fxa-status + toolbarseparator {
+  display: none;
+}
+#appMenu-fxa-icon {
+  border-width: 1px;
+  border-style: solid;
+  padding: 3px;
+  -moz-box-flex: 0;
+  min-width: 25px;
+}
+#appMenu-fxa-icon:not(:hover):not(:active) {
+  border-color: transparent;
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#negative) {
+  border-width: 0px;
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container) {
+  padding: 0 4px;
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container) > toolbarbutton {
+  border-radius: 0;
+  border-width: 1px;
+  border-inline-end-width: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-image-slice: 1;
+  margin: 0;
+  padding: 2px;
+
+  border-image-source: linear-gradient(transparent 15%, hsla(210,4%,10%,.18) 15%, hsla(210,4%,10%,.18) 85%, transparent 85%);
+  border-image-slice: 1 0 1 0; /* This may need to change for LTR locales */
+  background-clip: padding-box;
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container) > label + toolbarbutton {
+  border-image-slice: 1 0 1 0; /* This may need to change for LTR locales */
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container) > toolbarbutton:-moz-any(:last-child, #appMenu-zoomEnlarge-button) {
+  border-inline-end-width: 1px;
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container) > toolbarbutton + toolbarbutton {
+  border-image-slice: 1 0 1 1; /* This may need to change for LTR locales */
+}
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container):hover > toolbarbutton:not([disabled="true"]) + toolbarbutton {
+  border-image-source: none;
+  border-inline-start-color: hsla(210,4%,10%,.18);
+}
+photonpanelmultiview .toolbaritem-combined-buttons > toolbarbutton:not([disabled="true"])#appMenu-fullscreen-button:hover,
+photonpanelmultiview .toolbaritem-combined-buttons:not(#appMenu-fxa-container):hover > toolbarbutton:not([disabled="true"]):not(#appMenu-fullscreen-button) {
+  border-image-source: none;
+  border-color: hsla(210,4%,10%,.18);
+}
+
+photonpanelmultiview .toolbaritem-combined-buttons > toolbarbutton:not(#appMenu-zoomReset-button) > .toolbarbutton-text {
+  display: none;
+}
+photonpanelmultiview .toolbaritem-combined-buttons > toolbarbutton#appMenu-zoomReset-button > .toolbarbutton-text {
+  padding: 0;
+  text-align: center;
+}
+
+/******************************************************************************************/
+
+
+
+/* Start Rules for Firefox 55 *           /
+
+/* START photon adjustments *       /
+
+photonpanelmultiview .PanelUI-subView .subviewbutton:not(.panel-subview-footer) {
+  border-radius: 0;
+  border-width: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 4px 12px;
+}
+
+photonpanelmultiview .subviewbutton:focus {
+  outline: 0;
+}
+
+photonpanelmultiview .subviewbutton-iconic:not(.subviewbutton-back) > .toolbarbutton-text,
+photonpanelmultiview .subviewbutton[checked="true"] > .toolbarbutton-text,
+photonpanelmultiview .panel-banner-item > .toolbarbutton-multiline-text {
+  padding-inline-start: 8px; /* See '.subviewbutton-iconic > .toolbarbutton-text' rule above. *               /
+}
+
+photonpanelmultiview .subviewbutton:not(.subviewbutton-iconic):not([checked="true"]) > .toolbarbutton-text {
+  padding-inline-start: 24px; /* This is 16px for the icon + 8px for the padding as defined above. *             /
+}
+
+photonpanelmultiview .PanelUI-subView .panel-subview-footer {
+  font-size: 1.2rem;
+}
+
+photonpanelmultiview .subviewbutton {
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+photonpanelmultiview .subviewbutton[checked="true"] {
+  background: none;
+  list-style-image: url(chrome://browser/skin/check.svg);
+}
+
+photonpanelmultiview .subviewbutton > .menu-iconic-left {
+  -moz-appearance: none;
+  margin-inline-end: 0;
+}
+
+photonpanelmultiview .toolbaritem-combined-buttons:-moz-any(:not([cui-areatype="toolbar"]), [overflowedItem=true]) {
+  -moz-box-align: center;
+  -moz-box-orient: horizontal;
+  border: 0;
+  border-radius: 0;
+  margin-inline-end: 8px;
+}
+
+photonpanelmultiview .toolbaritem-combined-buttons > label {
+  -moz-box-flex: 1;
+  font: menu;
+  margin: 0;
+  padding-inline-start: 36px; /* 12px toolbarbutton padding + 16px icon + 8px label padding start *              /
+}
+
+photonpanelmultiview .PanelUI-subView .toolbaritem-combined-buttons > .subviewbutton {
+  -moz-box-flex: 0;
+  height: auto;
+  margin-inline-start: 18px;
+  min-width: auto;
+  padding: 4px;
+}
+
+#appMenu-zoom-controls > .subviewbutton {
+  margin-inline-start: 10px;
+}
+
+.toolbaritem-combined-buttons > toolbarseparator[orient="vertical"] + .subviewbutton,
+#appMenu-zoom-controls > toolbarseparator[orient="vertical"] + .subviewbutton {
+  margin-inline-start: 0;
+}
+
+photonpanelmultiview .PanelUI-subView .toolbaritem-combined-buttons >
+  .subviewbutton-iconic > .toolbarbutton-text,
+photonpanelmultiview .PanelUI-subView .toolbaritem-combined-buttons >
+  .subviewbutton:not(.subviewbutton-iconic) > .toolbarbutton-icon {
+  display: none;
+}
+
+/* Using this selector, because this way the hover and active selectors will apply properly. *             /
+photonpanelmultiview .PanelUI-subView .toolbaritem-combined-buttons >
+  .subviewbutton:not(.subviewbutton-iconic) {
+  background-color: #f9f9f9;
+  border: 1px solid #e1e1e1;
+  border-radius: 10000px;
+  padding: 1px 8px;
+}
+
+photonpanelmultiview .toolbaritem-combined-buttons > .subviewbutton:not(.subviewbutton-iconic) > .toolbarbutton-text {
+  font-size: 1em;
+  padding-inline-start: 0;
+}
+
+photonpanelmultiview .panel-banner-item::after {
+  margin-inline-end: 14px;
+  margin-inline-start: 10px;
+}
+
+/* END photon adjustments */
+
+/* End   Rules for Firefox 55 */
+
+
 
 panelview .toolbarbutton-1,
 .widget-overflow-list > .toolbarbutton-1:not(:first-child),
@@ -1157,6 +1745,7 @@ menuitem.panel-subview-footer:not([disabled])[_moz-menuactive]:active,
   padding-left: 6px;
 }
 
+#sidebarMenu-popup toolbarseparator,
 .PanelUI-subView menuseparator,
 .PanelUI-subView toolbarseparator,
 .cui-widget-panelview menuseparator {
@@ -1165,9 +1754,11 @@ menuitem.panel-subview-footer:not([disabled])[_moz-menuactive]:active,
   border-top: 1px solid var(--panel-separator-color);
   border-bottom: none;
   margin: 6px 0;
+  margin: 4px 0;
   padding: 0;
 }
 
+#sidebarMenu-popup toolbarseparator,
 .PanelUI-subView menuseparator,
 .PanelUI-subView toolbarseparator {
   margin-inline-start: -5px;
@@ -1185,6 +1776,17 @@ menuitem.panel-subview-footer:not([disabled])[_moz-menuactive]:active,
   margin-right: 10px;
 }
 
+/* Start Firefox 55 */
+.PanelUI-subView toolbarseparator[orient="vertical"] {
+  height: 24px;
+  border-inline-start: 1px solid var(--panel-separator-color);
+  border-top: none;
+  margin: 0;
+  margin-inline-start: 4px;
+  margin-inline-end: 5px;
+}
+/* End   Firefox 55 */
+
 .subviewbutton > .menu-accel-container {
   -moz-box-pack: start;
   margin-inline-start: 10px;
@@ -1192,19 +1794,28 @@ menuitem.panel-subview-footer:not([disabled])[_moz-menuactive]:active,
   color: GrayText;
 }
 
-#PanelUI-remotetabs-tabslist > toolbarbutton,
+#PanelUI-remotetabs-tabslist > toolbarbutton, /* disappears in Firefox 55 */
+#PanelUI-remotetabs-tabslist > toolbarbutton[itemtype="tab"], /* new in Firefox 55 */
 #PanelUI-historyItems > toolbarbutton {
   list-style-image: url("chrome://mozapps/skin/places/defaultFavicon.png");
 }
 
 @media (min-resolution: 1.1dppx) {
-  #PanelUI-remotetabs-tabslist > toolbarbutton,
+  #PanelUI-remotetabs-tabslist > toolbarbutton, /* disappears in Firefox 55 */
+  #PanelUI-remotetabs-tabslist > toolbarbutton[itemtype="tab"], /* new in Firefox 55 */
   #PanelUI-historyItems > toolbarbutton {
     list-style-image: url("chrome://mozapps/skin/places/defaultFavicon@2x.png");
   }
 }
 
-#PanelUI-remotetabs-tabslist > toolbarbutton > .toolbarbutton-icon,
+/* Start Selectors for Firefox 55 */
+#appMenu-fxa-avatar,
+#appMenu-fxa-label > .toolbarbutton-icon,
+#appMenu-fxa-icon > .toolbarbutton-icon,
+#PanelUI-containersItems > .subviewbutton > .toolbarbutton-icon,
+/* End   Selectors for Firefox 55 */
+#PanelUI-remotetabs-tabslist > toolbarbutton > .toolbarbutton-icon, /* disappears in Firefox 54 */
+#PanelUI-remotetabs-tabslist > toolbarbutton[itemtype="tab"] > .toolbarbutton-icon, /* new in Firefox 54 */
 #PanelUI-recentlyClosedWindows > toolbarbutton > .toolbarbutton-icon,
 #PanelUI-recentlyClosedTabs > toolbarbutton > .toolbarbutton-icon,
 #PanelUI-historyItems > toolbarbutton > .toolbarbutton-icon {
@@ -1372,10 +1983,17 @@ toolbarpaletteitem[haswideitem][place="panel"] + toolbarpaletteitem[haswideitem]
   overflow-x: hidden;
 }
 
+#widget-overflow-mainView { /* Firefox 56 + SimpleWhiteX */
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
 #widget-overflow-scroller {
   max-height: 30em;
   margin-top: 10px;
   margin-bottom: 10px;
+  
+  display: block; /* Firefox 56 + SimpleWhiteX */
 }
 
 #widget-overflow-list {
@@ -1385,7 +2003,10 @@ toolbarpaletteitem[haswideitem][place="panel"] + toolbarpaletteitem[haswideitem]
 }
 
 toolbaritem[overflowedItem=true],
-.widget-overflow-list .toolbarbutton-1 {
+/*** Tbe selector in this comment is replaced by the one that follows it. ***
+.widget-overflow-list .toolbarbutton-1
+ ***/
+.widget-overflow-list .toolbarbutton-1:not([panel-multiview-anchor="true"]) {
   width: 100%;
   max-width: 22.35em;
   min-height: 36px;
@@ -1421,6 +2042,10 @@ toolbaritem[overflowedItem=true],
   background-repeat: no-repeat;
   background-size: 1px 18px;
   box-shadow: 0 0 0 1px hsla(0,0%,100%,.2);
+}
+#main-window:not([customizing]) .widget-overflow-list#widget-overflow-fixed-list > * > .toolbarbutton-1 > .toolbarbutton-menubutton-button::after,  /* Firefox 56 + SimpleWhiteX */
+#main-window:not([customizing]) .widget-overflow-list#widget-overflow-fixed-list >     .toolbarbutton-1 > .toolbarbutton-menubutton-button::after { /* Firefox 56 + SimpleWhiteX */
+  content: none; /* Remove this node! */
 }
 
 .subviewbutton[checked="true"] {
@@ -1459,9 +2084,11 @@ menuitem[checked="true"].subviewbutton > .menu-iconic-left {
 }
 
 
+/********************************
 #PanelUI-containers {
   margin-bottom: -4px;
 }
+ ********************************/
 #PanelUI-containersItems > .subviewbutton:last-of-type:not([command="Browser:OpenAboutContainers"]) {
   margin-bottom: 4px;
 }
@@ -1609,6 +2236,7 @@ menuitem[checked="true"].subviewbutton > .menu-iconic-left {
   background-repeat: no-repeat;
   background-color: transparent;
   background-position: center left;
+  height: 21px; /* This is the value if "lineheight: 17px".  This helps making the right size panel in Firefox 56 */
 }
 
 .PanelUI-panic-actionlist:-moz-locale-dir(rtl) {
@@ -1697,7 +2325,11 @@ menuitem[checked="true"].subviewbutton > .menu-iconic-left {
                       linear-gradient(rgba(255,255,255,0.3), transparent);
   }
 
-  #PanelUI-update-status {
+  #PanelUI-update-status, /* disapears in Firefox 55 */
+  #PanelUI-update-restart-menu-item, /* new in Firefox 55 */
+  #PanelUI-update-available-menu-item, /* new in Firefox 55 */
+  #PanelUI-update-manual-menu-item  /* new in Firefox 55 */
+  {
     list-style-image: url(chrome://branding/content/icon32.png);
   }
 
@@ -1734,7 +2366,8 @@ menuitem[checked="true"].subviewbutton > .menu-iconic-left {
     -moz-image-region: rect(0, 32px, 32px, 0);
   }
 
-  #PanelUI-update-status > .toolbarbutton-icon,
+  #PanelUI-update-status > .toolbarbutton-icon, /* disapears in Firefox 55 */
+  .PanelUI-notification-menu-item > .toolbarbutton-icon, /* new in Firefox 55 */
   #PanelUI-fxa-label > .toolbarbutton-icon,
   #PanelUI-fxa-icon > .toolbarbutton-icon,
   #PanelUI-customize > .toolbarbutton-icon,
@@ -1789,6 +2422,192 @@ menuitem[checked="true"].subviewbutton > .menu-iconic-left {
     background-image: -moz-image-rect(url(chrome://browser/skin/panic-panel/icons@2x.png), 0, 128, 32, 96);
   }
 }
+
+/*** Start New in Firefox 55 *********************************************************/
+.subviewbutton-iconic > .toolbarbutton-text {
+  padding-inline-start: 5px;
+}
+
+
+/* START photon adjustments */
+
+.panel-header {
+  align-items: center;
+  border-bottom: 1px solid var(--panel-separator-color);
+  display: flex;
+  flex: 1 auto;
+  height: 40px; /* fixed item height to prevent flex sizing; height + 2*4px padding */
+  height: 41px;
+  margin-bottom: 6px;
+  margin-bottom: 4px;
+  padding: 4px;
+}
+
+.panel-header > label {
+  flex: auto;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+  /* Add the size of the back button to center properly. */
+  margin-inline-end: 32px;
+  text-align: center;
+
+  margin-inline-end: 22px;
+
+
+  font-size: inherit;
+  text-align: start;
+  color: GrayText;
+  font-variant: small-caps;
+}
+.panel-subviews > .PanelUI-subView > .panel-header {
+  display: none; /* There is already a .panel-subview-header */
+}
+
+photonpanelmultiview .PanelUI-subView .panel-header > .subviewbutton-back {
+  -moz-context-properties: fill;
+  fill: var(--arrowpanel-color);
+  list-style-image: url(chrome://browser/skin/arrow-left.svg);
+  padding: 8px;
+
+
+  list-style-image: url(chrome://browser/skin/back-12.svg);
+  padding: 3px;
+}
+
+
+/* Start Firefox 56 SimpleWhite X ! !  ! */
+photonpanelmultiview .PanelUI-subView .panel-header > .subviewbutton-back {
+  fill: #fff; /*  --in-content-selected-text: #fff */
+  background-color:  #0095dd; /* --in-content-primary-button-background: #0095dd */
+  border-width: 0px;
+  border-radius: 2px;
+
+  background-color:  #4db5e7; /* --in-content-primary-button-background: #0095dd */
+  background-color:  #66bfeb; /* --in-content-primary-button-background: #0095dd */
+  height: 40px;
+  width: 18px;
+  margin: -4px -8px -4px -4px;
+  border-width: 0;
+  border-radius: 0;
+  z-index: 1;
+  position: relative;
+
+  margin: -4px 4px -4px -4px;
+  
+  background-image: /* url("chrome://browser/skin/customizableui/subView-arrow-back-inverted.png"), */ linear-gradient(rgba(255, 255, 255, 0.3), transparent);
+  background-color: #39f; /* highlight */
+}
+photonpanelmultiview .PanelUI-subView .panel-header > .subviewbutton-back:hover {
+  background-color:  #008acb; /* --in-content-primary-button-background-hover: #008acb */
+
+  background-color:  #4daddc; /* --in-content-primary-button-background: #0095dd */
+  background-color:  #66b9e1; /* --in-content-primary-button-background: #0095dd */
+
+  background-color: #39f; /* highlight */
+}
+photonpanelmultiview .PanelUI-subView .panel-header > .subviewbutton-back:active {
+  background-color:  #006b9d; /* --in-content-primary-button-background-active: #006b9d */
+
+  background-color:  #4d97ba; /* --in-content-primary-button-background: #0095dd */
+  background-color:  #66a6c4; /* --in-content-primary-button-background: #0095dd */
+
+  background-color: #39f; /* highlight */
+}
+photonpanelmultiview .PanelUI-subView .panel-header > .subviewbutton-back > .toolbarbutton-icon {
+  width: 12px;
+  height: 12px;
+}
+/* End   Firefox 56 SimpleWhite X ! !  ! */
+
+
+
+.panel-header > .subviewbutton-back:-moz-locale-dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.panel-header > .subviewbutton-back > .toolbarbutton-text {
+  display: none;
+}
+
+photonpanelmultiview .PanelUI-subView toolbarseparator {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+/* Revert the top padding, but not for the history button panel */
+photonpanelmultiview#customizationui-widget-multiview/* :not([mainViewId=PanelUI-history]) */ {
+  margin-top: -4px;
+}
+/* Revert the bottom padding present in the .panel-arrowcontent */
+:not(.cui-widget-panelWithFooter) > photonpanelmultiview#customizationui-widget-multiview {
+  margin-bottom: -4px;
+}
+
+/* The following is important for the transition in the library button panel to see sub-panels */
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer {
+  overflow: hidden;
+}
+
+photonpanelmultiview > .panel-viewcontainer > * > #PanelUI-developer[mainview=true],
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer > * > #appMenu-libraryView,
+photonpanelmultiview#appMenu-multiView > .panel-viewcontainer > * > #appMenu-mainView {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+photonpanelmultiview > .panel-viewcontainer > * > #PanelUI-history[mainview=true] {
+  padding-top: 4px;
+}
+
+
+photonpanelmultiview > .panel-viewcontainer > * > #PanelUI-developer:not([mainview=true]),
+photonpanelmultiview#appMenu-multiView > .panel-viewcontainer > * > #PanelUI-bookmarks,
+photonpanelmultiview#appMenu-multiView > .panel-viewcontainer > * > #PanelUI-history,
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer > * > #PanelUI-bookmarks,
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer > * > #PanelUI-history:not([mainview=true]) {
+  padding-bottom: 4px;
+}
+
+photonpanelmultiview#appMenu-multiView > .panel-viewcontainer > * > #appMenu-mainView > .panel-subview-body,
+photonpanelmultiview > .panel-viewcontainer > * > #PanelUI-developer > .panel-subview-body,
+photonpanelmultiview#appMenu-multiView > .panel-viewcontainer > * > #PanelUI-bookmarks > .panel-subview-body,
+photonpanelmultiview#appMenu-multiView > .panel-viewcontainer > * > #PanelUI-history > .panel-subview-body,
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer > * > #PanelUI-bookmarks > .panel-subview-body,
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer > * > #PanelUI-history > .panel-subview-body {
+  margin-top: -4px;
+  margin-bottom: -4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+photonpanelmultiview#customizationui-widget-multiview > .panel-viewcontainer > * > #PanelUI-history[mainview=true] > .panel-subview-body {
+/* photonpanelmultiview > .panel-viewcontainer > * > #PanelUI-history[mainview=true] > .panel-subview-body { */
+  margin-top: -2px;
+  padding-top: 2px;
+}
+
+/* This is explicitly overriding the overflow properties set above. */
+photonpanelmultiview .cui-widget-panelview {
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+photonpanelmultiview #panelMenu_pocket {
+  display: none;
+}
+
+/* END photon adjustments */
+
+
+/***********
+#appMenu-new-window-button {
+  list-style-image: url(chrome://browser/skin/menu-icons/new-window.svg);
+}
+
+#appMenu-private-window-button {
+  list-style-image: url(chrome://browser/skin/menu-icons/private-window.svg);
+}
+/*** End New in Firefox 55 ***********************************************************/
 
 .panel-subviews {
   background-color: -moz-field;
@@ -1919,6 +2738,8 @@ menu.subviewbutton > .menu-right:-moz-locale-dir(rtl) {
 @media not all and (-moz-os-version: windows-xp) {
   @media not all and (-moz-os-version: windows-vista) {
     @media not all and (-moz-os-version: windows-win7) {
+      #main-window:not([customizing]) #widget-overflow-fixed-list > * >  .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button, /* Firefox 56 + SimpleWhiteX */
+      #main-window:not([customizing]) #widget-overflow-fixed-list >      .toolbarbutton-1:not(.toolbarbutton-combined) > .toolbarbutton-menubutton-button, /* Firefox 56 + SimpleWhiteX */
       panelview .toolbarbutton-1,
       .subviewbutton,
       .widget-overflow-list .toolbarbutton-1,
@@ -2029,4 +2850,116 @@ menu.subviewbutton > .menu-right:-moz-locale-dir(rtl) {
     background-color: Highlight;
     color: highlighttext !important;
   }
+}
+
+/* Start Firefox 56 *  /
+/* START photon adjustments *  /
+
+photonpanelmultiview .subviewbutton > .toolbarbutton-text,
+photonpanelmultiview .subviewbutton > .toolbarbutton-icon,
+photonpanelmultiview .panel-banner-item > .toolbarbutton-multiline-text {
+  padding: 0;
+  margin: 0;
+}
+
+/* END photon adjustments *  /
+/* End   Firefox 56 */
+
+
+
+/*
+#main-window[customizing] .customization-target:not(#PanelUI-contents) {
+#customization-container[photon] > #customization-content-container {
+ */
+
+#customization-container[photon] > * > #customization-panel-container {flex-shrink: 0;}
+#customization-container[photon] > * > * > #customization-panelWrapper {height: 100%;}
+#customization-container[photon] > * > * > * > * > #customization-panelHolder {display: block;}
+#customization-container[photon] > * > * > * > * > * > #widget-overflow-fixed-list {box-sizing: content-box; min-height: calc(100% - 12px); padding: 6px 5px;}
+
+#widget-overflow-fixed-list > toolbarpaletteitem {
+  min-width: 23em;
+  border-width: 0px;
+  border-style: solid;
+  border-color: transparent;
+  transition: border-width 150ms linear;
+}
+#widget-overflow-fixed-list > toolbarpaletteitem[dragover=before] {
+  border-block-start-width: 36px;
+}
+#widget-overflow-fixed-list > toolbarpaletteitem[dragover=after] {
+  border-block-end-width: 36px;
+}
+
+photonpanelmultiview[mainViewId="PanelUI-containers"]#customizationui-widget-multiview > * > * >
+#PanelUI-containers.cui-widget-panelview {
+  padding-top: 4px;
+  /* padding-bottom: 0px; ******************************/
+}
+
+
+
+#PanelUI-containers:not(.cui-widget-panelview) {
+  margin-bottom: -4px;
+}
+
+
+
+#PanelUI-containersItems {
+  -moz-box-flex: 1; -moz-box-pack: end;
+}
+#PanelUI-containersItems > menuseparator {
+  display: -moz-box; -moz-appearance: none; -moz-box-flex: 1; border-top-width: 0px; margin-top: 0px; margin-bottom: 0px;
+}
+#PanelUI-containersItems > .subviewbutton[command="Browser:OpenAboutContainers"] {
+  margin-right: -4px; margin-bottom: 0px; margin-left: -4px;
+}
+
+
+#PanelUI-sidebarItems {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+
+
+#sidebarMenu-popup > * > .panel-arrowbox {
+  transform: none !important;
+}
+
+
+
+
+
+
+
+/*
+#customizationui-widget-panel > .panel-arrowcontainer > .panel-arrowcontent {
+  padding-top: 1px;
+  padding-bottom: 0;
+}
+
+#customizationui-widget-panel > .panel-arrowcontainer > .panel-arrowcontent > #customizationui-widget-multiview > .panel-viewcontainer > 
+.panel-viewstack > .panel-mainview > .PanelUI-subView.cui-widget-panelview > .panel-subview-body,
+#customizationui-widget-panel .panel-viewcontainer > .panel-viewstack > .panel-mainview > .PanelUI-subView.cui-widget-panelview > .panel-subview-body,
+.panel-arrowcontent > #customizationui-widget-multiview > .panel-viewcontainer > .panel-viewstack > .panel-mainview > .PanelUI-subView.cui-widget-panelview > .panel-subview-body {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#customizationui-widget-panel > .panel-arrowcontainer > .panel-arrowcontent 
+.panel-subview-body + .panel-subview-footer.subviewbutton {
+  margin-top: 0;
+}
+*/
+
+#customizationui-widget-multiview > .panel-viewcontainer > .panel-viewstack > .panel-mainview > #PanelUI-history.PanelUI-subView.cui-widget-panelview {
+  overflow: visible;
+}
+
+#customizationui-widget-multiview > .panel-viewcontainer > .panel-viewstack > .panel-mainview > #PanelUI-history.PanelUI-subView.cui-widget-panelview > .panel-subview-body {
+  margin-top: -2px;
+  margin-bottom: -4px;
+  padding-top: 2px;
+  padding-bottom: 4px;
 }

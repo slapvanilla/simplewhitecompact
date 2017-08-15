@@ -7,6 +7,46 @@
 @import "resource://devtools/client/shared/components/tabs/tabs.css";
 @import "resource://devtools/client/shared/components/tabs/tabbar.css";
 
+/* Firefox 55: */
+@import "chrome://devtools/skin/components-frame.css";
+@import "chrome://devtools/content/sourceeditor/codemirror/lib/codemirror.css";
+@import "chrome://devtools/content/sourceeditor/codemirror/addon/dialog/dialog.css";
+@import "chrome://devtools/content/sourceeditor/codemirror/mozilla.css";
+
+/* General */
+
+html,
+body,
+.root,
+#mount, /* Firefox 55 */
+.launchpad-root, /* Firefox 55 */
+.network-monitor,
+.monitor-panel {
+  flex: initial;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.split-box {
+  overflow: hidden;
+}
+
+/* Toolbar */
+
+.devtools-toolbar.devtools-toolbar-container
+/* .devtools-toolbar */  {
+  display: flex;
+}
+.request-list-container > .devtools-toolbar {
+  display: flex;
+  padding: 0;
+}
+
+
+
+
 #toolbar-labels,
 .toolbar-labels {
   overflow: hidden;
@@ -106,23 +146,83 @@ div#toolbar-labels,
   --table-zebra-background: rgba(0,0,0,0.05);
 }
 
-hbox > div > .request-list-container { /* Firefox 53 (the hbox#network-table-and-sidebar is removed in future versions) */
+/****************   MOVED  **********************************
+hbox > div > .request-list-container { /* Firefox 53 (the hbox#network-table-and-sidebar is removed in following versions) * /
   display: -moz-box;
   -moz-box-orient: vertical;
   -moz-box-flex: 1;
 }
 
-.uncontrolled > .request-list-container { /* Firefox 54 */
+.uncontrolled > .request-list-container { /* Firefox 54 * /
   width: 100%;
   display: flex;
   flex-direction: column;
 }
+ ***********************************************************/
+
+/* Status bar */ /* Firefox 55 */
+
+.devtools-status-bottom {
+  border-top: 1px solid var(--theme-splitter-color);
+}
+
+.devtools-status-bar-label {
+  flex: 0;
+}
+
+.devtools-status-bottom > .requests-list-network-summary-button {
+  margin-inline-start: 10px;
+}
+
+.status-bar-label {
+  display: inline-flex;
+  /* margin-inline-end: 10px; */
+  /* Status bar has just one line so, don't wrap labels */
+  white-space: nowrap;
+
+  align-self: stretch;
+  align-items: center;
+  margin-inline-start: 10px;
+  border-inline-start: 1px solid  var(--theme-splitter-color);
+  border-image-source: linear-gradient(transparent 15%,
+                                       var(--theme-splitter-color) 15%,
+                                       var(--theme-splitter-color) 85%,
+                                       transparent 85%);
+  border-image-slice: 1;
+  padding-inline-start: 10px;
+}
+/*
+.status-bar-label::before {
+  content: "";
+  display: inline-block;
+  margin-inline-end: 10px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  width: 1px;
+  background: var(--theme-splitter-color);
+}
+ */
+
+.status-bar-label.dom-content-loaded {
+  color: blue;
+}
+.theme-dark .status-bar-label.dom-content-loaded { /* I added this improper rule regardless it introduces a miss-match. --johnGraciliano */
+  color: #26f; /* This should stay 'blue' (the line color in the timeline) but I changed the color for readability. --johnGraciliano */
+}
+
+.status-bar-label.load {
+  color: red;
+}
+
+/* Request list empty panel */
 
 #requests-menu-empty-notice,
 .request-list-empty-notice { /* Firefox 53 */
   margin: 0;
   padding: 12px;
   font-size: 120%;
+  flex: 1; /* Firefox 55 */
+  overflow: auto; /* Firefox 55 */
 }
 
 #notice-perf-message,
@@ -188,7 +288,8 @@ hbox > div > div > #requests-menu-toolbar { /* Firefox 53 (the hbox#network-tabl
 }
 
 .theme-firebug #requests-menu-toolbar,
-.theme-firebug .requests-list-toolbar {
+.theme-firebug .requests-list-toolbar,
+.theme-firebug .request-list-container > .devtools-toolbar /* Firefox 55 */ {
   height: auto !important; /* The value I had was 16px --johnGraciliano */
   padding: 0; /* Needed in late Firefox 54.0a1 to reverse padding for '.theme-firebug .devtools-toolbar' in 'firebug-theme.css' */
 
@@ -208,9 +309,59 @@ hbox > div > div > .requests-menu-contents { /* Firefox 53 (the hbox#network-tab
   -moz-box-flex: 1;
 }
 
+
+
+
+hbox > div > .request-list-container { /* Firefox 53 (the hbox#network-table-and-sidebar is removed in following versions) */
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-flex: 1;
+}
+
+OBSOLETE > /* REMOVED!!! */
+.uncontrolled > .request-list-container { /* Firefox 54 */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.request-list-container { /* Firefox 55 */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.requests-list-wrapper { /* Firefox 55 */
+  width: 100%;
+  /*
+  height: 100%;
+   */
+  
+  flex: 1 1 0%;
+  overflow-y: hidden;
+}
+
+.requests-list-table { /* Firefox 55 */
+/*
+  display: table;
+  position: relative;
+ */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+
+
+
+
 .requests-menu-contents, /* Firefox 53 and later (an 'id' is used in previous versions) */
 .requests-list-contents { /* Firefox 54 */
   display: flex;          /* Firefox 54 and later */
+  /*display: table-row-group; /* Firefox 55 */
   flex-direction: column; /* Firefox 54 and later */
   flex-grow: 1;           /* Firefox 54 and later */
   overflow-x: hidden;
@@ -220,9 +371,94 @@ hbox > div > div > .requests-menu-contents { /* Firefox 53 (the hbox#network-tab
   --timings-rev-scale: 1;
 }
 
+.requests-list-column {
+  display: block;
+}
+
+
+
+
+.request-list-item > .requests-list-column {
+  display: table-cell; /* block ??? */
+  cursor: default;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+/*  vertical-align: middle; */
+/*  max-width: 50px; */
+/*  min-width: 50px; */
+
+  box-sizing: border-box;   /* Firefox 55 */
+  flex-shrink: 0; /* This fixes a problem in Firefox 55 */
+}
+.request-list-item > .requests-list-column.requests-list-status,
+.request-list-item > .requests-list-column.requests-list-file,
+.request-list-item > .requests-list-column.requests-list-domain {
+  text-align: start;
+}
+.request-list-item > .requests-list-column.requests-list-transferred:not([title="cached"]):not([title="—"]),
+.request-list-item > .requests-list-column.requests-list-size:not([title="—"]) {
+  text-align: end;
+}
+
+.request-list-item > .requests-list-column.requests-list-waterfall {
+  display: flex;
+  text-align: start;
+  text-overflow: clip;
+}
+
+.request-list-item > .requests-list-column > * {
+  display: inline-block;
+  vertical-align: top;
+}
+.request-list-item > .requests-list-column.requests-list-status > .requests-list-status-icon {
+  margin-top: 3px;
+}
+.request-list-item > .requests-list-column.requests-list-file > .requests-list-icon {
+  margin-top: 1px;
+}
+.request-list-item > .requests-list-column.requests-list-file > .requests-list-icon:not([src]) {
+  display: none;
+}
+/*
+.request-list-item > .requests-list-column.requests-list-domain > .requests-security-state-icon {
+  margin-top: 0;
+}
+ */
+.request-list-item > .requests-list-column.requests-list-cause > .requests-list-cause-stack {
+/*
+  display: inline-flex;
+  margin-top: 3px;
+ */
+  display: inline;
+  vertical-align: baseline;
+}
+.theme-firebug .request-list-item > .requests-list-column.requests-list-cause > .requests-list-cause-stack {
+}
+.request-list-item > .requests-list-column.requests-list-waterfall > .requests-list-timings {
+  display: flex;
+}
+
+/*
+.theme-firebug .requests-list-column {
+  padding: 1px;
+}
+ */
+
+
+
+
+
+
 .requests-menu-subitem,
-.requests-list-subitem {
+.requests-list-subitem,
+.request-list-item > .requests-list-column /* Firefox 55 */ {
   padding: 3px;
+}
+.theme-firebug .request-list-item > .requests-list-column /* Firefox 55 */ {
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 div.requests-menu-subitem, /* Firefox 53 and later (these are hbox in previous versions) */
 .requests-list-subitem {   /* Firefox 54 */
@@ -239,9 +475,11 @@ div.requests-menu-subitem, /* Firefox 53 and later (these are hbox in previous v
 }
 
 div.requests-menu-header, /* Firefox 53 and later (these are hbox in previous versions) */
-.requests-list-header {   /* Firefox 54 */
+.requests-list-header,
+/* .requests-list-headers > */ .requests-list-column {   /* Firefox 55 */
   display: flex;
   flex: none;
+  box-sizing: border-box;   /* Firefox 55 */
 }
 
 .requests-menu-header-button,
@@ -289,7 +527,8 @@ div > .requests-menu-header-button,   /* Firefox 53 (these were inside hbox in p
 }
 
 .requests-menu-header:first-child > .requests-menu-header-button:first-of-type,
-.requests-list-header:first-child > .requests-list-header-button {
+.requests-list-header:first-child > .requests-list-header-button,
+.requests-list-column:first-child > .requests-list-header-button /* Firefox 55 */ {
   border-width: 0;
 }
 
@@ -462,13 +701,15 @@ div > .requests-menu-header-button,   /* Firefox 53 (these were inside hbox in p
 .theme-firebug .requests-menu-header,
 .theme-firebug .requests-list-header {
   padding: 0 !important;
-  font-weight: bold;
+  /* font-weight: bold; *** This should be done by the next rule --johnGraciliano (Done after Firefox 55) ***/
 }
 .theme-firebug #toolbar-labels,
-.theme-firebug .toolbar-labels {
+.theme-firebug .toolbar-labels,
+.theme-firebug .devtools-toolbar.requests-list-headers {
   background: linear-gradient(rgba(255, 255, 255, 0.05),
                               rgba(0, 0, 0, 0.05)),
                               #C8D2DC;
+  font-weight: bold;
 }
 
 .theme-firebug .requests-menu-header-button,
@@ -516,7 +757,9 @@ label + .requests-list-method {
 }
 
 .requests-menu-icon-and-file,
-.requests-list-icon-and-file {
+.requests-list-icon-and-file,
+.requests-list-column.requests-list-file,
+.request-list-column.requests-list-file /* Firefox 55 */ {
   width: 18vw;
 }
 
@@ -540,7 +783,8 @@ label + .requests-list-method {
 }
 
 .requests-menu-security-and-domain,
-.requests-list-security-and-domain {
+.requests-list-security-and-domain,
+.requests-list-column.requests-list-domain /* Firefox 55 */ {
   width: 12vw;
   min-width: 9em;
 }
@@ -625,6 +869,15 @@ div.security-state-local {
   -moz-margin-end: 3px;
   margin-inline-end: 3px;
   -moz-user-select: none;
+
+  
+  /* min-height:12px;     /* Firefox 55 */
+  /* display:inline-flex; /* Firefox 55 */
+  /* align-self:center;   /* Firefox 55 */
+  /* align-items:center;  /* Firefox 55 */
+}
+.theme-firebug .requests-list-cause-stack {
+  /* min-height:unset;    /* Firefox 55 */
 }
 
 .requests-menu-cause-label{
@@ -678,6 +931,8 @@ box.requests-menu-status,
   -moz-margin-end: 5px;
   border-radius: 10px;
   transition: box-shadow 0.5s ease-in-out;
+  
+  align-self: center; /* Firefox 55 */
 }
 
 label.requests-menu-status-code,
@@ -832,7 +1087,8 @@ label.requests-menu-timings-division:not(:first-child) { /* Firefox < 53 */
 /* Network requests table: waterfall items */
 
 .requests-menu-subitem.requests-menu-waterfall,
-.requests-list-subitem.requests-list-waterfall {
+.requests-list-subitem.requests-list-waterfall,
+.request-list-item > .requests-list-column.requests-list-waterfall /* Firefox 55 */ {
   -moz-border-start: 1px solid transparent; /* Mark the start of the timelines (Why is transparent OK?!) --johnGraciliano */
   -moz-padding-start: 0;
   -moz-padding-end: 4px;
@@ -846,22 +1102,26 @@ label.requests-menu-timings-division:not(:first-child) { /* Firefox < 53 */
   background-position: -1px center;
 }
 div.requests-menu-subitem.requests-menu-waterfall,  /* Firefox 53 */
-div.requests-list-subitem.requests-list-waterfall { /* Firefox 54 */
+div.requests-list-subitem.requests-list-waterfall, /* Firefox 54 */
+.request-list-item > div.requests-list-column.requests-list-waterfall { /* Firefox 55 */
   border-inline-start-color: rgba(126,134,142,0.36364);
 }
 div.theme-dark .requests-menu-subitem.requests-menu-waterfall,  /* Firefox 53 */
-div.theme-dark .requests-list-subitem.requests-list-waterfall { /* Firefox 54 */
+div.theme-dark .requests-list-subitem.requests-list-waterfall, /* Firefox 54 */
+div.theme-dark .request-list-item > .requests-list-column.requests-list-waterfall { /* Firefox 55 */
   border-inline-start-color: rgba(143,152,161,.33333);
 }
 
 .requests-menu-subitem.requests-menu-waterfall:-moz-locale-dir(rtl),
-.requests-list-subitem.requests-list-waterfall:-moz-locale-dir(rtl) {
+.requests-list-subitem.requests-list-waterfall:-moz-locale-dir(rtl),
+.request-list-item > .requests-list-column.requests-list-waterfall:-moz-locale-dir(rtl) { /* Firefox 55 */
   background-position: right center;
   -moz-border-start-color: rgba(126,134,142,0.36364); /* This border needs to be visible on the RTL --johnGraciliano */
 }
 
 .theme-dark .requests-menu-subitem.requests-menu-waterfall:-moz-locale-dir(rtl),
-.theme-dark .requests-list-subitem.requests-list-waterfall:-moz-locale-dir(rtl) {
+.theme-dark .requests-list-subitem.requests-list-waterfall:-moz-locale-dir(rtl),
+.theme-dark .request-list-item > .requests-list-column.requests-list-waterfall:-moz-locale-dir(rtl) { /* Firefox 55 */
   -moz-border-start-color: rgba(143,152,161,.33333);
 }
 
@@ -1026,7 +1286,8 @@ div.theme-dark .requests-list-subitem.requests-list-waterfall { /* Firefox 54 */
 
 /* Method Column */
 .theme-firebug :not(.selected) > .requests-menu-subitem.requests-menu-method-box,
-.theme-firebug :not(.selected) > .requests-list-subitem.requests-list-method-box {
+.theme-firebug :not(.selected) > .requests-list-subitem.requests-list-method-box,
+.theme-firebug .request-list-item:not(.selected) > .requests-list-method /* Firefox 55 */ {
   color: rgb(128, 128, 128);
 }
 
@@ -1047,8 +1308,13 @@ div.theme-dark .requests-list-subitem.requests-list-waterfall { /* Firefox 54 */
   filter: brightness(1.3125) saturate(1.25);
 }
 
+.requests-list-transferred[title=cached] { /* Firefox 55 */
+  color: var(--theme-comment);
+}
+
 .request-list-item.selected > * > .theme-comment, /* Firefox 53 */
-.side-menu-widget-item.selected > .theme-comment {
+.side-menu-widget-item.selected > .theme-comment,
+.selected > .requests-list-transferred[title=cached] { /* Firefox 55 */
   color: var(--theme-selection-color);
 }
 
@@ -1195,10 +1461,12 @@ div.theme-dark .requests-list-subitem.requests-list-waterfall { /* Firefox 54 */
 
 #headers-summary-resend {
   margin-top: -10px;
+  margin-top: -10px;
   -moz-margin-end: 6px;
 }
 
 #toggle-raw-headers {
+  margin-top: -10px;
   margin-top: -10px;
   -moz-margin-end: 6px;
 }
@@ -1296,6 +1564,49 @@ span.requests-list-timings-box {  /* Firefox 54 */
 .theme-firebug :-moz-any(.request-list-item:not(.selected),.side-menu-widget-item:not(.selected)) .requests-menu-timings-total,   /* Firefox 53 */
 .theme-firebug :-moz-any(.request-list-item:not(.selected),.side-menu-widget-item:not(.selected)) .requests-list-timings-total {  /* Firefox 54 */
   color: var(--theme-body-color);
+}
+
+/* Stack trace panel */ /* Firefox 55 */
+
+.stack-trace {
+  font-family: var(--monospace-font-family);
+  /* The markup contains extra whitespace to improve formatting of clipboard text.
+     Make sure this whitespace doesn't affect the HTML rendering */
+  white-space: normal;
+  padding: 5px;
+}
+
+.stack-trace .frame-link {
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+.stack-trace .frame-link-source,
+.message-location .frame-link-source {
+  /* Makes the file name truncated (and ellipsis shown) on the left side */
+  direction: rtl;
+/*  white-space: nowrap; */
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.stack-trace .frame-link-source-inner,
+.message-location .frame-link-source-inner {
+  /* Enforce LTR direction for the file name - fixes bug 1290056 */
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.stack-trace .frame-link-function-display-name {
+/*  white-space: nowrap; */
+/*  overflow: hidden; */
+  text-overflow: ellipsis;
+  margin-inline-end: 1ch;
+  
+  overflow-x: hidden;
+  max-width: 50%;
+  direction: ltr;
 }
 
 /* Security tabpanel */
@@ -2708,6 +3019,7 @@ button.requests-list-network-summary-button {
   display: flex;
 }
 
+td > .source-editor-mount, /* Firefox 55 */
 .editor-container,
 .editor-mount,
 .editor-mount iframe {
@@ -2767,6 +3079,7 @@ div#network-table {
   overflow: hidden;
 }
 
+/*************   MOVED ********************************
 .split-box {
   overflow: hidden;
 }
@@ -2781,7 +3094,7 @@ body,
   height: 100%;
   overflow: hidden;
 }
-
+ *****************************************************/
 
 
 
@@ -3030,3 +3343,13 @@ span.table-chart-row-label {
   a.learn-more-link {white-space:nowrap;}
   
 */
+
+
+/******   MOVED *************
+.frame-link{width:100%;box-sizing:border-box;overflow:hidden;white-space:nowrap;}
+.frame-link-function-display-name{display:block;flex:0 1 auto;max-width:35%;overflow:hidden;text-overflow:ellipsis;}
+.frame-link-source{display:flex;overflow:hidden;}
+.frame-link-source-inner{display:flex;overflow:hidden;}
+.frame-link-filename{display:block;overflow:hidden;flex:1 1 0;text-overflow:ellipsis;direction:rtl;}
+
+ ***************************/

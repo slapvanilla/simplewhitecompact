@@ -17,6 +17,27 @@
   --rule-property-value: darkblue;
 }
 
+
+.theme-firebug .theme-fg-color1 /*,
+/ * .cm-s-mozilla .cm-number, * /
+/ * .variable-or-property .token-number,
+.variable-or-property[return] > .title > .name,
+.variable-or-property[scope] > .title > .name */ {
+  color: var(--theme-highlight-green);
+  color: var(--rule-property-value);
+}
+
+
+
+.theme-firebug .theme-fg-color5 /* ,
+/ * .cm-s-mozilla .cm-keyword */ {
+  color: var(--theme-highlight-lightorange);
+  color: var(--rule-property-name);
+}
+
+
+
+
 #root .devtools-toolbar { /* Override chrome://browser/content/devtools/ruleview.css in Firefox 40 */
   display: flex;
 }
@@ -88,7 +109,7 @@ div#sidebar-panel-ruleview {  /* Firefox >= 50 */
 }
 
 #ruleview-toolbar > .devtools-searchbox:first-child {
-  -moz-padding-start: 0px;
+  -moz-padding-start: 0;
 }
 
 #ruleview-command-toolbar {
@@ -106,7 +127,8 @@ div#sidebar-panel-ruleview {  /* Firefox >= 50 */
 
 #pseudo-class-panel[hidden] {
   margin-top: -1px;
-  height: 0px;
+  height: 0;
+  max-height: unset; /* To avoid problems with the animation in Firefox 45 and earlier */
 }
 
 @media (display-mode) { /* Test if Firefox >= 47 */
@@ -123,6 +145,127 @@ div#sidebar-panel-ruleview {  /* Firefox >= 50 */
   flex-grow: 1;
   display: flex;
   align-items: center;
+}
+
+/* Class toggle panel */ /* Firefox 55 */
+
+#ruleview-class-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#ruleview-class-panel .add-class {
+  transition-property: margin-top, margin-bottom, border-width, height;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+  overflow-y: hidden;
+  min-width: -moz-fit-content;
+}
+
+#ruleview-class-panel[hidden] .add-class {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-width: 0;
+  height: 0;
+}
+
+#ruleview-class-panel > .classes > .no-classes,
+#ruleview-class-panel .classes label {
+  transition: height 150ms ease;
+  height: 20px;
+  overflow-y: hidden;
+  min-width: -moz-fit-content;
+  font-family: var(--monospace-font-family);
+}
+#ruleview-class-panel > .classes > .no-classes {
+  height: 16px;
+}
+.theme-firebug #ruleview-class-panel > .classes > .no-classes {
+  height: 14px;
+}
+.theme-firebug #ruleview-class-panel > .classes > label {
+  height: 16px;
+}
+#ruleview-class-panel > .classes {
+  transition: padding-block-end 150ms ease;
+  padding-block-end: 1px;
+}
+.theme-firebug #ruleview-class-panel > .classes {
+  transition: none;
+  padding-block-end: 0;
+}
+#ruleview-class-panel[hidden] > .classes {
+  padding-block-end: 0;
+}
+
+#ruleview-class-panel[hidden] > .classes > .no-classes,
+#ruleview-class-panel[hidden] .classes label {
+  height: 0px;
+}
+
+#ruleview-class-panel:not([hidden]) {
+  /* The class panel can contain 0 to N classes, so we can't hardcode a height here like
+     we do for the pseudo-class panel. Unfortunately, that means we don't get the height
+     transition when toggling the panel */
+  flex-direction: column;
+}
+
+#ruleview-class-panel .add-class::placeholder {
+  font-style: italic;
+}
+#ruleview-class-panel .add-class {
+/*
+  margin: 0;
+  border-width: 0 0 1px 0;
+  padding: 2px 6px;
+  border-radius: 0;
+  */
+
+  margin: 2px 0;
+  padding: 0px 3px;
+
+  -moz-box-flex: 1;
+  font: message-box;
+
+  height: 21px;
+  box-sizing: border-box;
+  /* min-width: calc(100% - 10px); */
+}
+
+#ruleview-class-panel .classes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#ruleview-class-panel .classes {
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+#ruleview-class-panel .classes label {
+  flex: 0 0;
+  max-width: 50%;
+
+
+  -moz-user-select: none;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+#ruleview-class-panel .classes label span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#ruleview-class-panel .no-classes {
+  flex: 1;
+  color: var(--theme-body-color-inactive);
+  margin: 0;
+  text-align: center;
 }
 
 /* Rule View Container */
@@ -203,12 +346,15 @@ body > #ruleview-container {
 }
 
 .ruleview-overridden-rule-filter[hidden],
-.ruleview-warning[hidden] {
+.ruleview-warning[hidden],
+.ruleview-overridden-items[hidden], /* Firefox 54 */
+.ruleview-overridden .ruleview-grid /* Firefox 55 */ {
   display: none;
 }
 
 .ruleview-computedlist[user-open],
-.ruleview-computedlist[filter-open] {
+.ruleview-computedlist[filter-open],
+.ruleview-overridden-items /* Firefox 54 */ {
   display: block;
 }
 
@@ -335,17 +481,6 @@ body > #ruleview-container {
   border-bottom: none;
 }
 
-.theme-firebug .ruleview-computed > .ruleview-propertyname, /* Added selector --johnGraciliano */
-.theme-firebug .ruleview-namecontainer > .ruleview-propertyname {
-  color: var(--rule-property-name);
-}
-
-.theme-firebug .ruleview-computed > .ruleview-propertyvalue, /* Added selector --johnGraciliano */
-.theme-firebug .ruleview-propertyvaluecontainer > .ruleview-propertyvalue, /* THIS SELECTOR SHOULD BE THAT OF THE NEXT LINE --johnGraciliano ***********/
-.theme-firebug .ruleview-propertycontainer > .ruleview-propertyvalue {
-  color: var(--rule-property-value);
-}
-
 .theme-firebug .ruleview-overridden .ruleview-propertyname,
 .theme-firebug .ruleview-overridden .ruleview-propertyvalue {
   text-decoration: line-through;
@@ -468,6 +603,55 @@ body > #ruleview-container {
   -moz-margin-start: 35px;
 }
 
+
+/*** Start Added with Firefox 54 ************************/
+.ruleview-overridden-items {
+  margin: 0px 0px 0px 5px;
+  list-style: none;
+  line-height: 1.5em;
+}
+
+.ruleview-overridden-item {
+  position: relative;
+}
+
+.ruleview-overridden-item::before {
+  position: absolute;
+  left: -15px;
+  top: 0px;
+  content: '';
+  display: block;
+  border-left: 0.5px solid /* var(--rule-overridden-item-border-color) **-> currentcolor */;
+  height: 0.8em;
+  border-bottom: 0.5px solid /* var(--rule-overridden-item-border-color) **-> currentcolor */;
+  /*
+  border-width: 0 0 .5px .5px;
+  border-color: currentcolor;
+  border-style: solid;
+  */
+  width: 10px;
+}
+
+.ruleview-overridden-item::after {
+  position: absolute;
+  left: -15px;
+  bottom: -7px;
+  content: '';
+  display: block;
+  border-left: 0.5px solid /* var(--rule-overridden-item-border-color) **-> currentcolor */;
+  /* border-left: .5px solid currentcolor; */
+  height: 100%;
+}
+
+.ruleview-overridden-item:last-child:after {
+  display: none;
+}
+
+.theme-light .ruleview-overridden-item::before,
+.theme-light .ruleview-overridden-item::after {
+  border-color: var(--theme-content-color3);
+}
+/*** End Added with Firefox 54   ************************/
 
 .ruleview-propertyvalue {
   position: relative; /* This is to make .ruleview-colorswatch::before visible through semi-transparent colors. --johnGraciliano */
@@ -637,6 +821,20 @@ body > #ruleview-container {
 #pseudo-class-panel-toggle::before {
   background-image: url(images/pseudo-class.svg);
   background-size: cover;
+}
+
+#class-panel-toggle::before {
+  content: ".cls";
+  font-family: var(--monospace-font-family);
+  font-size: 11px;
+  margin: 0;
+  text-align: center;
+  align-items: center;
+  position: static;
+  display: flex;
+  height: auto;
+  width: auto;
+  color: #0b0b0b;
 }
 
 .theme-firebug #ruleview-add-rule-button::before {
